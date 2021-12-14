@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/ui/view_picture_page.dart';
 import 'package:flutter_gitee/main/start/start_page.dart';
+import 'package:flutter_gitee/repo/search_page.dart';
 import 'package:flutter_gitee/user/follower_page.dart';
 import 'package:flutter_gitee/user/following_page.dart';
 import 'package:flutter_gitee/user/login_page.dart';
@@ -24,7 +25,8 @@ final routes = {
   "view_picture_page": (ctx) =>
       ViewPicturePage(url: ModalRoute.of(ctx)!.settings.arguments.toString()),
   "user_profile_page": (ctx) =>
-      UserProfilePage(user: ModalRoute.of(ctx)!.settings.arguments.toString())
+      UserProfilePage(user: ModalRoute.of(ctx)!.settings.arguments.toString()),
+  "search_page": (ctx) => const SearchPage(),
 };
 
 class GlobalTheme {

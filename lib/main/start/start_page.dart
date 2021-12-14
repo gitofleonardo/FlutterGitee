@@ -55,8 +55,24 @@ class _StartPageState extends BaseState<StartPage> {
         ),
         body: _currentPage,
         drawer: _createDrawer(),
+        floatingActionButton: _createFab(),
       ),
     );
+  }
+
+  Widget _createFab() {
+    return Builder(builder: (context) {
+      return FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        onPressed: () {
+          Navigator.pushNamed(context, "search_page");
+        },
+        child: const Icon(
+          Icons.search,
+          color: Colors.white,
+        ),
+      );
+    });
   }
 
   Widget _createDrawerHeader() {

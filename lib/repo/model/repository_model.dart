@@ -104,3 +104,13 @@ Future<BaseResult<List<RepositoryEntity>>> getMyRepository(
   });
   return res;
 }
+
+Future<BaseResult<List<RepositoryEntity>>> searchRepository(
+    String text, int page, int perPage) {
+  return postRequest("api/v5/search/repositories", RequestType.get, {
+    "access_token": globalToken,
+    "q": text,
+    "page": page,
+    "per_page": perPage
+  });
+}
