@@ -18,7 +18,7 @@ Before making contribution, make sure you have obtained client ID and client sec
 
 > Notice: Don't push your codes with your personal id and secret, they belong to you only!
 
-Fork this project to your own repositories, and most importantly, don't forget to replace two constants: `clientID` and `clientSecret` defined in `flutter_gitee/lib/utils/global_constant.dart` with your client ID and client secret.  
+Fork this project to your own repositories, and most importantly, don't forget to replace two constants: `clientID` and `clientSecret` defined in `flutter_gitee/lib/utils/app_secret.dart` with your client ID and client secret.  
 
 ## Goal
 
