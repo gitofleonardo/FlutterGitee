@@ -5,6 +5,7 @@ import 'package:flutter_gitee/main/start/start_page.dart';
 import 'package:flutter_gitee/user/follower_page.dart';
 import 'package:flutter_gitee/user/following_page.dart';
 import 'package:flutter_gitee/user/login_page.dart';
+import 'package:flutter_gitee/user/user_profile_page.dart';
 
 const tokenName = "token";
 const refreshTokenName = "refreshToken";
@@ -22,6 +23,8 @@ final routes = {
       FollowingPage(user: ModalRoute.of(ctx)!.settings.arguments.toString()),
   "view_picture_page": (ctx) =>
       ViewPicturePage(url: ModalRoute.of(ctx)!.settings.arguments.toString()),
+  "user_profile_page": (ctx) =>
+      UserProfilePage(user: ModalRoute.of(ctx)!.settings.arguments.toString())
 };
 
 class GlobalTheme {
@@ -70,7 +73,3 @@ final globalThemes = [
 ];
 
 final themeNames = ["Red", "Brown", "Teal", "Pink", "Orange"];
-
-//important server data
-const clientID = "";
-const clientSecret = "";

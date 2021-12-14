@@ -26,12 +26,18 @@ class _UnsupportedEventListItemState extends State<UnsupportedEventListItem> {
           children: [
             Row(
               children: [
-                SizedBox(
-                  width: 42,
-                  height: 42,
-                  child: ClipOval(
-                    child: Image.network(
-                        widget.event.actor?.avatarUrl.toString() ?? ""),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, "user_profile_page",
+                        arguments: "${widget.event.actor?.login}");
+                  },
+                  child: SizedBox(
+                    width: 42,
+                    height: 42,
+                    child: ClipOval(
+                      child: Image.network(
+                          widget.event.actor?.avatarUrl.toString() ?? ""),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -90,12 +96,18 @@ class FollowEventListItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                SizedBox(
-                  width: 42,
-                  height: 42,
-                  child: ClipOval(
-                    child:
-                        Image.network(event.actor?.avatarUrl.toString() ?? ""),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, "user_profile_page",
+                        arguments: "${event.actor?.login}");
+                  },
+                  child: SizedBox(
+                    width: 42,
+                    height: 42,
+                    child: ClipOval(
+                      child: Image.network(
+                          event.actor?.avatarUrl.toString() ?? ""),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -142,7 +154,10 @@ class FollowEventListItem extends StatelessWidget {
                   width: 5,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, "user_profile_page",
+                        arguments: "${event.payload?.target?.login}");
+                  },
                   child: Text(
                     event.payload?.target?.login.toString() ?? "",
                     style: const TextStyle(
@@ -172,14 +187,19 @@ class StarEventListItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                SizedBox(
-                  width: 42,
-                  height: 42,
-                  child: ClipOval(
-                    child:
-                        Image.network(event.actor?.avatarUrl.toString() ?? ""),
-                  ),
-                ),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, "user_profile_page",
+                          arguments: "${event.actor?.login}");
+                    },
+                    child: SizedBox(
+                      width: 42,
+                      height: 42,
+                      child: ClipOval(
+                        child: Image.network(
+                            event.actor?.avatarUrl.toString() ?? ""),
+                      ),
+                    )),
                 const SizedBox(
                   width: 20,
                 ),

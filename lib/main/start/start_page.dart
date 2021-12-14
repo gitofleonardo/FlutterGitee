@@ -26,7 +26,7 @@ class _StartPageState extends BaseState<StartPage> {
   var _repoMenuExpanded = true;
 
   void _refreshProfile() {
-    getUserProfile().then((value) {
+    getMyUserProfile().then((value) {
       checkRequestBaseResult(value);
       if (value.state == BaseStatus.success && value.data != null) {
         setState(() {

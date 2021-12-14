@@ -163,6 +163,7 @@ Future<BaseResult<T>> _postRequest<T>(String url, RequestType method,
       result.state = BaseStatus.failure;
     }
     result.errorMessage = e.toString();
+    debugPrint(e.response.toString());
     debugPrint(e.toString());
   }
   return result;

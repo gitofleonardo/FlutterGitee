@@ -107,7 +107,8 @@ class _FollowingPageState extends BaseState<FollowingPage> {
               final cur = _followers[index].user;
               return ListTile(
                 onTap: () {
-                  //TODO Jump to user page
+                  Navigator.pushNamed(context, "user_profile_page",
+                      arguments: cur.login);
                 },
                 leading: SizedBox(
                   width: 42,
