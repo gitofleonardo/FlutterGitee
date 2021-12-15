@@ -222,6 +222,7 @@ class _SearchPageState extends BaseState<SearchPage>
                   direction: Axis.vertical,
                   children: [
                     TabBar(
+                      labelColor: Colors.grey,
                       tabs: _issueFilterTabs,
                       controller: _issueFilterTabController,
                     ),
@@ -383,6 +384,7 @@ class _SearchPageState extends BaseState<SearchPage>
                   direction: Axis.vertical,
                   children: [
                     TabBar(
+                      labelColor: Colors.grey,
                       tabs: _userFilterTabs,
                       controller: _userFilterTabController,
                     ),
@@ -598,6 +600,7 @@ class _SearchPageState extends BaseState<SearchPage>
                   direction: Axis.vertical,
                   children: [
                     TabBar(
+                      labelColor: Colors.grey,
                       tabs: _repoFilterTabs,
                       controller: _repoFilterTabController,
                     ),
