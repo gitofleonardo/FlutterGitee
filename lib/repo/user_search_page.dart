@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
 import 'package:flutter_gitee/repo/widget/user_list_item.dart';
@@ -20,6 +21,7 @@ class _UserSearchPageState extends State<UserSearchPage>
   var _hasMore = false;
   final _pageSize = 20;
   var _currentPage = 1;
+  var _filter = UserFilter();
 
   @override
   void didChangeDependencies() {
@@ -33,6 +35,16 @@ class _UserSearchPageState extends State<UserSearchPage>
         _refreshController.requestRefresh();
       });
     }
+    final filter =
+        InheritedSearchWidget.of(context)?.userFilter ?? UserFilter();
+    if (filter != _filter) {
+      setState(() {
+        _filter = filter;
+      });
+      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        _refreshController.requestRefresh();
+      });
+    }
   }
 
   void _refresh() {
@@ -40,7 +52,8 @@ class _UserSearchPageState extends State<UserSearchPage>
       _hasMore = false;
     });
     _currentPage = 1;
-    searchUser(_searchText, _currentPage, _pageSize).then((value) {
+    searchUser(_searchText, _currentPage, _pageSize, filter: _filter)
+        .then((value) {
       if (value.success) {
         ++_currentPage;
         _refreshController.refreshCompleted();
@@ -61,7 +74,8 @@ class _UserSearchPageState extends State<UserSearchPage>
   }
 
   void _loadMore() {
-    searchUser(_searchText, _currentPage, _pageSize).then((value) {
+    searchUser(_searchText, _currentPage, _pageSize, filter: _filter)
+        .then((value) {
       if (value.success) {
         ++_currentPage;
         _refreshController.loadComplete();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
@@ -20,6 +21,7 @@ class _IssueSearchPageState extends State<IssueSearchPage>
   var _hasMore = false;
   final _pageSize = 20;
   var _currentPage = 1;
+  var _filter = IssueFilter();
 
   @override
   void didChangeDependencies() {
@@ -33,6 +35,16 @@ class _IssueSearchPageState extends State<IssueSearchPage>
         _refreshController.requestRefresh();
       });
     }
+    final filter =
+        InheritedSearchWidget.of(context)?.issueFilter ?? IssueFilter();
+    if (filter != _filter) {
+      setState(() {
+        _filter = filter;
+      });
+      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        _refreshController.requestRefresh();
+      });
+    }
   }
 
   void _refresh() {
@@ -40,7 +52,8 @@ class _IssueSearchPageState extends State<IssueSearchPage>
       _hasMore = false;
     });
     _currentPage = 1;
-    searchIssue(_searchText, _currentPage, _pageSize).then((value) {
+    searchIssue(_searchText, _currentPage, _pageSize, filter: _filter)
+        .then((value) {
       if (value.success) {
         ++_currentPage;
         _refreshController.refreshCompleted();
@@ -61,7 +74,8 @@ class _IssueSearchPageState extends State<IssueSearchPage>
   }
 
   void _loadMore() {
-    searchIssue(_searchText, _currentPage, _pageSize).then((value) {
+    searchIssue(_searchText, _currentPage, _pageSize, filter: _filter)
+        .then((value) {
       if (value.success) {
         ++_currentPage;
         _refreshController.loadComplete();

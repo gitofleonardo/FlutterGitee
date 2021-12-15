@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 
-class GeneralBottomSheetHeader extends StatefulWidget {
-  final Text title;
+class HeaderContentBottomSheet extends StatelessWidget {
+  final String title;
   final Widget body;
+  final bool contentScrollable;
 
-  const GeneralBottomSheetHeader(
-      {Key? key, required this.title, required this.body})
+  const HeaderContentBottomSheet(
+      {Key? key,
+      required this.title,
+      required this.body,
+      this.contentScrollable = false})
       : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => _GeneralBottomSheetHeaderState();
-}
-
-class _GeneralBottomSheetHeaderState extends State<GeneralBottomSheetHeader> {
-  final _barHeight = 5.0;
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -25,7 +21,7 @@ class _GeneralBottomSheetHeaderState extends State<GeneralBottomSheetHeader> {
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: Container(
                 width: 64,
-                height: _barHeight,
+                height: 5,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5), color: Colors.grey),
               )),
@@ -34,25 +30,35 @@ class _GeneralBottomSheetHeaderState extends State<GeneralBottomSheetHeader> {
             child: Flex(direction: Axis.horizontal, children: [
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: InkWell(
-                  onTap: () {
+                child: IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: const Icon(Icons.close),
                 ),
               ),
               Expanded(
                   child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: widget.title,
+                child: Text(title,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16)),
               ))
             ]),
           ),
           ConstrainedBox(
             constraints:
                 BoxConstraints(maxHeight: constraints.constrainHeight() - 200),
-            child: SingleChildScrollView(
-              child: widget.body,
+            child: Builder(
+              builder: (context) {
+                if (contentScrollable) {
+                  return SingleChildScrollView(
+                    child: body,
+                  );
+                } else {
+                  return body;
+                }
+              },
             ),
           )
         ],
