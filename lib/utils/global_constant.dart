@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/ui/view_picture_page.dart';
 import 'package:flutter_gitee/main/start/start_page.dart';
-import 'package:flutter_gitee/repo/search_page.dart';
+import 'package:flutter_gitee/repo/repository_detail_page.dart';
+import 'package:flutter_gitee/repo/search/search_page.dart';
 import 'package:flutter_gitee/user/follower_page.dart';
 import 'package:flutter_gitee/user/following_page.dart';
 import 'package:flutter_gitee/user/login_page.dart';
@@ -27,6 +28,8 @@ final routes = {
   "user_profile_page": (ctx) =>
       UserProfilePage(user: ModalRoute.of(ctx)!.settings.arguments.toString()),
   "search_page": (ctx) => const SearchPage(),
+  "repository_detail_page": (ctx) => RepositoryDetailPage(
+      repo: ModalRoute.of(ctx)!.settings.arguments as RepoInfo),
 };
 
 class GlobalTheme {
