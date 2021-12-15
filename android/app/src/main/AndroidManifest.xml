@@ -3,8 +3,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
    <application
-        android:label="FlutterGitee"
-        android:icon="@drawable/ic_gitee">
+        android:label="Gitter"
+        android:icon="@drawable/ic_git">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

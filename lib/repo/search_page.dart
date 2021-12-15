@@ -115,6 +115,15 @@ class _SearchPageState extends BaseState<SearchPage>
               tabs: _tabs,
             ),
             title: TextField(
+              onSubmitted: (value) {
+                if (value.trim().isNotEmpty) {
+                  setState(() {
+                    _searchText = value;
+                  });
+                  FocusScope.of(context).unfocus();
+                }
+              },
+              textInputAction: TextInputAction.search,
               focusNode: _focusNode,
               controller: _searchController,
               maxLines: 1,

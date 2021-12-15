@@ -153,7 +153,9 @@ class _StartPageState extends BaseState<StartPage> {
                   Expanded(
                       flex: 1,
                       child: IconButton(
-                          onPressed: _selectTheme,
+                          onPressed: () {
+                            _selectTheme(context);
+                          },
                           icon: const Icon(
                             Icons.palette,
                             color: Colors.white,
@@ -270,7 +272,10 @@ class _StartPageState extends BaseState<StartPage> {
               ],
             ),
             TextButton(
-                onPressed: _showLogoutDialog, child: const Text("Logout")),
+                onPressed: () {
+                  _showLogoutDialog(context);
+                },
+                child: const Text("Logout")),
           ],
         ),
       );
@@ -287,20 +292,22 @@ class _StartPageState extends BaseState<StartPage> {
     );
   }
 
-  void _selectTheme() {
+  void _selectTheme(BuildContext context) {
     showDialog(
         context: context,
         builder: (context) {
-          return ThemeSelectDialog(
-              context: context,
-              onSelect: (theme) {
-                _baseKey.currentState?.updateTheme(theme);
-                Navigator.pop(context);
-              });
+          return Builder(builder: (context) {
+            return ThemeSelectDialog(
+                context: context,
+                onSelect: (theme) {
+                  _baseKey.currentState?.updateTheme(theme);
+                  Navigator.pop(context);
+                });
+          });
         });
   }
 
-  void _showLogoutDialog() {
+  void _showLogoutDialog(BuildContext context) {
     showDialog(
         context: context,
         builder: (context) {

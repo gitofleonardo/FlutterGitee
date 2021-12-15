@@ -64,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
           title: const Text("Login to Gitee"),
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).colorScheme.primary,
           onPressed: () {
             if (!_isLoggingIn &&
                 (_formStateKey.currentState as FormState).validate()) {
