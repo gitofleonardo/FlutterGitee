@@ -68,6 +68,10 @@ class _SearchPageState extends BaseState<SearchPage>
               controller: _searchController,
               maxLines: 1,
               decoration: InputDecoration(
+                  enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
                   hintStyle: const TextStyle(color: Colors.white),
                   hintText: "Search repository, user or issue",
                   suffixIcon: IconButton(

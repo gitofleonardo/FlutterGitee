@@ -1,7 +1,9 @@
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/repo/attrs/sort_attrs.dart';
+import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/repository_page.dart';
+import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
 import 'package:flutter_gitee/utils/global_context.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 
@@ -112,5 +114,25 @@ Future<BaseResult<List<RepositoryEntity>>> searchRepository(
     "q": text,
     "page": page,
     "per_page": perPage
+  });
+}
+
+Future<BaseResult<List<UserProfileEntity>>> searchUser(
+    String text, int page, int perPage) {
+  return postRequest("api/v5/search/users", RequestType.get, {
+    "access_token": globalToken,
+    "q": text,
+    "page": page,
+    "per_page": perPage
+  });
+}
+
+Future<BaseResult<List<IssueResultEntity>>> searchIssue(
+    String text, int page, int perPage) {
+  return postRequest("api/v5/search/issues", RequestType.get, {
+    "access_token": globalToken,
+    "page": page,
+    "per_page": perPage,
+    "q": text
   });
 }

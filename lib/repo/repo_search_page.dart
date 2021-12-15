@@ -83,7 +83,7 @@ class _RepoSearchPageState extends State<RepoSearchPage>
     super.build(context);
     return SmartRefresher(
       enablePullUp: _hasMore,
-      enablePullDown: true,
+      enablePullDown: _searchText.isNotEmpty,
       header: const WaterDropHeader(),
       controller: _refreshController,
       onRefresh: _refresh,
