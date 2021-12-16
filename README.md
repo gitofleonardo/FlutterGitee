@@ -23,3 +23,17 @@ Fork this project to your own repositories, and most importantly, don't forget t
 ## Goal
 
 My goal is to implement most of the Gitee APIs. You can find the documentation [here](https://gitee.com/api/v5/swagger).
+
+## Current progress
+
+![alt pic1](raw/pic1.jpg)
+
+![alt pic2](raw/pic2.jpg)
+
+![alt pic3](raw/pic3.jpg)
+
+![alt pic4](raw/pic4.jpg)
+
+![alt pic5](raw/pic5.jpg)
+
+![alt pic6](raw/pic6.jpg)
