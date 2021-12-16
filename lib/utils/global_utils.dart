@@ -216,3 +216,11 @@ String formatStargazerCount(int? count) {
   final cnt = count ?? 0;
   return cnt < 1000 ? "$cnt" : "${cnt / 1000}K";
 }
+
+String base64ToString(String? src) {
+  if (src == null || src.isEmpty) {
+    return "";
+  }
+  Codec<String, String> codec = utf8.fuse(base64);
+  return codec.decode(src);
+}

@@ -29,7 +29,7 @@ final routes = {
       UserProfilePage(user: ModalRoute.of(ctx)!.settings.arguments.toString()),
   "search_page": (ctx) => const SearchPage(),
   "repository_detail_page": (ctx) => RepositoryDetailPage(
-      repo: ModalRoute.of(ctx)!.settings.arguments as RepoInfo),
+      fullname: ModalRoute.of(ctx)!.settings.arguments.toString()),
 };
 
 class GlobalTheme {
@@ -78,3 +78,5 @@ final globalThemes = [
 ];
 
 final themeNames = ["Red", "Brown", "Teal", "Pink", "Orange"];
+
+const giteeBaseUrl = "https://gitee.com/";

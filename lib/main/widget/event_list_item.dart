@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gitee/repo/repository_detail_page.dart';
 import 'package:flutter_gitee/user/bean/result/success/event_result_entity.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 
@@ -236,7 +235,10 @@ class StarEventListItem extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                     child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, "repository_detail_page",
+                        arguments: "${event.repo?.fullName}");
+                  },
                   child: Text(
                     "${event.repo?.fullName}",
                     style: const TextStyle(
@@ -315,7 +317,10 @@ class PushEventListItem extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, "repository_detail_page",
+                          arguments: "${event.repo?.fullName}");
+                    },
                     child: Text(
                       event.repo?.fullName ?? "Unknown",
                       style: const TextStyle(
@@ -448,8 +453,7 @@ class CreateEventListItem extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, "repository_detail_page",
-                          arguments: RepoInfo("${event.actor?.login}",
-                              "${event.repo?.humanName}"));
+                          arguments: "${event.repo?.fullName}");
                     },
                     child: Text(
                       event.repo?.fullName ?? "Unknown",

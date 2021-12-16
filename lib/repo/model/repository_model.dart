@@ -1,6 +1,7 @@
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
+import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/repository_page.dart';
 import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
@@ -238,4 +239,33 @@ Future<BaseResult<List<IssueResultEntity>>> searchIssue(
     }
   }
   return postRequest("api/v5/search/issues", RequestType.get, params);
+}
+
+Future<BaseResult<RepositoryEntity>> getRepositoryInfo(String fullName) async {
+  final repo = await postRequest<RepositoryEntity>(
+      "api/v5/repos/$fullName", RequestType.get, {"access_token": globalToken});
+  final readme = await postRequest<RepoFileEntity>(
+      "api/v5/repos/$fullName/readme", RequestType.get);
+  if (repo.success && readme.success) {
+    repo.data!.readme = readme.data;
+    return repo;
+  }
+  if (!repo.success) {
+    return repo;
+  }
+  repo.state = readme.state;
+  repo.resultCode = readme.resultCode;
+  return repo;
+}
+
+Future<BaseResult<String>> toggleRepositoryStar(String fullname, bool star) {
+  final RequestType method = star ? RequestType.put : RequestType.delete;
+  return postRequest<String>(
+      "api/v5/user/starred/$fullname", method, {"access_token": globalToken});
+}
+
+Future<BaseResult<RepoFileEntity>> getRepoFile(
+    String fullname, String filename) {
+  return postRequest("api/v5/repos/$fullname/contents/$filename",
+      RequestType.get, {"access_token": globalToken});
 }

@@ -4,9 +4,9 @@ import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart'
 import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
 import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/search/issue_search_page.dart';
+import 'package:flutter_gitee/repo/search/repo_search_page.dart';
 import 'package:flutter_gitee/repo/search/user_search_page.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
-import 'package:flutter_gitee/repo/widget/repo_search_page.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 

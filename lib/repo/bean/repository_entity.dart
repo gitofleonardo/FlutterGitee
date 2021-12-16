@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_gitee/generated/json/base/json_field.dart';
 import 'package:flutter_gitee/generated/json/repository_entity.g.dart';
+import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
 
 @JsonSerializable()
 class RepositoryEntity {
@@ -117,6 +118,7 @@ class RepositoryEntity {
   dynamic? enterprise;
   @JSONField(name: "project_labels")
   List<dynamic>? projectLabels;
+  RepoFileEntity? readme;
 
   RepositoryEntity();
 

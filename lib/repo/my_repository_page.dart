@@ -283,7 +283,12 @@ class _RepositoryPageState extends State<MyRepositoryPage> {
               itemCount: _currentRepos.length,
               itemBuilder: (context, index) {
                 final item = _currentRepos[index];
-                return RepoListItem(repo: item, onTap: () {});
+                return RepoListItem(
+                    repo: item,
+                    onTap: () {
+                      Navigator.pushNamed(context, "repository_detail_page",
+                          arguments: "${_currentRepos[index].fullName}");
+                    });
               },
               separatorBuilder: (BuildContext context, int index) {
                 return Container(

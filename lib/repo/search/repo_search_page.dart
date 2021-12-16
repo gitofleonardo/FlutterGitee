@@ -105,7 +105,13 @@ class _RepoSearchPageState extends State<RepoSearchPage>
       child: ListView.builder(
         itemCount: _resultItems.length,
         itemBuilder: (context, index) {
-          return RepoListItem(repo: _resultItems[index], onTap: () {});
+          return RepoListItem(
+              repo: _resultItems[index],
+              onTap: () {
+                final item = _resultItems[index];
+                Navigator.pushNamed(context, "repository_detail_page",
+                    arguments: item.fullName);
+              });
         },
       ),
     );
