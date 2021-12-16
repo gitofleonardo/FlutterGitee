@@ -37,6 +37,9 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
   var _state = _LoadState.loading;
 
   void _refreshRepoInfo() {
+    setState(() {
+      _state = _LoadState.loading;
+    });
     getRepositoryInfo(widget.fullname).then((value) {
       setState(() {
         if (value.success) {

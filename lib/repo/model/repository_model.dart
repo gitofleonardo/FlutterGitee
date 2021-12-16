@@ -245,7 +245,9 @@ Future<BaseResult<RepositoryEntity>> getRepositoryInfo(String fullName) async {
   final repo = await postRequest<RepositoryEntity>(
       "api/v5/repos/$fullName", RequestType.get, {"access_token": globalToken});
   final readme = await postRequest<RepoFileEntity>(
-      "api/v5/repos/$fullName/readme", RequestType.get);
+      "api/v5/repos/$fullName/readme",
+      RequestType.get,
+      {"access_token": globalToken});
   if (repo.success && (readme.success || readme.resultCode == 404)) {
     repo.data!.readme = readme.data;
     return repo;
