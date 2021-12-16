@@ -266,6 +266,7 @@ class _RepositoryPageState extends State<MyRepositoryPage> {
         Container(
           constraints: const BoxConstraints(minWidth: double.infinity),
           padding: const EdgeInsets.symmetric(horizontal: 10),
+          color: Theme.of(context).backgroundColor,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: _createFilterChipSets(),
@@ -279,7 +280,7 @@ class _RepositoryPageState extends State<MyRepositoryPage> {
             enablePullDown: true,
             enablePullUp: _hasMore,
             header: const WaterDropHeader(),
-            child: ListView.separated(
+            child: ListView.builder(
               itemCount: _currentRepos.length,
               itemBuilder: (context, index) {
                 final item = _currentRepos[index];
@@ -289,12 +290,6 @@ class _RepositoryPageState extends State<MyRepositoryPage> {
                       Navigator.pushNamed(context, "repository_detail_page",
                           arguments: "${_currentRepos[index].fullName}");
                     });
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Container(
-                  constraints: const BoxConstraints(
-                      minWidth: double.infinity, minHeight: 5),
-                );
               },
             ),
           ),

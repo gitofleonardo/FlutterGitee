@@ -9,7 +9,6 @@ import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'bean/repo_file_entity.dart';
 
@@ -34,7 +33,6 @@ class RepositoryDetailPage extends StatefulWidget {
 }
 
 class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
-  final _refreshController = RefreshController();
   RepositoryEntity repo = RepositoryEntity();
   var _state = _LoadState.loading;
 
@@ -43,10 +41,8 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
       setState(() {
         if (value.success) {
           repo = value.data!;
-          _refreshController.refreshCompleted();
           _state = _LoadState.done;
         } else {
-          _refreshController.refreshFailed();
           _state = _LoadState.fail;
         }
       });
@@ -67,39 +63,32 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      _refreshController.requestRefresh();
-    });
+    _refreshRepoInfo();
   }
 
   @override
   Widget build(BuildContext context) {
     return GlobalThemeWidget(
       child: Scaffold(
-        body: SmartRefresher(
-          onRefresh: _refreshRepoInfo,
-          controller: _refreshController,
-          enablePullDown: true,
-          enablePullUp: false,
-          header: const WaterDropHeader(),
-          child: LayoutBuilder(builder: (context, constraints) {
-            switch (_state) {
-              case _LoadState.done:
-                return _createRepoInfoBody();
-              case _LoadState.loading:
-                return const SizedBox(width: 0, height: 0);
-              case _LoadState.fail:
-                return TapToRetryWidget(
-                    onTap: () {
-                      setState(() {
-                        _state = _LoadState.loading;
-                        _refreshController.requestRefresh();
-                      });
-                    },
-                    message: "Tap to retry");
-            }
-          }),
+        appBar: AppBar(
+          title: Text(widget.fullname, maxLines: 1),
         ),
+        body: Builder(builder: (context) {
+          switch (_state) {
+            case _LoadState.done:
+              return _createRepoInfoBody();
+            case _LoadState.loading:
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            case _LoadState.fail:
+              return TapToRetryWidget(
+                  onTap: () {
+                    _refreshRepoInfo();
+                  },
+                  message: "tap to retry");
+          }
+        }),
       ),
     );
   }
@@ -108,24 +97,10 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
     return NestedScrollView(
       headerSliverBuilder: (context, innerIsScrolled) {
         return [
-          SliverAppBar(
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(widget.fullname),
-            ),
-          ),
-          _createRepoHeader()
+          _createRepoHeader(),
         ];
       },
-      body: NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (overscroll) {
-          overscroll.disallowGlow();
-          return true;
-        },
-        child: SingleChildScrollView(
-          child: _createRepoReadmeBody(),
-        ),
-      ),
+      body: _createRepoReadmeBody(),
     );
   }
 
@@ -133,32 +108,45 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
     return Builder(builder: (context) {
       return DecoratedBox(
         decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: MarkdownBody(
-            onTapLink: (text, href, title) {},
-            selectable: true,
-            data: base64ToString(repo.readme?.content),
-            imageBuilder: (uri, title, alt) {
-              var url = uri.toString().trim();
-              if (!url.startsWith("http")) {
-                return FutureBuilder<BaseResult<RepoFileEntity>>(
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        final data = snapshot.data;
-                        if (data != null && data.success) {
-                          return Image.memory(const Base64Decoder()
-                              .convert(data.data?.content ?? ""));
+        child: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (over) {
+            over.disallowGlow();
+            return true;
+          },
+          child: Builder(builder: (context) {
+            final content = base64ToString(repo.readme?.content);
+            if (content.isEmpty) {
+              return const SizedBox(
+                width: 0,
+                height: 0,
+              );
+            }
+            return Markdown(
+              padding: const EdgeInsets.all(10),
+              onTapLink: (text, href, title) {},
+              selectable: true,
+              data: content,
+              imageBuilder: (uri, title, alt) {
+                var url = uri.toString().trim();
+                if (!url.startsWith("http")) {
+                  return FutureBuilder<BaseResult<RepoFileEntity>>(
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          final data = snapshot.data;
+                          if (data != null && data.success) {
+                            return Image.memory(const Base64Decoder()
+                                .convert(data.data?.content ?? ""));
+                          }
                         }
-                      }
-                      return const SizedBox(width: 0, height: 0);
-                    },
-                    future: getRepoFile("${repo.fullName}", url));
-              } else {
-                return Image.network(url);
-              }
-            },
-          ),
+                        return const SizedBox(width: 0, height: 0);
+                      },
+                      future: getRepoFile("${repo.fullName}", url));
+                } else {
+                  return Image.network(url);
+                }
+              },
+            );
+          }),
         ),
       );
     });
