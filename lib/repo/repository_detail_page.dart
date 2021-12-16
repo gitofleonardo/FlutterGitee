@@ -8,11 +8,20 @@ import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'bean/repo_file_entity.dart';
 
 enum _LoadState { done, loading, fail }
+
+class NoRippleScrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
+  }
+}
 
 class RepositoryDetailPage extends StatefulWidget {
   final String fullname;
@@ -105,99 +114,147 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
               title: Text(widget.fullname),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  GestureDetector(
-                      child: Flex(direction: Axis.horizontal, children: [
-                        ClipOval(
-                            child: Image.network(
-                          "${repo.owner?.avatarUrl}",
-                          width: 24,
-                          height: 24,
-                        )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Text(
-                          "${repo.owner?.login}",
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        Builder(
-                          builder: (context) {
-                            if (repo.stared ?? false) {
-                              return TextButton.icon(
-                                  onPressed: _toggleRepoStarState,
-                                  icon: const Icon(
-                                    Icons.star,
-                                    color: Colors.yellow,
-                                    size: 16,
-                                  ),
-                                  label: const Text(
-                                    "Starred",
-                                    style: TextStyle(fontSize: 12),
-                                  ));
-                            }
-                            return TextButton.icon(
-                                onPressed: _toggleRepoStarState,
-                                icon: const Icon(Icons.star_border, size: 12),
-                                label: const Text(
-                                  "Star",
-                                  style: TextStyle(fontSize: 12),
-                                ));
-                          },
-                        )
-                      ]),
-                      onTap: () {
-                        Navigator.pushNamed(context, "user_profile_page",
-                            arguments: "${repo.owner?.login}");
-                      }),
-                  const SizedBox(height: 10),
-                  Text("${repo.name}",
-                      style: const TextStyle(
-                          fontSize: 26, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 10),
-                  Builder(builder: (context) {
-                    final desc = repo.description ?? "";
-                    if (desc.isEmpty) {
-                      return const SizedBox(width: 0, height: 0);
-                    }
-                    return Text(desc);
-                  }),
-                ],
-              ),
-            ),
-          )
+          _createRepoHeader()
         ];
       },
-      body: Markdown(
-        onTapLink: (text, href, title) {},
-        selectable: true,
-        data: base64ToString(repo.readme?.content),
-        imageBuilder: (uri, title, alt) {
-          var url = uri.toString().trim();
-          if (!url.startsWith("http")) {
-            return FutureBuilder<BaseResult<RepoFileEntity>>(
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    final data = snapshot.data;
-                    if (data != null && data.success) {
-                      return Image.memory(const Base64Decoder()
-                          .convert(data.data?.content ?? ""));
-                    }
-                  }
-                  return const SizedBox(width: 0, height: 0);
-                },
-                future: getRepoFile("${repo.fullName}", url));
-          } else {
-            return Image.network(url);
-          }
-          debugPrint(url);
+      body: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (overscroll) {
+          overscroll.disallowGlow();
+          return true;
+        },
+        child: SingleChildScrollView(
+          child: _createRepoReadmeBody(),
+        ),
+      ),
+    );
+  }
+
+  Widget _createRepoReadmeBody() {
+    return Builder(builder: (context) {
+      return DecoratedBox(
+        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: MarkdownBody(
+            onTapLink: (text, href, title) {},
+            selectable: true,
+            data: base64ToString(repo.readme?.content),
+            imageBuilder: (uri, title, alt) {
+              var url = uri.toString().trim();
+              if (!url.startsWith("http")) {
+                return FutureBuilder<BaseResult<RepoFileEntity>>(
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        final data = snapshot.data;
+                        if (data != null && data.success) {
+                          return Image.memory(const Base64Decoder()
+                              .convert(data.data?.content ?? ""));
+                        }
+                      }
+                      return const SizedBox(width: 0, height: 0);
+                    },
+                    future: getRepoFile("${repo.fullName}", url));
+              } else {
+                return Image.network(url);
+              }
+            },
+          ),
+        ),
+      );
+    });
+  }
+
+  Widget _createRepoHeader() {
+    return SliverToBoxAdapter(
+      child: Builder(
+        builder: (context) {
+          return DecoratedBox(
+              decoration:
+                  BoxDecoration(color: Theme.of(context).backgroundColor),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    GestureDetector(
+                        child: Flex(direction: Axis.horizontal, children: [
+                          ClipOval(
+                              child: Image.network(
+                            "${repo.owner?.avatarUrl}",
+                            width: 24,
+                            height: 24,
+                          )),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Text(
+                            "${repo.owner?.login}",
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          Builder(
+                            builder: (context) {
+                              if (repo.stared ?? false) {
+                                return TextButton.icon(
+                                    onPressed: _toggleRepoStarState,
+                                    icon: const Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                      size: 16,
+                                    ),
+                                    label: const Text(
+                                      "Starred",
+                                      style: TextStyle(fontSize: 12),
+                                    ));
+                              }
+                              return TextButton.icon(
+                                  onPressed: _toggleRepoStarState,
+                                  icon: const Icon(Icons.star_border, size: 12),
+                                  label: const Text(
+                                    "Star",
+                                    style: TextStyle(fontSize: 12),
+                                  ));
+                            },
+                          )
+                        ]),
+                        onTap: () {
+                          Navigator.pushNamed(context, "user_profile_page",
+                              arguments: "${repo.owner?.login}");
+                        }),
+                    const SizedBox(height: 10),
+                    Text("${repo.name}",
+                        style: const TextStyle(
+                            fontSize: 26, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                    Builder(builder: (context) {
+                      final desc = repo.description ?? "";
+                      if (desc.isEmpty) {
+                        return const SizedBox(width: 0, height: 0);
+                      }
+                      return Text(desc);
+                    }),
+                    Row(
+                      children: [
+                        TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(Icons.star_border, size: 20),
+                            label: Text(
+                                "${formatGitCount(repo.stargazersCount?.toInt() ?? 0)} Stars")),
+                        const SizedBox(width: 10),
+                        TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(
+                              FontAwesomeIcons.codeBranch,
+                              size: 16,
+                            ),
+                            label: Text(
+                                "${formatGitCount(repo.forksCount?.toInt() ?? 0)} forks"))
+                      ],
+                    )
+                  ],
+                ),
+              ));
         },
       ),
     );

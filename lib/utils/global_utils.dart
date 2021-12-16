@@ -212,7 +212,7 @@ String formatDate(String dateString) {
   return DateFormat("yyyy-MM-dd hh:mm").format(date);
 }
 
-String formatStargazerCount(int? count) {
+String formatGitCount(int? count) {
   final cnt = count ?? 0;
   return cnt < 1000 ? "$cnt" : "${cnt / 1000}K";
 }

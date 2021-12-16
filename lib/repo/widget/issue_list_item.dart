@@ -11,31 +11,34 @@ class IssueListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Flex(
-              direction: Axis.horizontal,
-              crossAxisAlignment: CrossAxisAlignment.center,
+    return DecoratedBox(
+        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _createIssueByIssueState("${issue.state}"),
-                const SizedBox(
-                  width: 10,
+                Flex(
+                  direction: Axis.horizontal,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _createIssueByIssueState("${issue.state}"),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(child: Text("${issue.repository?.fullName}")),
+                    Text(formatDate(issue.updatedAt ?? ''))
+                  ],
                 ),
-                Expanded(child: Text("${issue.repository?.fullName}")),
-                Text(formatDate(issue.updatedAt ?? ''))
+                const SizedBox(height: 10),
+                Text("${issue.title}",
+                    style: const TextStyle(color: Colors.grey))
               ],
             ),
-            const SizedBox(height: 10),
-            Text("${issue.title}", style: const TextStyle(color: Colors.grey))
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 
   Widget _createIssueByIssueState(String state) {

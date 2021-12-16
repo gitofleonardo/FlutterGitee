@@ -127,6 +127,7 @@ class _SearchPageState extends BaseState<SearchPage>
               focusNode: _focusNode,
               controller: _searchController,
               maxLines: 1,
+              style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white)),
