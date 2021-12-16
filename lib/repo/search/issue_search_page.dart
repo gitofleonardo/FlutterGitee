@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gitee/repo/bean/repository_entity.dart';
+import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
+import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
-import 'package:flutter_gitee/repo/widget/repo_list_item.dart';
+import 'package:flutter_gitee/repo/widget/issue_list_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class RepoSearchPage extends StatefulWidget {
-  const RepoSearchPage({Key? key}) : super(key: key);
+class IssueSearchPage extends StatefulWidget {
+  const IssueSearchPage({Key? key}) : super(key: key);
 
   @override
-  _RepoSearchPageState createState() => _RepoSearchPageState();
+  _IssueSearchPageState createState() => _IssueSearchPageState();
 }
 
-class _RepoSearchPageState extends State<RepoSearchPage>
+class _IssueSearchPageState extends State<IssueSearchPage>
     with AutomaticKeepAliveClientMixin {
   var _searchText = "";
   final _refreshController = RefreshController();
-  final _resultItems = <RepositoryEntity>[];
+  final _resultItems = <IssueResultEntity>[];
   var _hasMore = false;
   final _pageSize = 20;
   var _currentPage = 1;
+  var _filter = IssueFilter();
 
   @override
   void didChangeDependencies() {
@@ -33,6 +35,16 @@ class _RepoSearchPageState extends State<RepoSearchPage>
         _refreshController.requestRefresh();
       });
     }
+    final filter =
+        InheritedSearchWidget.of(context)?.issueFilter ?? IssueFilter();
+    if (filter != _filter) {
+      setState(() {
+        _filter = filter;
+      });
+      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        _refreshController.requestRefresh();
+      });
+    }
   }
 
   void _refresh() {
@@ -40,7 +52,8 @@ class _RepoSearchPageState extends State<RepoSearchPage>
       _hasMore = false;
     });
     _currentPage = 1;
-    searchRepository(_searchText, _currentPage, _pageSize).then((value) {
+    searchIssue(_searchText, _currentPage, _pageSize, filter: _filter)
+        .then((value) {
       if (value.success) {
         ++_currentPage;
         _refreshController.refreshCompleted();
@@ -61,7 +74,8 @@ class _RepoSearchPageState extends State<RepoSearchPage>
   }
 
   void _loadMore() {
-    searchRepository(_searchText, _currentPage, _pageSize).then((value) {
+    searchIssue(_searchText, _currentPage, _pageSize, filter: _filter)
+        .then((value) {
       if (value.success) {
         ++_currentPage;
         _refreshController.loadComplete();
@@ -91,7 +105,7 @@ class _RepoSearchPageState extends State<RepoSearchPage>
       child: ListView.builder(
         itemCount: _resultItems.length,
         itemBuilder: (context, index) {
-          return RepoListItem(repo: _resultItems[index], onTap: () {});
+          return IssueListItem(issue: _resultItems[index], onTap: () {});
         },
       ),
     );

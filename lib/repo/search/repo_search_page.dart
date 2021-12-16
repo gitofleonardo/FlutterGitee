@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
+import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
-import 'package:flutter_gitee/repo/widget/user_list_item.dart';
-import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
+import 'package:flutter_gitee/repo/widget/repo_list_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class UserSearchPage extends StatefulWidget {
-  const UserSearchPage({Key? key}) : super(key: key);
+class RepoSearchPage extends StatefulWidget {
+  const RepoSearchPage({Key? key}) : super(key: key);
 
   @override
-  _UserSearchPageState createState() => _UserSearchPageState();
+  _RepoSearchPageState createState() => _RepoSearchPageState();
 }
 
-class _UserSearchPageState extends State<UserSearchPage>
+class _RepoSearchPageState extends State<RepoSearchPage>
     with AutomaticKeepAliveClientMixin {
   var _searchText = "";
   final _refreshController = RefreshController();
-  final _resultItems = <UserProfileEntity>[];
+  final _resultItems = <RepositoryEntity>[];
   var _hasMore = false;
   final _pageSize = 20;
   var _currentPage = 1;
+  var _filter = RepositoryFilter();
 
   @override
   void didChangeDependencies() {
@@ -33,6 +35,16 @@ class _UserSearchPageState extends State<UserSearchPage>
         _refreshController.requestRefresh();
       });
     }
+    final filter =
+        InheritedSearchWidget.of(context)?.repoFilter ?? RepositoryFilter();
+    if (filter != _filter) {
+      setState(() {
+        _filter = filter;
+      });
+      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        _refreshController.requestRefresh();
+      });
+    }
   }
 
   void _refresh() {
@@ -40,7 +52,8 @@ class _UserSearchPageState extends State<UserSearchPage>
       _hasMore = false;
     });
     _currentPage = 1;
-    searchUser(_searchText, _currentPage, _pageSize).then((value) {
+    searchRepository(_searchText, _currentPage, _pageSize, filter: _filter)
+        .then((value) {
       if (value.success) {
         ++_currentPage;
         _refreshController.refreshCompleted();
@@ -61,7 +74,8 @@ class _UserSearchPageState extends State<UserSearchPage>
   }
 
   void _loadMore() {
-    searchUser(_searchText, _currentPage, _pageSize).then((value) {
+    searchRepository(_searchText, _currentPage, _pageSize, filter: _filter)
+        .then((value) {
       if (value.success) {
         ++_currentPage;
         _refreshController.loadComplete();
@@ -91,11 +105,12 @@ class _UserSearchPageState extends State<UserSearchPage>
       child: ListView.builder(
         itemCount: _resultItems.length,
         itemBuilder: (context, index) {
-          return UserListItem(
-              user: _resultItems[index],
+          return RepoListItem(
+              repo: _resultItems[index],
               onTap: () {
-                Navigator.pushNamed(context, "user_profile_page",
-                    arguments: _resultItems[index].login);
+                final item = _resultItems[index];
+                Navigator.pushNamed(context, "repository_detail_page",
+                    arguments: item.fullName);
               });
         },
       ),

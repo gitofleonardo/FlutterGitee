@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
+import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
-import 'package:flutter_gitee/repo/widget/issue_list_item.dart';
+import 'package:flutter_gitee/repo/widget/user_list_item.dart';
+import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class IssueSearchPage extends StatefulWidget {
-  const IssueSearchPage({Key? key}) : super(key: key);
+class UserSearchPage extends StatefulWidget {
+  const UserSearchPage({Key? key}) : super(key: key);
 
   @override
-  _IssueSearchPageState createState() => _IssueSearchPageState();
+  _UserSearchPageState createState() => _UserSearchPageState();
 }
 
-class _IssueSearchPageState extends State<IssueSearchPage>
+class _UserSearchPageState extends State<UserSearchPage>
     with AutomaticKeepAliveClientMixin {
   var _searchText = "";
   final _refreshController = RefreshController();
-  final _resultItems = <IssueResultEntity>[];
+  final _resultItems = <UserProfileEntity>[];
   var _hasMore = false;
   final _pageSize = 20;
   var _currentPage = 1;
+  var _filter = UserFilter();
 
   @override
   void didChangeDependencies() {
@@ -33,6 +35,16 @@ class _IssueSearchPageState extends State<IssueSearchPage>
         _refreshController.requestRefresh();
       });
     }
+    final filter =
+        InheritedSearchWidget.of(context)?.userFilter ?? UserFilter();
+    if (filter != _filter) {
+      setState(() {
+        _filter = filter;
+      });
+      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        _refreshController.requestRefresh();
+      });
+    }
   }
 
   void _refresh() {
@@ -40,7 +52,8 @@ class _IssueSearchPageState extends State<IssueSearchPage>
       _hasMore = false;
     });
     _currentPage = 1;
-    searchIssue(_searchText, _currentPage, _pageSize).then((value) {
+    searchUser(_searchText, _currentPage, _pageSize, filter: _filter)
+        .then((value) {
       if (value.success) {
         ++_currentPage;
         _refreshController.refreshCompleted();
@@ -61,7 +74,8 @@ class _IssueSearchPageState extends State<IssueSearchPage>
   }
 
   void _loadMore() {
-    searchIssue(_searchText, _currentPage, _pageSize).then((value) {
+    searchUser(_searchText, _currentPage, _pageSize, filter: _filter)
+        .then((value) {
       if (value.success) {
         ++_currentPage;
         _refreshController.loadComplete();
@@ -91,7 +105,12 @@ class _IssueSearchPageState extends State<IssueSearchPage>
       child: ListView.builder(
         itemCount: _resultItems.length,
         itemBuilder: (context, index) {
-          return IssueListItem(issue: _resultItems[index], onTap: () {});
+          return UserListItem(
+              user: _resultItems[index],
+              onTap: () {
+                Navigator.pushNamed(context, "user_profile_page",
+                    arguments: _resultItems[index].login);
+              });
         },
       ),
     );

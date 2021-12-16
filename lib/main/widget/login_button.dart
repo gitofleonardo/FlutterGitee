@@ -10,7 +10,7 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(5),
           boxShadow: const [
             BoxShadow(color: Colors.grey, offset: Offset(2, 2), blurRadius: 5)

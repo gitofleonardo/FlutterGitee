@@ -66,7 +66,7 @@ class _SplashState extends State<Splash> {
                   height: 100,
                   child: SvgPicture.asset(
                     "assets/images/git.svg",
-                    color: Theme.of(ctx).primaryColor,
+                    color: Theme.of(ctx).colorScheme.primary,
                   ),
                 ),
                 Positioned(
@@ -105,7 +105,7 @@ class _SplashState extends State<Splash> {
                   child: Text(
                     "Opensource Gitee Client",
                     style: TextStyle(
-                        fontSize: 12, color: Theme.of(ctx).primaryColor),
+                        fontSize: 12, color: Theme.of(ctx).colorScheme.primary),
                   ),
                 )
               ],

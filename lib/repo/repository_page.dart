@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
+import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/repo_list_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'attrs/sort_attrs.dart';
+import 'attrs/filter_attrs.dart';
 
 enum RepositoryType { star, watch }
 
@@ -126,9 +127,8 @@ class _RepositoryPageState extends State<RepositoryPage> {
 
   Widget _createSortBottomSheet() {
     final children = _sortByItems.map((e) {
-      return RadioListTile(
-        contentPadding: const EdgeInsets.all(0),
-        title: Text(e.title),
+      return MyRadioListTile(
+        myTitle: Text(e.title),
         value: e.value,
         groupValue: _sortBy,
         onChanged: (value) {
@@ -140,11 +140,9 @@ class _RepositoryPageState extends State<RepositoryPage> {
         },
       );
     });
-    return GeneralBottomSheetHeader(
-        title: const Text(
-          "Sort by",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
+    return HeaderContentBottomSheet(
+        title: "Sort by",
+        contentScrollable: true,
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: children.toList(),
@@ -153,9 +151,8 @@ class _RepositoryPageState extends State<RepositoryPage> {
 
   Widget _createSortDirectionBottomSheet() {
     final items = _sortDirectionItems.map((e) {
-      return RadioListTile(
-        contentPadding: const EdgeInsets.all(0),
-        title: Text(e.title),
+      return MyRadioListTile(
+        myTitle: Text(e.title),
         value: e.value,
         groupValue: _sortDirection,
         onChanged: (value) {
@@ -167,11 +164,9 @@ class _RepositoryPageState extends State<RepositoryPage> {
         },
       );
     }).toList();
-    return GeneralBottomSheetHeader(
-        title: const Text(
-          "Sort direction",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
+    return HeaderContentBottomSheet(
+        title: "Sort direction",
+        contentScrollable: true,
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: items,
@@ -221,6 +216,7 @@ class _RepositoryPageState extends State<RepositoryPage> {
       direction: Axis.vertical,
       children: [
         Container(
+          color: Theme.of(context).backgroundColor,
           constraints: const BoxConstraints(minWidth: double.infinity),
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: SingleChildScrollView(
@@ -236,17 +232,16 @@ class _RepositoryPageState extends State<RepositoryPage> {
             enablePullDown: true,
             enablePullUp: _hasMore,
             header: const WaterDropHeader(),
-            child: ListView.separated(
+            child: ListView.builder(
               itemCount: _currentRepos.length,
               itemBuilder: (context, index) {
                 final item = _currentRepos[index];
-                return RepoListItem(repo: item, onTap: () {});
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Container(
-                  constraints: const BoxConstraints(
-                      minWidth: double.infinity, minHeight: 5),
-                );
+                return RepoListItem(
+                    repo: item,
+                    onTap: () {
+                      Navigator.pushNamed(context, "repository_detail_page",
+                          arguments: "${_currentRepos[index].fullName}");
+                    });
               },
             ),
           ),

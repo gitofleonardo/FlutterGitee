@@ -1,4 +1,5 @@
 import 'package:flutter_gitee/generated/json/base/json_convert_content.dart';
+import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 
 RepositoryEntity $RepositoryEntityFromJson(Map<String, dynamic> json) {
@@ -311,6 +312,11 @@ RepositoryEntity $RepositoryEntityFromJson(Map<String, dynamic> json) {
   if (projectLabels != null) {
     repositoryEntity.projectLabels = projectLabels;
   }
+  final RepoFileEntity? readme =
+      jsonConvert.convert<RepoFileEntity>(json['readme']);
+  if (readme != null) {
+    repositoryEntity.readme = readme;
+  }
   return repositoryEntity;
 }
 
@@ -387,6 +393,7 @@ Map<String, dynamic> $RepositoryEntityToJson(RepositoryEntity entity) {
   data['programs'] = entity.programs;
   data['enterprise'] = entity.enterprise;
   data['project_labels'] = entity.projectLabels;
+  data['readme'] = entity.readme?.toJson();
   return data;
 }
 
