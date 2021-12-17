@@ -1,8 +1,10 @@
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
+import 'package:flutter_gitee/repo/bean/branch_entity.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
+import 'package:flutter_gitee/repo/bean/repository_tree_entity.dart';
 import 'package:flutter_gitee/repo/repository_page.dart';
 import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
 import 'package:flutter_gitee/utils/global_context.dart';
@@ -270,4 +272,15 @@ Future<BaseResult<RepoFileEntity>> getRepoFile(
     String fullname, String filename) {
   return postRequest("api/v5/repos/$fullname/contents/$filename",
       RequestType.get, {"access_token": globalToken});
+}
+
+Future<BaseResult<List<BranchEntity>>> getBranches(String fullname) {
+  return postRequest("api/v5/repos/$fullname/branches", RequestType.get,
+      {"access_token": globalToken});
+}
+
+Future<BaseResult<RepositoryTreeEntity>> getRepositoryTree(
+    String fullname, String sha) {
+  return postRequest("api/v5/repos/$fullname/git/trees/$sha", RequestType.get,
+      {"access_token": globalToken});
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/ui/view_picture_page.dart';
 import 'package:flutter_gitee/main/start/start_page.dart';
 import 'package:flutter_gitee/repo/repository_detail_page.dart';
+import 'package:flutter_gitee/repo/repository_tree_viewer.dart';
 import 'package:flutter_gitee/repo/search/search_page.dart';
 import 'package:flutter_gitee/user/follower_page.dart';
 import 'package:flutter_gitee/user/following_page.dart';
@@ -30,6 +31,8 @@ final routes = {
   "search_page": (ctx) => const SearchPage(),
   "repository_detail_page": (ctx) => RepositoryDetailPage(
       fullname: ModalRoute.of(ctx)!.settings.arguments.toString()),
+  "repository_tree_page": (ctx) => RepositoryTreeViewer(
+      treeInfo: ModalRoute.of(ctx)!.settings.arguments as TreeInfo)
 };
 
 class GlobalTheme {

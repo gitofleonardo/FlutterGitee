@@ -3,14 +3,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
+import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
+import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
+import 'package:flutter_gitee/repo/bean/branch_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
+import 'package:flutter_gitee/repo/repository_tree_viewer.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'bean/repo_file_entity.dart';
+import 'widget/icon_text_button.dart';
 
 enum _LoadState { done, loading, fail }
 
@@ -61,6 +66,10 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
         });
       }
     });
+  }
+
+  Future<BaseResult<List<BranchEntity>>> _getBranches() {
+    return getBranches("${repo.fullName}");
   }
 
   @override
@@ -125,6 +134,7 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
               );
             }
             return Markdown(
+              shrinkWrap: true,
               padding: const EdgeInsets.all(10),
               onTapLink: (text, href, title) {},
               selectable: true,
@@ -168,86 +178,237 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    GestureDetector(
-                        child: Flex(direction: Axis.horizontal, children: [
-                          ClipOval(
-                              child: Image.network(
-                            "${repo.owner?.avatarUrl}",
-                            width: 24,
-                            height: 24,
-                          )),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                              child: Text(
-                            "${repo.owner?.login}",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                          Builder(
-                            builder: (context) {
-                              if (repo.stared ?? false) {
-                                return TextButton.icon(
-                                    onPressed: _toggleRepoStarState,
-                                    icon: const Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                      size: 16,
-                                    ),
-                                    label: const Text(
-                                      "Starred",
-                                      style: TextStyle(fontSize: 12),
-                                    ));
-                              }
-                              return TextButton.icon(
-                                  onPressed: _toggleRepoStarState,
-                                  icon: const Icon(Icons.star_border, size: 12),
-                                  label: const Text(
-                                    "Star",
-                                    style: TextStyle(fontSize: 12),
-                                  ));
-                            },
-                          )
-                        ]),
-                        onTap: () {
-                          Navigator.pushNamed(context, "user_profile_page",
-                              arguments: "${repo.owner?.login}");
-                        }),
-                    const SizedBox(height: 10),
-                    Text("${repo.name}",
-                        style: const TextStyle(
-                            fontSize: 26, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 10),
-                    Builder(builder: (context) {
-                      final desc = repo.description ?? "";
-                      if (desc.isEmpty) {
-                        return const SizedBox(width: 0, height: 0);
-                      }
-                      return Text(desc);
-                    }),
-                    Row(
-                      children: [
-                        TextButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(Icons.star_border, size: 20),
-                            label: Text(
-                                "${formatGitCount(repo.stargazersCount?.toInt() ?? 0)} Stars")),
-                        const SizedBox(width: 10),
-                        TextButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(
-                              FontAwesomeIcons.codeBranch,
-                              size: 16,
-                            ),
-                            label: Text(
-                                "${formatGitCount(repo.forksCount?.toInt() ?? 0)} forks"))
-                      ],
-                    )
+                    _createSimpleDescriptionHeader(),
+                    _createAttrViewPanel(),
                   ],
                 ),
               ));
         },
       ),
     );
+  }
+
+  Widget _createSimpleDescriptionHeader() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+            child: Flex(direction: Axis.horizontal, children: [
+              ClipOval(
+                  child: Image.network(
+                "${repo.owner?.avatarUrl}",
+                width: 24,
+                height: 24,
+              )),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Text(
+                "${repo.owner?.login}",
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              )),
+              Builder(
+                builder: (context) {
+                  if (repo.stared ?? false) {
+                    return TextButton.icon(
+                        onPressed: _toggleRepoStarState,
+                        icon: const Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                          size: 16,
+                        ),
+                        label: const Text(
+                          "Starred",
+                          style: TextStyle(fontSize: 12),
+                        ));
+                  }
+                  return TextButton.icon(
+                      onPressed: _toggleRepoStarState,
+                      icon: const Icon(Icons.star_border, size: 12),
+                      label: const Text(
+                        "Star",
+                        style: TextStyle(fontSize: 12),
+                      ));
+                },
+              )
+            ]),
+            onTap: () {
+              Navigator.pushNamed(context, "user_profile_page",
+                  arguments: "${repo.owner?.login}");
+            }),
+        const SizedBox(height: 10),
+        Flex(direction: Axis.horizontal, children: [
+          Expanded(
+              child: Text("${repo.name}",
+                  style: const TextStyle(
+                      fontSize: 26, fontWeight: FontWeight.bold))),
+          Builder(builder: (context) {
+            return TextButton.icon(
+                onPressed: () {
+                  _showBranchSelector(context);
+                },
+                icon: const Icon(
+                  FontAwesomeIcons.codeBranch,
+                  size: 16,
+                ),
+                label: Text("${repo.defaultBranch}"));
+          })
+        ]),
+        const SizedBox(height: 10),
+        Builder(builder: (context) {
+          final desc = repo.description ?? "";
+          if (desc.isEmpty) {
+            return const SizedBox(width: 0, height: 0);
+          }
+          return Text(desc);
+        }),
+        Row(
+          children: [
+            TextButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.star_border, size: 20),
+                label: Text(
+                    "${formatGitCount(repo.stargazersCount?.toInt() ?? 0)} Stars")),
+            const SizedBox(width: 10),
+            TextButton.icon(
+                onPressed: () {},
+                icon: const Icon(
+                  FontAwesomeIcons.codeBranch,
+                  size: 16,
+                ),
+                label: Text(
+                    "${formatGitCount(repo.forksCount?.toInt() ?? 0)} forks"))
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _createAttrViewPanel() {
+    return Column(
+      children: [
+        IconTextButton(
+          leading: const Icon(
+            FontAwesomeIcons.fileCode,
+            color: Colors.white,
+            size: 18,
+          ),
+          leadingColor: Colors.black54,
+          text: const Text("Codes"),
+          onTap: () {
+            Navigator.pushNamed(context, "repository_tree_page",
+                arguments: TreeInfo(
+                    fullname: "${repo.fullName}",
+                    branch: "${repo.defaultBranch}"));
+          },
+        ),
+        IconTextButton(
+          leading: const Icon(
+            FontAwesomeIcons.pushed,
+            color: Colors.white,
+            size: 18,
+          ),
+          leadingColor: Colors.black54,
+          text: const Text("Commits"),
+          onTap: () {},
+        ),
+        IconTextButton(
+          leading: const Icon(
+            FontAwesomeIcons.codeBranch,
+            color: Colors.white,
+            size: 18,
+          ),
+          leadingColor: Colors.deepOrange,
+          text: const Text("Pull Requests"),
+          onTap: () {},
+        ),
+        IconTextButton(
+          leading: const Icon(
+            Icons.person,
+            color: Colors.white,
+            size: 18,
+          ),
+          leadingColor: Colors.deepPurple,
+          text: const Text("Contributors"),
+          onTap: () {},
+        ),
+        IconTextButton(
+          leadingColor: Colors.green,
+          leading: const Icon(FontAwesomeIcons.dotCircle,
+              color: Colors.white, size: 18),
+          text: const Text("Issues"),
+          onTap: () {},
+          trailing: Text("${repo.openIssuesCount?.toInt() ?? 0}"),
+        ),
+        IconTextButton(
+          leading: const Icon(
+            Icons.person,
+            color: Colors.white,
+            size: 18,
+          ),
+          leadingColor: Colors.teal,
+          trailing: Text("${repo.watchersCount?.toInt() ?? 0}"),
+          text: const Text("Watchers"),
+          onTap: () {},
+        ),
+        IconTextButton(
+          leading: const Icon(
+            FontAwesomeIcons.pencilAlt,
+            color: Colors.white,
+            size: 18,
+          ),
+          leadingColor: Colors.redAccent,
+          text: const Text("License"),
+          trailing: Text(repo.license ?? ''),
+          onTap: () {},
+        ),
+      ],
+    );
+  }
+
+  void _showBranchSelector(BuildContext context) {
+    final tapToRetry = TapToRetryWidget(
+        onTap: () {
+          setState(() {});
+        },
+        message: "Tap To Retry");
+    showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+        context: context,
+        builder: (context) {
+          return HeaderContentBottomSheet(
+              contentScrollable: true,
+              title: "Select Branch",
+              body: FutureBuilder<BaseResult<List<BranchEntity>>>(
+                future: _getBranches(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    final data = snapshot.data;
+                    final branches = data?.data ?? [];
+                    if (data == null || !data.success || branches.isEmpty) {
+                      return tapToRetry;
+                    }
+                    return Column(
+                      children: branches.map((e) {
+                        return MyRadioListTile(
+                            myTitle: Text("${e.name}"),
+                            value: "${e.name}",
+                            groupValue: "${repo.defaultBranch}",
+                            onChanged: (value) {
+                              Navigator.pop(context);
+                              setState(() {
+                                repo.defaultBranch = e.name;
+                              });
+                            });
+                      }).toList(),
+                    );
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ));
+        });
   }
 }
