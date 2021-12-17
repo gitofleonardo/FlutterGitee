@@ -29,10 +29,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  shared_preferences: 2.0.10
+  shared_preferences: ^2.0.11
   flutter_svg: 1.0.0
   fullscreen: 1.0.3
-  dio: ^4.0.5-beta1
+  dio: ^4.0.4
   flutter_displaymode: ^0.3.2
   flutter_inappwebview: ^5.3.2
   pull_to_refresh: ^2.0.0
@@ -40,8 +40,11 @@ dependencies:
   fluttertoast: ^8.0.8
   photo_view: ^0.13.0
   shimmer: ^2.0.0
-  flutter_markdown: ^0.6.8
+  flutter_markdown: ^0.6.9
   font_awesome_flutter: ^9.2.0
+  flutter_json_viewer: ^1.0.1
+  flutter_highlight: ^0.7.0
+  highlight: ^0.7.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

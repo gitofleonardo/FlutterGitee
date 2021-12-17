@@ -3,6 +3,7 @@ import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/bean/branch_entity.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
+import 'package:flutter_gitee/repo/bean/repository_blob_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_tree_entity.dart';
 import 'package:flutter_gitee/repo/repository_page.dart';
@@ -271,6 +272,12 @@ Future<BaseResult<String>> toggleRepositoryStar(String fullname, bool star) {
 Future<BaseResult<RepoFileEntity>> getRepoFile(
     String fullname, String filename) {
   return postRequest("api/v5/repos/$fullname/contents/$filename",
+      RequestType.get, {"access_token": globalToken});
+}
+
+Future<BaseResult<RepositoryBlobEntity>> getRepoBlobFile(
+    String fullname, String filename) {
+  return postRequest("api/v5/repos/$fullname/git/blobs/$filename",
       RequestType.get, {"access_token": globalToken});
 }
 

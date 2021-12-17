@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/repo/bean/repository_tree_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
+import 'package:flutter_gitee/utils/repository_file_open_handler.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -16,8 +17,6 @@ class _Pair<T, E> {
   final E second;
   _Pair(this.first, this.second);
 }
-
-typedef SortFunction = int Function(RepositoryTreeTree, RepositoryTreeTree);
 
 class RepositoryTreeViewer extends StatefulWidget {
   final TreeInfo treeInfo;
@@ -36,7 +35,8 @@ class _RepositoryTreeViewerState extends State<RepositoryTreeViewer> {
   RepositoryTreeEntity? _currentTree;
   final _currentTreeNodes = <RepositoryTreeTree>[];
   final _historyStack = <_Pair<String, RepositoryTreeEntity>>[];
-  SortFunction _comparator = (first, second) {
+
+  int _fileTypeComparator(RepositoryTreeTree first, RepositoryTreeTree second) {
     if (first.type == second.type) {
       return first.path!.compareTo(second.type!);
     }
@@ -44,7 +44,7 @@ class _RepositoryTreeViewerState extends State<RepositoryTreeViewer> {
       return -1;
     }
     return 1;
-  };
+  }
 
   @override
   void initState() {
@@ -85,7 +85,7 @@ class _RepositoryTreeViewerState extends State<RepositoryTreeViewer> {
         _refreshController.refreshCompleted();
         _currentTree = value.data;
         final items = value.data?.tree ?? [];
-        items.sort(_comparator);
+        items.sort(_fileTypeComparator);
         setState(() {
           _currentTreeNodes.addAll(items);
         });
@@ -101,7 +101,7 @@ class _RepositoryTreeViewerState extends State<RepositoryTreeViewer> {
         _refreshController.refreshCompleted();
         _currentTree = value.data;
         final items = value.data?.tree ?? [];
-        items.sort(_comparator);
+        items.sort(_fileTypeComparator);
         setState(() {
           _currentTreeNodes.clear();
           _currentTreeNodes.addAll(items);
@@ -130,14 +130,24 @@ class _RepositoryTreeViewerState extends State<RepositoryTreeViewer> {
                   itemBuilder: (context, index) {
                     final item = _currentTreeNodes[index];
                     final isDir = item.type == "tree";
-                    return ListTile(
-                      leading: _createFileIcon(isDir),
-                      title: Text("${item.path}"),
-                      onTap: () {
-                        if (isDir) {
-                          _nextTree("${item.sha}", "${item.path}");
-                        }
-                      },
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).backgroundColor),
+                      child: ListTile(
+                        leading: _createFileIcon(isDir),
+                        title: Text("${item.path}"),
+                        onTap: () {
+                          if (isDir) {
+                            _nextTree("${item.sha}", "${item.path}");
+                          } else {
+                            RepositoryFileOpenHandler.getInstance().open(
+                                context,
+                                widget.treeInfo.fullname,
+                                "${item.path}",
+                                "${item.sha}");
+                          }
+                        },
+                      ),
                     );
                   },
                   itemCount: _currentTreeNodes.length),

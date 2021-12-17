@@ -6,6 +6,7 @@
 import 'package:flutter_gitee/repo/bean/branch_entity.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
+import 'package:flutter_gitee/repo/bean/repository_blob_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_tree_entity.dart';
 import 'package:flutter_gitee/user/bean/result/success/event_result_entity.dart';
@@ -122,6 +123,9 @@ class JsonConvert {
     }
     if (type == (ReadmeLinks).toString()) {
       return ReadmeLinks.fromJson(json) as M;
+    }
+    if (type == (RepositoryBlobEntity).toString()) {
+      return RepositoryBlobEntity.fromJson(json) as M;
     }
     if (type == (RepositoryEntity).toString()) {
       return RepositoryEntity.fromJson(json) as M;
@@ -256,6 +260,11 @@ class JsonConvert {
     if (<ReadmeLinks>[] is M) {
       return data.map<ReadmeLinks>((e) => ReadmeLinks.fromJson(e)).toList()
           as M;
+    }
+    if (<RepositoryBlobEntity>[] is M) {
+      return data
+          .map<RepositoryBlobEntity>((e) => RepositoryBlobEntity.fromJson(e))
+          .toList() as M;
     }
     if (<RepositoryEntity>[] is M) {
       return data
