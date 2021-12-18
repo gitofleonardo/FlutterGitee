@@ -119,6 +119,13 @@ class _RepositoryTreeViewerState extends State<RepositoryTreeViewer> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(_title),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.close))
+              ],
             ),
             body: SmartRefresher(
               onRefresh: _refreshCurrentTree,
@@ -143,8 +150,7 @@ class _RepositoryTreeViewerState extends State<RepositoryTreeViewer> {
                             RepositoryFileOpenHandler.getInstance().open(
                                 context,
                                 widget.treeInfo.fullname,
-                                "${item.path}",
-                                "${item.sha}");
+                                RepositoryBlob.fromTree(item));
                           }
                         },
                       ),

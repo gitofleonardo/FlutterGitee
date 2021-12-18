@@ -50,6 +50,10 @@ class GlobalThemeWidgetState extends State<GlobalThemeWidget> {
     });
   }
 
+  bool isDarkTheme() {
+    return _currentTheme == darkTheme;
+  }
+
   void navigateToLogin() {
     Navigator.popUntil(context, (route) => true);
     Navigator.pushNamed(context, "login_page");

@@ -2,16 +2,38 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/ui/network_markdown_reader_page.dart';
+import 'package:flutter_gitee/main/base/ui/network_plain_text_reader_page.dart';
 import 'package:flutter_gitee/main/base/ui/network_source_code_reader_page.dart';
+import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
+import 'package:flutter_gitee/main/base/widget/vertical_text_icon_button.dart';
+import 'package:flutter_gitee/repo/bean/repository_tree_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum _FileType {
   raw,
   markdown,
   sourceCode,
   plainText,
-  json,
+}
+
+class RepositoryBlob {
+  late String path;
+  late String mode;
+  late String sha;
+  late int size;
+  late String url;
+
+  RepositoryBlob.fromTree(RepositoryTreeTree tree) {
+    path = tree.path!;
+    mode = tree.mode!;
+    sha = tree.sha!;
+    size = tree.size!;
+    url = tree.url!;
+  }
 }
 
 class RepositoryFileOpenHandler {
@@ -22,29 +44,68 @@ class RepositoryFileOpenHandler {
 
   RepositoryFileOpenHandler._internal();
 
-  void open(
-      BuildContext context, String fullName, String filename, String sha) {
-    final lastIndex = filename.lastIndexOf(".");
-    final suffix = lastIndex == filename.length - 1
+  void open(BuildContext context, String fullName, RepositoryBlob blob) {
+    final lastIndex = blob.path.lastIndexOf(".");
+    final suffix = lastIndex == blob.path.length - 1
         ? ""
-        : filename.substring(lastIndex + 1);
+        : blob.path.substring(lastIndex + 1);
     switch (parseFileType(suffix)) {
       case _FileType.raw:
+        _openRawFile(context, fullName, blob);
         break;
       case _FileType.markdown:
-        _openWithMarkdownReader(context, fullName, filename, sha);
+        _openWithMarkdownReader(context, fullName, blob.path, blob.sha);
         break;
       case _FileType.sourceCode:
-        _openWithSourceCodeReader(context, fullName, filename, sha);
+        _openWithSourceCodeReader(
+            context, fullName, blob.path, blob.sha, suffix);
         break;
       case _FileType.plainText:
-        _openWithPlainTextReader(context, fullName, filename, sha);
+        _openWithPlainTextReader(context, fullName, blob.path, blob.sha);
         break;
     }
   }
 
-  void _openWithSourceCodeReader(
-      BuildContext context, String fullName, String filename, String sha) {
+  void _openRawFile(
+      BuildContext context, String fullName, RepositoryBlob blob) {
+    const delegate =
+        SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4);
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return HeaderContentBottomSheet(
+              title: "Open",
+              body: GridView(
+                gridDelegate: delegate,
+                children: [
+                  VerticalTextIconButton(
+                      onTap: () {
+                        Navigator.pop(context);
+                        _openWithPlainTextReader(
+                            context, fullName, blob.path, blob.sha);
+                      },
+                      icon: const Icon(FontAwesomeIcons.file),
+                      text: const Text("Text")),
+                  VerticalTextIconButton(
+                      onTap: () async {
+                        Navigator.pop(context);
+                        final url = blob.url;
+                        if (await canLaunch(url)) {
+                          launch(url);
+                        } else {
+                          Fluttertoast.showToast(msg: "Cannot open this file");
+                        }
+                      },
+                      icon: const Icon(Icons.open_in_browser),
+                      text: const Text("In Browser"))
+                ],
+              ),
+              contentScrollable: false);
+        });
+  }
+
+  void _openWithSourceCodeReader(BuildContext context, String fullName,
+      String filename, String sha, String suffix) {
     Future<BaseResult<String>> markdownFuture() async {
       final res = await getRepoBlobFile(fullName, sha);
       final copyResult = BaseResult<String>();
@@ -57,7 +118,10 @@ class RepositoryFileOpenHandler {
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return NetworkSourceCodeReaderPage(
-          title: filename, loader: markdownFuture);
+        title: filename,
+        loader: markdownFuture,
+        language: parseLanguage(suffix),
+      );
     }));
   }
 
@@ -74,7 +138,11 @@ class RepositoryFileOpenHandler {
     }
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return NetworkMarkdownReaderPage(title: filename, loader: markdownFuture);
+      return NetworkMarkdownReaderPage(
+        title: filename,
+        loader: markdownFuture,
+        fullName: fullName,
+      );
     }));
   }
 
@@ -91,8 +159,82 @@ class RepositoryFileOpenHandler {
     }
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return NetworkMarkdownReaderPage(title: filename, loader: textFuture);
+      return NetworkPlainTextReaderPage(title: filename, loader: textFuture);
     }));
+  }
+
+  String parseLanguage(String suffix) {
+    switch (suffix) {
+      case "applescript":
+      case "bat":
+      case "c":
+      case "dart":
+      case "java":
+      case "lua":
+      case "groovy":
+      case "json":
+      case "php":
+      case "rust":
+      case "perl":
+      case "swift":
+      case "scala":
+      case "r":
+      case "xml":
+      case "yaml":
+      case "cs":
+      case "cpp":
+      case "fs":
+      case "go":
+      case "f":
+      case "sql":
+      case "css":
+      case "es6":
+      case "html":
+      case "jl":
+      case "jsp":
+      case "lisp":
+        return suffix;
+      case "sh":
+        return "bash";
+      case "asp":
+      case "aspx":
+        return "cs";
+      case "cc":
+      case "h":
+        return "c";
+      case "clj":
+        return "clojure";
+      case "e":
+      case "el":
+      case "erl":
+        return "erlang";
+      case "hs":
+        return "haskell";
+      case "js":
+        return "javascript";
+      case "kt":
+        return "kotlin";
+      case "m":
+      case "mm":
+        return "objectivec";
+      case "pas":
+        return "delphi";
+      case "pl":
+        return "perl";
+      case "py":
+        return "python";
+      case "rb":
+        return "ruby";
+      case "ts":
+        return "typescript";
+      case "v":
+      case "vb":
+      case "vba":
+        return "vbnet";
+      case "vbs":
+        return "vbscript";
+    }
+    return suffix;
   }
 
   _FileType parseFileType(String suffix) {
@@ -152,6 +294,7 @@ class RepositoryFileOpenHandler {
       case "vbs":
       case "xml":
       case "yaml":
+      case "h":
         return _FileType.sourceCode;
       case "":
         return _FileType.raw;

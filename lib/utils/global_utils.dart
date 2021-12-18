@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/generated/json/base/json_convert_content.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
+import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
+import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/user/bean/result/success/login_success_result_entity.dart';
 import 'package:flutter_gitee/utils/global_constant.dart';
 import 'package:flutter_gitee/utils/global_context.dart';
@@ -223,4 +225,25 @@ String base64ToString(String? src) {
   }
   Codec<String, String> codec = utf8.fuse(base64);
   return codec.decode(src);
+}
+
+Widget repositoryMarkdownImageBuilder(
+    Uri uri, String fullName, String title, String alt) {
+  var url = uri.toString().trim();
+  if (!url.startsWith("http")) {
+    return FutureBuilder<BaseResult<RepoFileEntity>>(
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            final data = snapshot.data;
+            if (data != null && data.success) {
+              return Image.memory(
+                  const Base64Decoder().convert(data.data?.content ?? ""));
+            }
+          }
+          return const SizedBox(width: 0, height: 0);
+        },
+        future: getRepoFile(fullName, url));
+  } else {
+    return Image.network(url);
+  }
 }

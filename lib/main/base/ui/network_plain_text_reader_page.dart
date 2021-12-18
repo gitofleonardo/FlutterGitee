@@ -43,7 +43,11 @@ class _NetworkPlainTextReaderPageState
                   }
                   final dat = res.data ?? "";
                   return SingleChildScrollView(
-                    child: Text(dat),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      child: Text(dat),
+                    ),
                   );
                 } else {
                   return const Center(

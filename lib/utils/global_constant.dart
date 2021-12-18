@@ -44,6 +44,13 @@ class GlobalTheme {
 
 const lightThemeBackgroundColor = Color(0xffeaeaea);
 
+final darkTheme = GlobalTheme(
+    ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color(0xff262626),
+        backgroundColor: const Color(0xff2b2b2b)),
+    "Dark");
+
 final globalThemes = [
   GlobalTheme(
       ThemeData(
@@ -106,16 +113,11 @@ final globalThemes = [
       "DeepOrange"),
   GlobalTheme(
       ThemeData(
-          brightness: Brightness.dark,
-          scaffoldBackgroundColor: const Color(0xff262626),
-          backgroundColor: const Color(0xff2b2b2b)),
-      "Dark"),
-  GlobalTheme(
-      ThemeData(
           brightness: Brightness.light,
           scaffoldBackgroundColor: lightThemeBackgroundColor,
           backgroundColor: Colors.white),
-      "Light")
+      "Light"),
+  darkTheme
 ];
 
 const giteeBaseUrl = "https://gitee.com/";

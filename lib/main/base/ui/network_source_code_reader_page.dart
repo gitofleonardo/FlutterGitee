@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
+import 'package:flutter_highlight/themes/dark.dart';
 import 'package:flutter_highlight/themes/github.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../request_base_result.dart';
 
 typedef SourceCodeLoader = Future<BaseResult<String>> Function();
 
+class CodeRowData {
+  String text = "";
+  bool selected = false;
+
+  CodeRowData(this.text, this.selected);
+}
+
 class NetworkSourceCodeReaderPage extends StatefulWidget {
   final String title;
+  final String language;
   final SourceCodeLoader loader;
 
   const NetworkSourceCodeReaderPage(
-      {Key? key, required this.title, required this.loader})
+      {Key? key,
+      required this.title,
+      required this.loader,
+      required this.language})
       : super(key: key);
 
   @override
@@ -23,15 +38,29 @@ class NetworkSourceCodeReaderPage extends StatefulWidget {
 
 class _NetworkSourceCodeReaderPageState
     extends State<NetworkSourceCodeReaderPage> {
+  final _data = <CodeRowData>[];
+  String _stringData = "";
+  final _themeKey = GlobalKey<GlobalThemeWidgetState>();
+
   @override
   Widget build(BuildContext context) {
     return GlobalThemeWidget(
+      key: _themeKey,
       child: Builder(builder: (context) {
         return Scaffold(
           appBar: AppBar(
             title: Text(widget.title),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: _stringData));
+                  Fluttertoast.showToast(msg: "Copied");
+                },
+                icon: const Icon(FontAwesomeIcons.clipboard),
+                tooltip: "Copy All",
+              )
+            ],
           ),
-          backgroundColor: Theme.of(context).backgroundColor,
           body: FutureBuilder<BaseResult<String>>(
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
@@ -43,8 +72,11 @@ class _NetworkSourceCodeReaderPageState
                         },
                         message: "Tap To Retry");
                   }
-                  final dat = (res.data ?? "").split("\n");
-                  final maxLen = "${dat.length}".length;
+                  _stringData = res.data ?? "";
+                  _data.addAll((_stringData)
+                      .split("\n")
+                      .map((e) => CodeRowData(e, false)));
+                  final maxLen = "${_data.length}".length;
                   return ListView.builder(
                     itemBuilder: (context, index) {
                       final line = index + 1;
@@ -53,17 +85,30 @@ class _NetworkSourceCodeReaderPageState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           direction: Axis.horizontal,
                           children: [
+                            const SizedBox(width: 10),
                             Text("${'0' * (maxLen - indexLen)}$line"),
                             const SizedBox(width: 5),
                             Expanded(
+                                child: Material(
+                              child: InkWell(
+                                onTap: () {},
+                                onLongPress: () {
+                                  Clipboard.setData(
+                                      ClipboardData(text: _data[index].text));
+                                  Fluttertoast.showToast(msg: "Copied");
+                                },
                                 child: HighlightView(
-                              dat[index],
-                              language: "dart",
-                              theme: githubTheme,
+                                  _data[index].text,
+                                  language: widget.language,
+                                  theme: _darkTheme() ? darkTheme : githubTheme,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 2),
+                                ),
+                              ),
                             ))
                           ]);
                     },
-                    itemCount: dat.length,
+                    itemCount: _data.length,
                   );
                 } else {
                   return const Center(
@@ -75,5 +120,10 @@ class _NetworkSourceCodeReaderPageState
         );
       }),
     );
+  }
+
+  bool _darkTheme() {
+    final state = _themeKey.currentState!;
+    return state.isDarkTheme();
   }
 }

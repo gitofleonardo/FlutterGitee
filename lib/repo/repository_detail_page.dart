@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
@@ -14,7 +12,6 @@ import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'bean/repo_file_entity.dart';
 import 'widget/icon_text_button.dart';
 
 enum _LoadState { done, loading, fail }
@@ -140,23 +137,8 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
               selectable: true,
               data: content,
               imageBuilder: (uri, title, alt) {
-                var url = uri.toString().trim();
-                if (!url.startsWith("http")) {
-                  return FutureBuilder<BaseResult<RepoFileEntity>>(
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          final data = snapshot.data;
-                          if (data != null && data.success) {
-                            return Image.memory(const Base64Decoder()
-                                .convert(data.data?.content ?? ""));
-                          }
-                        }
-                        return const SizedBox(width: 0, height: 0);
-                      },
-                      future: getRepoFile("${repo.fullName}", url));
-                } else {
-                  return Image.network(url);
-                }
+                return repositoryMarkdownImageBuilder(
+                    uri, "${repo.fullName}", "$title", "$alt");
               },
             );
           }),
