@@ -197,8 +197,8 @@ class StarEventListItem extends StatelessWidget {
                   children: [
                     GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, "user_profile_page",
-                              arguments: "${event.actor?.login}");
+                          // Navigator.pushNamed(context, "user_profile_page",
+                          //     arguments: "${event.actor?.login}");
                         },
                         child: SizedBox(
                           width: 42,
