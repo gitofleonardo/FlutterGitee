@@ -7,7 +7,7 @@ import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/repo_list_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'attrs/filter_attrs.dart';
+import '../attrs/filter_attrs.dart';
 
 class SortByItem {
   SortBy value;

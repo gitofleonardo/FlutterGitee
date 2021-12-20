@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 typedef TargetUrlProcessor = dynamic Function(String);
 
@@ -67,6 +69,14 @@ class _WebViewState extends State<WebViewPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(_titleText),
+          actions: [
+            IconButton(
+                tooltip: "Open In Browser",
+                onPressed: () {
+                  launch(widget.url);
+                },
+                icon: const Icon(FontAwesomeIcons.solidCompass))
+          ],
         ),
         body: Container(
           constraints: const BoxConstraints.expand(),

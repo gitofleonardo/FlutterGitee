@@ -6,13 +6,13 @@ import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
 import 'package:flutter_gitee/repo/bean/branch_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
-import 'package:flutter_gitee/repo/repository_tree_viewer.dart';
+import 'package:flutter_gitee/repo/ui/repository_tree_viewer.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'widget/icon_text_button.dart';
+import '../widget/icon_text_button.dart';
 
 enum _LoadState { done, loading, fail }
 
@@ -248,19 +248,36 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
         Row(
           children: [
             TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, "repository_stargazers_page",
+                      arguments: widget.fullname);
+                },
                 icon: const Icon(Icons.star_border, size: 20),
                 label: Text(
                     "${formatGitCount(repo.stargazersCount?.toInt() ?? 0)} Stars")),
             const SizedBox(width: 10),
             TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(
-                  FontAwesomeIcons.codeBranch,
-                  size: 16,
-                ),
-                label: Text(
-                    "${formatGitCount(repo.forksCount?.toInt() ?? 0)} forks"))
+              icon: const Icon(
+                FontAwesomeIcons.bullseye,
+                size: 16,
+              ),
+              label: Text(
+                  "${formatGitCount(repo.watchersCount?.toInt() ?? 0)} Watches"),
+              onPressed: () {
+                Navigator.pushNamed(context, "repository_watchers_page",
+                    arguments: widget.fullname);
+              },
+            ),
+            const SizedBox(width: 10),
+            TextButton.icon(
+              icon: const Icon(
+                FontAwesomeIcons.codeBranch,
+                size: 16,
+              ),
+              label: Text(
+                  "${formatGitCount(repo.forksCount?.toInt() ?? 0)} Forks"),
+              onPressed: () {},
+            )
           ],
         )
       ],
@@ -322,17 +339,6 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
           text: const Text("Issues"),
           onTap: () {},
           trailing: Text("${repo.openIssuesCount?.toInt() ?? 0}"),
-        ),
-        IconTextButton(
-          leading: const Icon(
-            Icons.person,
-            color: Colors.white,
-            size: 18,
-          ),
-          leadingColor: Colors.teal,
-          trailing: Text("${repo.watchersCount?.toInt() ?? 0}"),
-          text: const Text("Watchers"),
-          onTap: () {},
         ),
         IconTextButton(
           leading: const Icon(

@@ -1,10 +1,13 @@
 // For keys in SharedPreferences
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/main/about_page.dart';
 import 'package:flutter_gitee/main/base/ui/view_picture_page.dart';
 import 'package:flutter_gitee/main/start/start_page.dart';
-import 'package:flutter_gitee/repo/repository_detail_page.dart';
-import 'package:flutter_gitee/repo/repository_tree_viewer.dart';
 import 'package:flutter_gitee/repo/search/search_page.dart';
+import 'package:flutter_gitee/repo/ui/repo_stargazers_page.dart';
+import 'package:flutter_gitee/repo/ui/repo_watchers_page.dart';
+import 'package:flutter_gitee/repo/ui/repository_detail_page.dart';
+import 'package:flutter_gitee/repo/ui/repository_tree_viewer.dart';
 import 'package:flutter_gitee/user/follower_page.dart';
 import 'package:flutter_gitee/user/following_page.dart';
 import 'package:flutter_gitee/user/login_page.dart';
@@ -32,7 +35,12 @@ final routes = {
   "repository_detail_page": (ctx) => RepositoryDetailPage(
       fullname: ModalRoute.of(ctx)!.settings.arguments.toString()),
   "repository_tree_page": (ctx) => RepositoryTreeViewer(
-      treeInfo: ModalRoute.of(ctx)!.settings.arguments as TreeInfo)
+      treeInfo: ModalRoute.of(ctx)!.settings.arguments as TreeInfo),
+  "repository_stargazers_page": (ctx) => RepoStargazersPage(
+      fullName: ModalRoute.of(ctx)!.settings.arguments.toString()),
+  "repository_watchers_page": (ctx) => RepoWatchersPage(
+      fullName: ModalRoute.of(ctx)!.settings.arguments.toString()),
+  "about_page": (ctx) => const AboutPage(),
 };
 
 class GlobalTheme {
@@ -42,7 +50,7 @@ class GlobalTheme {
   GlobalTheme(this.theme, this.name);
 }
 
-const lightThemeBackgroundColor = Color(0xffeaeaea);
+const lightThemeBackgroundColor = Colors.white;
 
 final darkTheme = GlobalTheme(
     ThemeData(

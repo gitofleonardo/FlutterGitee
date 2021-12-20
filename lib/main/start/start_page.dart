@@ -3,12 +3,13 @@ import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/ui/view_picture_page.dart';
 import 'package:flutter_gitee/main/events_page.dart';
 import 'package:flutter_gitee/main/widget/theme_select_dialog.dart';
-import 'package:flutter_gitee/repo/my_repository_page.dart';
-import 'package:flutter_gitee/repo/repository_page.dart';
+import 'package:flutter_gitee/repo/ui/my_repository_page.dart';
+import 'package:flutter_gitee/repo/ui/repository_page.dart';
 import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -270,6 +271,14 @@ class _StartPageState extends BaseState<StartPage> {
                   },
                 )
               ],
+            ),
+            ListTile(
+              leading: Icon(FontAwesomeIcons.infoCircle, color: themePrimary),
+              title: const Text("About"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "about_page");
+              },
             ),
             TextButton(
                 onPressed: () {
