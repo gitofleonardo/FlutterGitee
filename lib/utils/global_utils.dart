@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -246,4 +247,8 @@ Widget repositoryMarkdownImageBuilder(
   } else {
     return Image.network(url);
   }
+}
+
+Uint8List base64ToUint8ListImage(String dat) {
+  return const Base64Decoder().convert(dat);
 }

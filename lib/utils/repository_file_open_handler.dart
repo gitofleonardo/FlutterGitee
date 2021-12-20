@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
+import 'package:flutter_gitee/main/base/ui/network_image_viewer_page.dart';
 import 'package:flutter_gitee/main/base/ui/network_markdown_reader_page.dart';
 import 'package:flutter_gitee/main/base/ui/network_plain_text_reader_page.dart';
 import 'package:flutter_gitee/main/base/ui/network_source_code_reader_page.dart';
@@ -9,15 +12,14 @@ import 'package:flutter_gitee/main/base/widget/vertical_text_icon_button.dart';
 import 'package:flutter_gitee/repo/bean/repository_tree_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 enum _FileType {
   raw,
   markdown,
   sourceCode,
   plainText,
+  image,
 }
 
 class RepositoryBlob {
@@ -63,7 +65,30 @@ class RepositoryFileOpenHandler {
       case _FileType.plainText:
         _openWithPlainTextReader(context, fullName, blob.path, blob.sha);
         break;
+      case _FileType.image:
+        _openWithImageViewer(context, fullName, blob);
+        break;
     }
+  }
+
+  void _openWithImageViewer(
+      BuildContext context, String fullName, RepositoryBlob blob) {
+    Future<BaseResult<Uint8List>> imageFuture() async {
+      final res = await getRepoBlobFile(fullName, blob.sha);
+      final copyResult = BaseResult<Uint8List>();
+      copyResult.resultCode = res.resultCode;
+      copyResult.state = res.state;
+      copyResult.errorMessage = res.errorMessage;
+      copyResult.data = base64ToUint8ListImage(res.data?.content ?? "");
+      return copyResult;
+    }
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return NetworkImageViewerPage(
+        title: blob.path,
+        loader: imageFuture,
+      );
+    }));
   }
 
   void _openRawFile(
@@ -71,6 +96,9 @@ class RepositoryFileOpenHandler {
     const delegate =
         SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4);
     showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10), topRight: Radius.circular(10))),
         context: context,
         builder: (context) {
           return HeaderContentBottomSheet(
@@ -89,15 +117,17 @@ class RepositoryFileOpenHandler {
                   VerticalTextIconButton(
                       onTap: () async {
                         Navigator.pop(context);
-                        final url = blob.url;
-                        if (await canLaunch(url)) {
-                          launch(url);
-                        } else {
-                          Fluttertoast.showToast(msg: "Cannot open this file");
-                        }
+                        _openWithMarkdownReader(
+                            context, fullName, blob.path, blob.sha);
                       },
-                      icon: const Icon(Icons.open_in_browser),
-                      text: const Text("In Browser"))
+                      icon: const Icon(FontAwesomeIcons.markdown),
+                      text: const Text("Markdown")),
+                  VerticalTextIconButton(
+                      onTap: () {
+                        _openWithImageViewer(context, fullName, blob);
+                      },
+                      icon: const Icon(FontAwesomeIcons.image),
+                      text: const Text("Image")),
                 ],
               ),
               contentScrollable: false);
@@ -298,6 +328,14 @@ class RepositoryFileOpenHandler {
         return _FileType.sourceCode;
       case "":
         return _FileType.raw;
+      case "jpg":
+      case "jpeg":
+      case "png":
+      case "bmp":
+      case "gif":
+      case "tiff":
+      case "raw":
+        return _FileType.image;
     }
     return _FileType.raw;
   }

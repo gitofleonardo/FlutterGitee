@@ -127,11 +127,13 @@ class _RepositoryPageState extends State<MyRepositoryPage> {
       if (value.state == BaseStatus.success) {
         _refreshController.loadComplete();
         final result = value.data ?? [];
-        if (result.length < _pageSize) {
-          _hasMore = false;
-        } else {
-          _hasMore = true;
-        }
+        setState(() {
+          if (result.length < _pageSize) {
+            _hasMore = false;
+          } else {
+            _hasMore = true;
+          }
+        });
         _currentRepos.addAll(result);
         ++_currentPage;
       } else {
