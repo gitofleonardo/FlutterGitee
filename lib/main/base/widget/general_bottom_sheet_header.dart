@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+ShapeBorder bottomSheetShape = const RoundedRectangleBorder(
+    borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(10), topRight: Radius.circular(10)));
+
 class HeaderContentBottomSheet extends StatelessWidget {
   final String title;
   final Widget body;

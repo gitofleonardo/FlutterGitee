@@ -6,6 +6,7 @@ import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
 import 'package:flutter_gitee/repo/bean/branch_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
+import 'package:flutter_gitee/repo/ui/repo_commits_page.dart';
 import 'package:flutter_gitee/repo/ui/repository_tree_viewer.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
@@ -310,7 +311,12 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
           ),
           leadingColor: Colors.black54,
           text: const Text("Commits"),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return RepoCommitsPage(
+                  branch: repo.defaultBranch!, fullName: repo.fullName!);
+            }));
+          },
         ),
         IconTextButton(
           leading: const Icon(
@@ -395,7 +401,11 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
                       }).toList(),
                     );
                   }
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                      child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: CircularProgressIndicator(),
+                  ));
                 },
               ));
         });

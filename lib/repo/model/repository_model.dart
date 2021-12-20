@@ -1,7 +1,9 @@
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/bean/branch_entity.dart';
+import 'package:flutter_gitee/repo/bean/commit_detail_entity.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
+import 'package:flutter_gitee/repo/bean/repo_commit_entity.dart';
 import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_blob_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
@@ -306,4 +308,20 @@ Future<BaseResult<List<UserProfileEntity>>> getWatchers(
       "api/v5/repos/$fullName/subscribers",
       RequestType.get,
       {"access_token": globalToken, "page": page, "per_page": perPage});
+}
+
+Future<BaseResult<List<RepoCommitEntity>>> getRepoCommits(
+    String fullName, String branch, int page, int perPage) {
+  return postRequest("api/v5/repos/$fullName/commits", RequestType.get, {
+    "access_token": globalToken,
+    "page": page,
+    "per_page": perPage,
+    "sha": branch
+  });
+}
+
+Future<BaseResult<CommitDetailEntity>> getRepoCommitDetail(
+    String fullName, String sha) {
+  return postRequest<CommitDetailEntity>("api/v5/repos/$fullName/commits/$sha",
+      RequestType.get, {"access_token": globalToken});
 }
