@@ -325,3 +325,30 @@ Future<BaseResult<CommitDetailEntity>> getRepoCommitDetail(
   return postRequest<CommitDetailEntity>("api/v5/repos/$fullName/commits/$sha",
       RequestType.get, {"access_token": globalToken});
 }
+
+Future<BaseResult<List<RepositoryEntity>>> getRepoForks(
+    String fullName, int page, int perPage) {
+  return postRequest<List<RepositoryEntity>>(
+      "api/v5/repos/$fullName/forks",
+      RequestType.get,
+      {"access_token": globalToken, "page": page, "per_page": perPage});
+}
+
+Future<BaseResult<List<IssueResultEntity>>> getRepositoryIssue(String fullName,
+    int page, int perPage, String sort, String sortDirection, String state) {
+  final params = {
+    "access_token": globalToken,
+    "page": page,
+    "per_page": perPage
+  };
+  if (sort.isNotEmpty) {
+    params["sort"] = sort;
+  }
+  if (sortDirection.isNotEmpty) {
+    params["direction"] = sortDirection;
+  }
+  if (state.isNotEmpty) {
+    params["state"] = state;
+  }
+  return postRequest("api/v5/repos/$fullName/issues", RequestType.get, params);
+}

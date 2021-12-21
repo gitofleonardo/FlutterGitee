@@ -34,11 +34,24 @@ class IssueListItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text("${issue.title}",
-                    style: const TextStyle(color: Colors.grey))
+                    style: const TextStyle(color: Colors.grey)),
+                const SizedBox(height: 10),
+                Wrap(
+                  runSpacing: 5,
+                  spacing: 10,
+                  children: _createIssueTags(),
+                ),
               ],
             ),
           ),
         ));
+  }
+
+  List<Widget> _createIssueTags() {
+    final labels = issue.labels ?? [];
+    return labels.map((e) {
+      return RawChip(label: Text("${e.name}"));
+    }).toList();
   }
 
   Widget _createIssueByIssueState(String state) {

@@ -277,7 +277,10 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
               ),
               label: Text(
                   "${formatGitCount(repo.forksCount?.toInt() ?? 0)} Forks"),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, "repository_forks_page",
+                    arguments: widget.fullname);
+              },
             )
           ],
         )
@@ -343,7 +346,10 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
           leading: const Icon(FontAwesomeIcons.dotCircle,
               color: Colors.white, size: 18),
           text: const Text("Issues"),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, "repository_issue_page",
+                arguments: widget.fullname);
+          },
           trailing: Text("${repo.openIssuesCount?.toInt() ?? 0}"),
         ),
         IconTextButton(
