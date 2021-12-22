@@ -329,7 +329,10 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
           ),
           leadingColor: Colors.deepOrange,
           text: const Text("Pull Requests"),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, "repository_pull_request_page",
+                arguments: repo.fullName);
+          },
         ),
         IconTextButton(
           leading: const Icon(
@@ -338,8 +341,11 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
             size: 18,
           ),
           leadingColor: Colors.deepPurple,
-          text: const Text("Contributors"),
-          onTap: () {},
+          text: const Text("Collaborators"),
+          onTap: () {
+            Navigator.pushNamed(context, "repository_collaborator_page",
+                arguments: widget.fullname);
+          },
         ),
         IconTextButton(
           leadingColor: Colors.green,

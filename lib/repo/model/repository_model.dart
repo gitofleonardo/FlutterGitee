@@ -3,6 +3,7 @@ import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/bean/branch_entity.dart';
 import 'package:flutter_gitee/repo/bean/commit_detail_entity.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
+import 'package:flutter_gitee/repo/bean/pull_request_entity.dart';
 import 'package:flutter_gitee/repo/bean/repo_commit_entity.dart';
 import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_blob_entity.dart';
@@ -351,4 +352,29 @@ Future<BaseResult<List<IssueResultEntity>>> getRepositoryIssue(String fullName,
     params["state"] = state;
   }
   return postRequest("api/v5/repos/$fullName/issues", RequestType.get, params);
+}
+
+Future<BaseResult<List<UserProfileEntity>>> getRepoCollaborator(
+    String fullName, int page, int perPage) {
+  return postRequest("api/v5/repos/$fullName/collaborators", RequestType.get,
+      {"access_token": globalToken, "page": page, "per_page": perPage});
+}
+
+Future<BaseResult<List<PullRequestEntity>>> getRepoPullRequest(String fullName,
+    int page, int perPage, String sort, String sortDirection, String state) {
+  final params = {
+    "access_token": globalToken,
+    "page": page,
+    "per_page": perPage
+  };
+  if (sort.isNotEmpty) {
+    params["sort"] = sort;
+  }
+  if (sortDirection.isNotEmpty) {
+    params["direction"] = sortDirection;
+  }
+  if (state.isNotEmpty) {
+    params["state"] = state;
+  }
+  return postRequest("api/v5/repos/$fullName/pulls", RequestType.get, params);
 }

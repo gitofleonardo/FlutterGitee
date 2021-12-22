@@ -6,6 +6,7 @@
 import 'package:flutter_gitee/repo/bean/branch_entity.dart';
 import 'package:flutter_gitee/repo/bean/commit_detail_entity.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
+import 'package:flutter_gitee/repo/bean/pull_request_entity.dart';
 import 'package:flutter_gitee/repo/bean/repo_commit_entity.dart';
 import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_blob_entity.dart';
@@ -143,6 +144,75 @@ class JsonConvert {
     }
     if (type == (IssueResultIssueStateDetail).toString()) {
       return IssueResultIssueStateDetail.fromJson(json) as M;
+    }
+    if (type == (PullRequestEntity).toString()) {
+      return PullRequestEntity.fromJson(json) as M;
+    }
+    if (type == (PullRequestLabel).toString()) {
+      return PullRequestLabel.fromJson(json) as M;
+    }
+    if (type == (PullRequestHead).toString()) {
+      return PullRequestHead.fromJson(json) as M;
+    }
+    if (type == (PullRequestHeadUser).toString()) {
+      return PullRequestHeadUser.fromJson(json) as M;
+    }
+    if (type == (PullRequestHeadRepo).toString()) {
+      return PullRequestHeadRepo.fromJson(json) as M;
+    }
+    if (type == (PullRequestHeadRepoNamespace).toString()) {
+      return PullRequestHeadRepoNamespace.fromJson(json) as M;
+    }
+    if (type == (PullRequestHeadRepoOwner).toString()) {
+      return PullRequestHeadRepoOwner.fromJson(json) as M;
+    }
+    if (type == (PullRequestHeadRepoAssigner).toString()) {
+      return PullRequestHeadRepoAssigner.fromJson(json) as M;
+    }
+    if (type == (PullRequestBase).toString()) {
+      return PullRequestBase.fromJson(json) as M;
+    }
+    if (type == (PullRequestBaseUser).toString()) {
+      return PullRequestBaseUser.fromJson(json) as M;
+    }
+    if (type == (PullRequestBaseRepo).toString()) {
+      return PullRequestBaseRepo.fromJson(json) as M;
+    }
+    if (type == (PullRequestBaseRepoNamespace).toString()) {
+      return PullRequestBaseRepoNamespace.fromJson(json) as M;
+    }
+    if (type == (PullRequestBaseRepoOwner).toString()) {
+      return PullRequestBaseRepoOwner.fromJson(json) as M;
+    }
+    if (type == (PullRequestBaseRepoAssigner).toString()) {
+      return PullRequestBaseRepoAssigner.fromJson(json) as M;
+    }
+    if (type == (PullRequestLinks).toString()) {
+      return PullRequestLinks.fromJson(json) as M;
+    }
+    if (type == (PullRequestLinksSelf).toString()) {
+      return PullRequestLinksSelf.fromJson(json) as M;
+    }
+    if (type == (PullRequestLinksHtml).toString()) {
+      return PullRequestLinksHtml.fromJson(json) as M;
+    }
+    if (type == (PullRequestLinksIssue).toString()) {
+      return PullRequestLinksIssue.fromJson(json) as M;
+    }
+    if (type == (PullRequestLinksComments).toString()) {
+      return PullRequestLinksComments.fromJson(json) as M;
+    }
+    if (type == (PullRequestLinksReviewComments).toString()) {
+      return PullRequestLinksReviewComments.fromJson(json) as M;
+    }
+    if (type == (PullRequestLinksReviewComment).toString()) {
+      return PullRequestLinksReviewComment.fromJson(json) as M;
+    }
+    if (type == (PullRequestLinksCommits).toString()) {
+      return PullRequestLinksCommits.fromJson(json) as M;
+    }
+    if (type == (PullRequestUser).toString()) {
+      return PullRequestUser.fromJson(json) as M;
     }
     if (type == (RepoCommitEntity).toString()) {
       return RepoCommitEntity.fromJson(json) as M;
@@ -343,6 +413,131 @@ class JsonConvert {
       return data
           .map<IssueResultIssueStateDetail>(
               (e) => IssueResultIssueStateDetail.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestEntity>[] is M) {
+      return data
+          .map<PullRequestEntity>((e) => PullRequestEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestLabel>[] is M) {
+      return data
+          .map<PullRequestLabel>((e) => PullRequestLabel.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestHead>[] is M) {
+      return data
+          .map<PullRequestHead>((e) => PullRequestHead.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestHeadUser>[] is M) {
+      return data
+          .map<PullRequestHeadUser>((e) => PullRequestHeadUser.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestHeadRepo>[] is M) {
+      return data
+          .map<PullRequestHeadRepo>((e) => PullRequestHeadRepo.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestHeadRepoNamespace>[] is M) {
+      return data
+          .map<PullRequestHeadRepoNamespace>(
+              (e) => PullRequestHeadRepoNamespace.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestHeadRepoOwner>[] is M) {
+      return data
+          .map<PullRequestHeadRepoOwner>(
+              (e) => PullRequestHeadRepoOwner.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestHeadRepoAssigner>[] is M) {
+      return data
+          .map<PullRequestHeadRepoAssigner>(
+              (e) => PullRequestHeadRepoAssigner.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestBase>[] is M) {
+      return data
+          .map<PullRequestBase>((e) => PullRequestBase.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestBaseUser>[] is M) {
+      return data
+          .map<PullRequestBaseUser>((e) => PullRequestBaseUser.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestBaseRepo>[] is M) {
+      return data
+          .map<PullRequestBaseRepo>((e) => PullRequestBaseRepo.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestBaseRepoNamespace>[] is M) {
+      return data
+          .map<PullRequestBaseRepoNamespace>(
+              (e) => PullRequestBaseRepoNamespace.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestBaseRepoOwner>[] is M) {
+      return data
+          .map<PullRequestBaseRepoOwner>(
+              (e) => PullRequestBaseRepoOwner.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestBaseRepoAssigner>[] is M) {
+      return data
+          .map<PullRequestBaseRepoAssigner>(
+              (e) => PullRequestBaseRepoAssigner.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestLinks>[] is M) {
+      return data
+          .map<PullRequestLinks>((e) => PullRequestLinks.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestLinksSelf>[] is M) {
+      return data
+          .map<PullRequestLinksSelf>((e) => PullRequestLinksSelf.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestLinksHtml>[] is M) {
+      return data
+          .map<PullRequestLinksHtml>((e) => PullRequestLinksHtml.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestLinksIssue>[] is M) {
+      return data
+          .map<PullRequestLinksIssue>((e) => PullRequestLinksIssue.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestLinksComments>[] is M) {
+      return data
+          .map<PullRequestLinksComments>(
+              (e) => PullRequestLinksComments.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestLinksReviewComments>[] is M) {
+      return data
+          .map<PullRequestLinksReviewComments>(
+              (e) => PullRequestLinksReviewComments.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestLinksReviewComment>[] is M) {
+      return data
+          .map<PullRequestLinksReviewComment>(
+              (e) => PullRequestLinksReviewComment.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestLinksCommits>[] is M) {
+      return data
+          .map<PullRequestLinksCommits>(
+              (e) => PullRequestLinksCommits.fromJson(e))
+          .toList() as M;
+    }
+    if (<PullRequestUser>[] is M) {
+      return data
+          .map<PullRequestUser>((e) => PullRequestUser.fromJson(e))
           .toList() as M;
     }
     if (<RepoCommitEntity>[] is M) {
