@@ -7,6 +7,8 @@ import 'package:flutter_gitee/repo/widget/issue_list_item.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import 'issue_detail_page.dart';
+
 const stateMap = {
   "Open": "open",
   "Progressing": "progressing",
@@ -131,7 +133,16 @@ class _RepoIssuePageState extends State<RepoIssuePage> {
                   child: ListView.builder(
                       itemBuilder: (context, index) {
                         final item = _issues[index];
-                        return IssueListItem(issue: item, onTap: () {});
+                        return IssueListItem(
+                            issue: item,
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return IssueDetailPage(
+                                    fullName: "${item.repository?.fullName}",
+                                    number: "${item.number}");
+                              }));
+                            });
                       },
                       itemCount: _issues.length),
                 )),

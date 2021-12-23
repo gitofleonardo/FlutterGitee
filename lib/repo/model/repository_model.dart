@@ -2,6 +2,7 @@ import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/bean/branch_entity.dart';
 import 'package:flutter_gitee/repo/bean/commit_detail_entity.dart';
+import 'package:flutter_gitee/repo/bean/issue_comment_entity.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/bean/pull_request_entity.dart';
 import 'package:flutter_gitee/repo/bean/repo_commit_entity.dart';
@@ -377,4 +378,18 @@ Future<BaseResult<List<PullRequestEntity>>> getRepoPullRequest(String fullName,
     params["state"] = state;
   }
   return postRequest("api/v5/repos/$fullName/pulls", RequestType.get, params);
+}
+
+Future<BaseResult<IssueResultEntity>> getRepoIssueDetails(
+    String fullName, String number) {
+  return postRequest("api/v5/repos/$fullName/issues/$number", RequestType.get,
+      {"access_token": globalToken});
+}
+
+Future<BaseResult<List<IssueCommentEntity>>> getIssueComments(
+    String fullName, String number, int page, int perPage) {
+  return postRequest<List<IssueCommentEntity>>(
+      "api/v5/repos/$fullName/issues/$number/comments",
+      RequestType.get,
+      {"access_token": globalToken, "page": page, "per_page": perPage});
 }

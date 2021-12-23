@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
+import 'package:flutter_gitee/repo/ui/issue_detail_page.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
 import 'package:flutter_gitee/repo/widget/issue_list_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -105,7 +106,16 @@ class _IssueSearchPageState extends State<IssueSearchPage>
       child: ListView.builder(
         itemCount: _resultItems.length,
         itemBuilder: (context, index) {
-          return IssueListItem(issue: _resultItems[index], onTap: () {});
+          final item = _resultItems[index];
+          return IssueListItem(
+              issue: item,
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return IssueDetailPage(
+                      fullName: "${item.repository?.fullName}",
+                      number: "${item.number}");
+                }));
+              });
         },
       ),
     );
