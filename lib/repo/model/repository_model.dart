@@ -11,7 +11,7 @@ import 'package:flutter_gitee/repo/bean/repository_blob_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_tree_entity.dart';
 import 'package:flutter_gitee/repo/ui/repository_page.dart';
-import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
+import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 import 'package:flutter_gitee/utils/global_context.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 

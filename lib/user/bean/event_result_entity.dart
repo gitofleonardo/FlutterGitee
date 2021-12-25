@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_gitee/generated/json/base/json_field.dart';
 import 'package:flutter_gitee/generated/json/event_result_entity.g.dart';
+import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 
 @JsonSerializable()
 class EventResultEntity {
@@ -83,6 +84,12 @@ class EventResultPayload {
   bool? followed;
   int size = 0;
   List<EventResultPayloadCommit> commits = [];
+  String? number;
+  String? state;
+  String? title;
+  String? body;
+  EventResultPayloadComment? comment;
+  EventResultPayloadIssue? issue;
 
   EventResultPayload();
 
@@ -90,6 +97,44 @@ class EventResultPayload {
       $EventResultPayloadFromJson(json);
 
   Map<String, dynamic> toJson() => $EventResultPayloadToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+}
+
+@JsonSerializable()
+class EventResultPayloadComment {
+  UserProfileEntity? user;
+  String? body;
+
+  EventResultPayloadComment();
+
+  factory EventResultPayloadComment.fromJson(Map<String, dynamic> json) =>
+      $EventResultPayloadCommentFromJson(json);
+
+  Map<String, dynamic> toJson() => $EventResultPayloadCommentToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+}
+
+@JsonSerializable()
+class EventResultPayloadIssue {
+  String? number;
+  String? state;
+  String? title;
+  String? body;
+
+  EventResultPayloadIssue();
+
+  factory EventResultPayloadIssue.fromJson(Map<String, dynamic> json) =>
+      $EventResultPayloadIssueFromJson(json);
+
+  Map<String, dynamic> toJson() => $EventResultPayloadIssueToJson(this);
 
   @override
   String toString() {

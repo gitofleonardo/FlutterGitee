@@ -7,7 +7,7 @@ import 'package:flutter_gitee/generated/json/base/json_convert_content.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
-import 'package:flutter_gitee/user/bean/result/success/login_success_result_entity.dart';
+import 'package:flutter_gitee/user/bean/login_success_result_entity.dart';
 import 'package:flutter_gitee/utils/global_constant.dart';
 import 'package:flutter_gitee/utils/global_context.dart';
 import 'package:intl/intl.dart';
@@ -173,7 +173,9 @@ Future<BaseResult<T>> _postRequest<T>(String url, RequestType method,
 }
 
 Future<BaseStatus> _refreshToken() async {
+  debugPrint("Refreshing access token");
   final refreshToken = await getLocalRefreshToken();
+  debugPrint("Refresh token: $refreshToken");
   if (refreshToken == null) {
     return BaseStatus.unauthorized;
   }
@@ -189,7 +191,10 @@ Future<BaseStatus> _refreshToken() async {
     setLocalToken(result.accessToken);
     setLocalRefreshToken(result.refreshToken);
     return BaseStatus.success;
-  } on Exception {
+  } on DioError catch (e) {
+    debugPrint(e.response.toString());
+    debugPrint(e.toString());
+
     if (resp == null) {
       return BaseStatus.networkFailure;
     }

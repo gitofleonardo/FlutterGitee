@@ -13,10 +13,10 @@ import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_blob_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_tree_entity.dart';
-import 'package:flutter_gitee/user/bean/result/success/event_result_entity.dart';
-import 'package:flutter_gitee/user/bean/result/success/follow_result_entity.dart';
-import 'package:flutter_gitee/user/bean/result/success/login_success_result_entity.dart';
-import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
+import 'package:flutter_gitee/user/bean/event_result_entity.dart';
+import 'package:flutter_gitee/user/bean/follow_result_entity.dart';
+import 'package:flutter_gitee/user/bean/login_success_result_entity.dart';
+import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 
@@ -298,6 +298,12 @@ class JsonConvert {
     }
     if (type == (EventResultPayload).toString()) {
       return EventResultPayload.fromJson(json) as M;
+    }
+    if (type == (EventResultPayloadComment).toString()) {
+      return EventResultPayloadComment.fromJson(json) as M;
+    }
+    if (type == (EventResultPayloadIssue).toString()) {
+      return EventResultPayloadIssue.fromJson(json) as M;
     }
     if (type == (EventResultPayloadCommit).toString()) {
       return EventResultPayloadCommit.fromJson(json) as M;
@@ -693,6 +699,18 @@ class JsonConvert {
     if (<EventResultPayload>[] is M) {
       return data
           .map<EventResultPayload>((e) => EventResultPayload.fromJson(e))
+          .toList() as M;
+    }
+    if (<EventResultPayloadComment>[] is M) {
+      return data
+          .map<EventResultPayloadComment>(
+              (e) => EventResultPayloadComment.fromJson(e))
+          .toList() as M;
+    }
+    if (<EventResultPayloadIssue>[] is M) {
+      return data
+          .map<EventResultPayloadIssue>(
+              (e) => EventResultPayloadIssue.fromJson(e))
           .toList() as M;
     }
     if (<EventResultPayloadCommit>[] is M) {

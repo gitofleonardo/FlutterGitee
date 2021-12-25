@@ -1,7 +1,7 @@
 import 'package:flutter_gitee/generated/json/base/json_convert_content.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
-import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
+import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 
 IssueResultEntity $IssueResultEntityFromJson(Map<String, dynamic> json) {
   final IssueResultEntity issueResultEntity = IssueResultEntity();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
-import 'package:flutter_gitee/user/bean/result/success/follow_result_entity.dart';
+import 'package:flutter_gitee/user/bean/follow_result_entity.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';

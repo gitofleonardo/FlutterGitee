@@ -7,7 +7,6 @@ import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class IssueDetailPage extends StatefulWidget {
   final String fullName;
@@ -57,46 +56,52 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GlobalThemeWidget(
-        child: Scaffold(
-      appBar: AppBar(
-        title: const Text("Issue Details"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-        child: FutureBuilder<BaseResult<IssueResultEntity>>(
-          future: _issueFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              final data = snapshot.data;
-              if (data == null || !data.success || data.data == null) {
-                return TapToRetryWidget(onTap: () {}, message: "Tap To Retry");
-              }
-              _issue = data.data!;
-              _loadIssueComments();
-              return CustomScrollView(
-                controller: _scrollController,
-                slivers: [
-                  _createIssueHeader(),
-                  _createIssueContent(),
-                  _createCommentHeader(),
-                  _createCommentBody(),
-                ],
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _scrollController.animateTo(0,
-              duration: const Duration(seconds: 1), curve: Curves.decelerate);
-        },
-        child: const Icon(FontAwesomeIcons.longArrowAltUp, color: Colors.white),
-        tooltip: "Top",
-      ),
+    return GlobalThemeWidget(child: Builder(
+      builder: (context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("Issue Details"),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+            child: FutureBuilder<BaseResult<IssueResultEntity>>(
+              future: _issueFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  final data = snapshot.data;
+                  if (data == null || !data.success || data.data == null) {
+                    return TapToRetryWidget(
+                        onTap: () {}, message: "Tap To Retry");
+                  }
+                  _issue = data.data!;
+                  _loadIssueComments();
+                  return CustomScrollView(
+                    controller: _scrollController,
+                    slivers: [
+                      _createIssueHeader(),
+                      _createIssueContent(),
+                      _createCommentHeader(),
+                      _createCommentBody(),
+                    ],
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            onPressed: () {
+              _scrollController.animateTo(0,
+                  duration: const Duration(seconds: 1),
+                  curve: Curves.decelerate);
+            },
+            child: const Icon(Icons.arrow_drop_up, color: Colors.white),
+            tooltip: "Top",
+          ),
+        );
+      },
     ));
   }
 

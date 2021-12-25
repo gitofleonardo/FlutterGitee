@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gitee/user/bean/result/success/event_result_entity.dart';
+import 'package:flutter_gitee/repo/ui/issue_detail_page.dart';
+import 'package:flutter_gitee/user/bean/event_result_entity.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 
 class UnsupportedEventListItem extends StatefulWidget {
@@ -473,13 +474,214 @@ class CreateEventListItem extends StatelessWidget {
                         child: Text(
                           event.repo?.fullName ?? "Unknown",
                           style: const TextStyle(
-                              color: Colors.grey, fontWeight: FontWeight.bold),
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
                       ),
                     )
                   ],
+                )
+              ],
+            ),
+          ),
+        ));
+  }
+}
+
+class CreateIssueListItem extends StatelessWidget {
+  final EventResultEntity event;
+  const CreateIssueListItem({Key? key, required this.event}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+        child: InkWell(
+          onTap: () {},
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 42,
+                      height: 42,
+                      child: ClipOval(
+                        child: Image.network(
+                            event.actor?.avatarUrl.toString() ?? ""),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          event.actor?.login ?? "",
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          formatDate(event.createdAt.toString()),
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 12),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    Icon(
+                      Icons.create,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    const Text("Create Issue"),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return IssueDetailPage(
+                                fullName: "${event.repo?.fullName}",
+                                number: "${event.payload?.number}");
+                          }));
+                        },
+                        child: Text(
+                          "#${event.payload?.number}",
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(minWidth: double.infinity),
+                  child: Text(
+                    "${event.payload?.title}",
+                    style: const TextStyle(color: Colors.grey, fontSize: 12),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
+  }
+}
+
+class IssueCommentListItem extends StatelessWidget {
+  final EventResultEntity event;
+  const IssueCommentListItem({Key? key, required this.event}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+        child: InkWell(
+          onTap: () {},
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 42,
+                      height: 42,
+                      child: ClipOval(
+                        child: Image.network(
+                            event.actor?.avatarUrl.toString() ?? ""),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          event.actor?.login ?? "",
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          formatDate(event.createdAt.toString()),
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 12),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    Icon(
+                      Icons.message,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    const Text("Comment On Issue"),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return IssueDetailPage(
+                                fullName: "${event.repo?.fullName}",
+                                number: "${event.payload?.issue?.number}");
+                          }));
+                        },
+                        child: Text(
+                          "#${event.payload?.issue?.number}",
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(minWidth: double.infinity),
+                  child: Text(
+                    "${event.payload?.comment?.body}",
+                    style: const TextStyle(color: Colors.grey, fontSize: 12),
+                  ),
                 )
               ],
             ),

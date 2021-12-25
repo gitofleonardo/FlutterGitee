@@ -3,7 +3,7 @@ import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
 import 'package:flutter_gitee/repo/widget/user_list_item.dart';
-import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
+import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class UserSearchPage extends StatefulWidget {

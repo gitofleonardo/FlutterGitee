@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/widget/event_list_item.dart';
-import 'package:flutter_gitee/user/bean/result/success/event_result_entity.dart';
+import 'package:flutter_gitee/user/bean/event_result_entity.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -107,6 +107,10 @@ class _EventsPageState extends BaseState<EventsPage>
                 return PushEventListItem(event: event);
               case "CreateEvent":
                 return CreateEventListItem(event: event);
+              case "IssueEvent":
+                return CreateIssueListItem(event: event);
+              case "IssueCommentEvent":
+                return IssueCommentListItem(event: event);
               default:
                 return UnsupportedEventListItem(event: event);
             }

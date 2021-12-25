@@ -5,7 +5,7 @@ import 'package:flutter_gitee/main/events_page.dart';
 import 'package:flutter_gitee/main/widget/theme_select_dialog.dart';
 import 'package:flutter_gitee/repo/ui/my_repository_page.dart';
 import 'package:flutter_gitee/repo/ui/repository_page.dart';
-import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
+import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';

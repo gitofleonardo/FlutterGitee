@@ -1,5 +1,5 @@
 import 'package:flutter_gitee/generated/json/base/json_convert_content.dart';
-import 'package:flutter_gitee/user/bean/result/success/follow_result_entity.dart';
+import 'package:flutter_gitee/user/bean/follow_result_entity.dart';
 
 FollowResultEntity $FollowResultEntityFromJson(Map<String, dynamic> json) {
   final FollowResultEntity followResultEntity = FollowResultEntity();

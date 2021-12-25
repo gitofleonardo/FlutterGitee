@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter_gitee/generated/json/base/json_field.dart';
 import 'package:flutter_gitee/generated/json/issue_result_entity.g.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
-import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
+import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 
 @JsonSerializable()
 class IssueResultEntity {

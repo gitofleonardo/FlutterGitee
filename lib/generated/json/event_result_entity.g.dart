@@ -1,5 +1,6 @@
 import 'package:flutter_gitee/generated/json/base/json_convert_content.dart';
-import 'package:flutter_gitee/user/bean/result/success/event_result_entity.dart';
+import 'package:flutter_gitee/user/bean/event_result_entity.dart';
+import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 
 EventResultEntity $EventResultEntityFromJson(Map<String, dynamic> json) {
   final EventResultEntity eventResultEntity = EventResultEntity();
@@ -153,6 +154,32 @@ EventResultPayload $EventResultPayloadFromJson(Map<String, dynamic> json) {
   if (commits != null) {
     eventResultPayload.commits = commits;
   }
+  final String? number = jsonConvert.convert<String>(json['number']);
+  if (number != null) {
+    eventResultPayload.number = number;
+  }
+  final String? state = jsonConvert.convert<String>(json['state']);
+  if (state != null) {
+    eventResultPayload.state = state;
+  }
+  final String? title = jsonConvert.convert<String>(json['title']);
+  if (title != null) {
+    eventResultPayload.title = title;
+  }
+  final String? body = jsonConvert.convert<String>(json['body']);
+  if (body != null) {
+    eventResultPayload.body = body;
+  }
+  final EventResultPayloadComment? comment =
+      jsonConvert.convert<EventResultPayloadComment>(json['comment']);
+  if (comment != null) {
+    eventResultPayload.comment = comment;
+  }
+  final EventResultPayloadIssue? issue =
+      jsonConvert.convert<EventResultPayloadIssue>(json['issue']);
+  if (issue != null) {
+    eventResultPayload.issue = issue;
+  }
   return eventResultPayload;
 }
 
@@ -163,6 +190,69 @@ Map<String, dynamic> $EventResultPayloadToJson(EventResultPayload entity) {
   data['followed'] = entity.followed;
   data['size'] = entity.size;
   data['commits'] = entity.commits.map((v) => v.toJson()).toList();
+  data['number'] = entity.number;
+  data['state'] = entity.state;
+  data['title'] = entity.title;
+  data['body'] = entity.body;
+  data['comment'] = entity.comment?.toJson();
+  data['issue'] = entity.issue?.toJson();
+  return data;
+}
+
+EventResultPayloadComment $EventResultPayloadCommentFromJson(
+    Map<String, dynamic> json) {
+  final EventResultPayloadComment eventResultPayloadComment =
+      EventResultPayloadComment();
+  final UserProfileEntity? user =
+      jsonConvert.convert<UserProfileEntity>(json['user']);
+  if (user != null) {
+    eventResultPayloadComment.user = user;
+  }
+  final String? body = jsonConvert.convert<String>(json['body']);
+  if (body != null) {
+    eventResultPayloadComment.body = body;
+  }
+  return eventResultPayloadComment;
+}
+
+Map<String, dynamic> $EventResultPayloadCommentToJson(
+    EventResultPayloadComment entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['user'] = entity.user?.toJson();
+  data['body'] = entity.body;
+  return data;
+}
+
+EventResultPayloadIssue $EventResultPayloadIssueFromJson(
+    Map<String, dynamic> json) {
+  final EventResultPayloadIssue eventResultPayloadIssue =
+      EventResultPayloadIssue();
+  final String? number = jsonConvert.convert<String>(json['number']);
+  if (number != null) {
+    eventResultPayloadIssue.number = number;
+  }
+  final String? state = jsonConvert.convert<String>(json['state']);
+  if (state != null) {
+    eventResultPayloadIssue.state = state;
+  }
+  final String? title = jsonConvert.convert<String>(json['title']);
+  if (title != null) {
+    eventResultPayloadIssue.title = title;
+  }
+  final String? body = jsonConvert.convert<String>(json['body']);
+  if (body != null) {
+    eventResultPayloadIssue.body = body;
+  }
+  return eventResultPayloadIssue;
+}
+
+Map<String, dynamic> $EventResultPayloadIssueToJson(
+    EventResultPayloadIssue entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['number'] = entity.number;
+  data['state'] = entity.state;
+  data['title'] = entity.title;
+  data['body'] = entity.body;
   return data;
 }
 

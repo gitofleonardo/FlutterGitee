@@ -1,5 +1,5 @@
 import 'package:flutter_gitee/generated/json/base/json_convert_content.dart';
-import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
+import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 
 UserProfileEntity $UserProfileEntityFromJson(Map<String, dynamic> json) {
   final UserProfileEntity userProfileEntity = UserProfileEntity();

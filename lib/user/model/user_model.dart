@@ -1,8 +1,8 @@
 import 'package:flutter_gitee/main/base/request_base_result.dart';
-import 'package:flutter_gitee/user/bean/result/success/event_result_entity.dart';
-import 'package:flutter_gitee/user/bean/result/success/follow_result_entity.dart';
-import 'package:flutter_gitee/user/bean/result/success/login_success_result_entity.dart';
-import 'package:flutter_gitee/user/bean/result/success/user_profile_entity.dart';
+import 'package:flutter_gitee/user/bean/event_result_entity.dart';
+import 'package:flutter_gitee/user/bean/follow_result_entity.dart';
+import 'package:flutter_gitee/user/bean/login_success_result_entity.dart';
+import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 import 'package:flutter_gitee/utils/app_secret.dart';
 import 'package:flutter_gitee/utils/global_context.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';

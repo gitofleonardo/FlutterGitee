@@ -4,7 +4,7 @@ import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'bean/result/success/follow_result_entity.dart';
+import 'bean/follow_result_entity.dart';
 import 'model/user_model.dart';
 
 class FollowingPage extends StatefulWidget {
