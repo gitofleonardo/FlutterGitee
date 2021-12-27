@@ -217,7 +217,7 @@ String formatDate(String dateString) {
   } else if (timeGap.inDays < 7) {
     return "${timeGap.inDays} day${timeGap.inDays > 1 ? 's' : ''} ago";
   }
-  return DateFormat("yyyy-MM-dd hh:mm").format(date);
+  return DateFormat("yy-MM-dd hh:mm").format(date);
 }
 
 String formatGitCount(int? count) {
