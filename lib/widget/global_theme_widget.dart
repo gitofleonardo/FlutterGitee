@@ -36,7 +36,7 @@ class GlobalThemeWidgetState extends State<GlobalThemeWidget> {
   Widget build(BuildContext context) {
     return GlobalShareDataWidget(
       theme: _currentTheme,
-      chd: Theme(
+      chd: AnimatedTheme(
         data: _currentTheme.theme,
         child: widget.child,
       ),
