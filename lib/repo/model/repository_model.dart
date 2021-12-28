@@ -393,3 +393,25 @@ Future<BaseResult<List<IssueCommentEntity>>> getIssueComments(
       RequestType.get,
       {"access_token": globalToken, "page": page, "per_page": perPage});
 }
+
+Future<BaseResult<List<IssueResultEntity>>> getMyIssues(int page, int perPage,
+    String sort, String sortDirection, String state, String filter) {
+  final params = {
+    "access_token": globalToken,
+    "page": page,
+    "per_page": perPage
+  };
+  if (sort.isNotEmpty) {
+    params["sort"] = sort;
+  }
+  if (sortDirection.isNotEmpty) {
+    params["direction"] = sortDirection;
+  }
+  if (state.isNotEmpty) {
+    params["state"] = state;
+  }
+  if (filter.isNotEmpty) {
+    params["filter"] = filter;
+  }
+  return postRequest("api/v5/issues", RequestType.get, params);
+}

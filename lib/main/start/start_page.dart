@@ -273,6 +273,15 @@ class _StartPageState extends BaseState<StartPage> {
               ],
             ),
             ListTile(
+              leading:
+                  Icon(FontAwesomeIcons.questionCircle, color: themePrimary),
+              title: const Text("Issues"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "my_issue_page");
+              },
+            ),
+            ListTile(
               leading: Icon(FontAwesomeIcons.infoCircle, color: themePrimary),
               title: const Text("About"),
               onTap: () {
