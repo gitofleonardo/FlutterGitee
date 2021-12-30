@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
+import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/repo/bean/issue_comment_entity.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_gitee/repo/widget/issue_comment_list_item.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 enum _PageState { loading, done, fail }
 
@@ -31,6 +33,8 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
   final _pageSize = 20;
   final _scrollController = ScrollController();
   var _pageState = _PageState.loading;
+  String? _replyTo;
+  final _replyTextController = TextEditingController();
 
   void _getIssueDetails() {
     getRepoIssueDetails(widget.fullName, widget.number).then((value) {
@@ -61,6 +65,48 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
         });
       }
     });
+  }
+
+  void _replyToIssue(BuildContext context) {
+    final text = _replyTextController.text;
+    if (text.isEmpty) {
+      Fluttertoast.showToast(msg: "Message cannot be empty");
+      return;
+    }
+    FocusScope.of(context).unfocus();
+    _showLoading(context, "Loading");
+    commentOnIssue(widget.fullName, "${_issue.number}", text).then((value) {
+      Navigator.pop(context, true);
+      if (value.success && value.data != null) {
+        setState(() {
+          _issueComments.insert(0, value.data!);
+        });
+        Navigator.pop(context);
+        _replyTextController.clear();
+        Fluttertoast.showToast(msg: "Comment sent");
+      } else {
+        Fluttertoast.showToast(msg: "Failed sending comment");
+      }
+    });
+  }
+
+  void _showLoading(BuildContext context, String message) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+              content: Flex(
+            direction: Axis.horizontal,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(message)
+            ],
+          ));
+        });
   }
 
   @override
@@ -109,16 +155,53 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
           floatingActionButton: FloatingActionButton(
             backgroundColor: Theme.of(context).colorScheme.primary,
             onPressed: () {
-              _scrollController.animateTo(0,
-                  duration: const Duration(seconds: 1),
-                  curve: Curves.decelerate);
+              _showCommentBottomSheet(context);
             },
-            child: const Icon(Icons.arrow_drop_up, color: Colors.white),
+            child: const Icon(Icons.message, color: Colors.white),
             tooltip: "Top",
           ),
         );
       },
     ));
+  }
+
+  void _showCommentBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        shape: bottomSheetShape,
+        context: context,
+        builder: (context) {
+          return Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: _createCommentBottomSheet(),
+          );
+        });
+  }
+
+  Widget _createCommentBottomSheet() {
+    return Builder(builder: (context) {
+      return HeaderContentBottomSheet(
+          title: "Comment",
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Flex(
+              direction: Axis.horizontal,
+              children: [
+                Expanded(
+                    child: TextField(
+                  controller: _replyTextController,
+                  decoration:
+                      const InputDecoration(hintText: "Comment on issue"),
+                )),
+                TextButton(
+                    onPressed: () {
+                      _replyToIssue(context);
+                    },
+                    child: const Text("Reply"))
+              ],
+            ),
+          ));
+    });
   }
 
   Widget _createCommentHeader() {
@@ -210,7 +293,12 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
         _loadIssueComments();
       }
       final item = _issueComments[index];
-      return IssueCommentListItem(issue: item);
+      return IssueCommentListItem(
+          issue: item,
+          onTap: () {
+            _replyTo = item.user?.login;
+          },
+          onLongPress: () {});
     }, childCount: _issueComments.length));
   }
 }

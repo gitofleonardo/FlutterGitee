@@ -415,3 +415,11 @@ Future<BaseResult<List<IssueResultEntity>>> getMyIssues(int page, int perPage,
   }
   return postRequest("api/v5/issues", RequestType.get, params);
 }
+
+Future<BaseResult<IssueCommentEntity>> commentOnIssue(
+    String fullName, String number, String body) {
+  return postRequest<IssueCommentEntity>(
+      "api/v5/repos/$fullName/issues/$number/comments",
+      RequestType.post,
+      {"access_token": globalToken, "body": body});
+}
