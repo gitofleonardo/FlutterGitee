@@ -7,10 +7,6 @@ import 'package:flutter_gitee/generated/json/repo_commit_entity.g.dart';
 class RepoCommitEntity {
   String? url;
   String? sha;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  @JSONField(name: "comments_url")
-  String? commentsUrl;
   RepoCommitCommit? commit;
   RepoCommitAuthor? author;
   RepoCommitCommitter? committer;
@@ -112,29 +108,6 @@ class RepoCommitAuthor {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   RepoCommitAuthor();
 
@@ -156,29 +129,6 @@ class RepoCommitCommitter {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   RepoCommitCommitter();
 

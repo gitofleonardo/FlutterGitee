@@ -1,7 +1,5 @@
 import 'package:flutter_gitee/generated/json/base/json_convert_content.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
-import 'package:flutter_gitee/repo/bean/repository_entity.dart';
-import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 
 IssueResultEntity $IssueResultEntityFromJson(Map<String, dynamic> json) {
   final IssueResultEntity issueResultEntity = IssueResultEntity();
@@ -9,46 +7,9 @@ IssueResultEntity $IssueResultEntityFromJson(Map<String, dynamic> json) {
   if (id != null) {
     issueResultEntity.id = id;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    issueResultEntity.url = url;
-  }
-  final String? repositoryUrl =
-      jsonConvert.convert<String>(json['repository_url']);
-  if (repositoryUrl != null) {
-    issueResultEntity.repositoryUrl = repositoryUrl;
-  }
-  final String? labelsUrl = jsonConvert.convert<String>(json['labels_url']);
-  if (labelsUrl != null) {
-    issueResultEntity.labelsUrl = labelsUrl;
-  }
-  final String? commentsUrl = jsonConvert.convert<String>(json['comments_url']);
-  if (commentsUrl != null) {
-    issueResultEntity.commentsUrl = commentsUrl;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    issueResultEntity.htmlUrl = htmlUrl;
-  }
-  final String? parentUrl = jsonConvert.convert<String>(json['parent_url']);
-  if (parentUrl != null) {
-    issueResultEntity.parentUrl = parentUrl;
-  }
   final String? number = jsonConvert.convert<String>(json['number']);
   if (number != null) {
     issueResultEntity.number = number;
-  }
-  final double? parentId = jsonConvert.convert<double>(json['parent_id']);
-  if (parentId != null) {
-    issueResultEntity.parentId = parentId;
-  }
-  final double? depth = jsonConvert.convert<double>(json['depth']);
-  if (depth != null) {
-    issueResultEntity.depth = depth;
-  }
-  final String? state = jsonConvert.convert<String>(json['state']);
-  if (state != null) {
-    issueResultEntity.state = state;
   }
   final String? title = jsonConvert.convert<String>(json['title']);
   if (title != null) {
@@ -58,8 +19,12 @@ IssueResultEntity $IssueResultEntityFromJson(Map<String, dynamic> json) {
   if (body != null) {
     issueResultEntity.body = body;
   }
-  final UserProfileEntity? user =
-      jsonConvert.convert<UserProfileEntity>(json['user']);
+  final String? state = jsonConvert.convert<String>(json['state']);
+  if (state != null) {
+    issueResultEntity.state = state;
+  }
+  final IssueResultEntityUser? user =
+      jsonConvert.convert<IssueResultEntityUser>(json['user']);
   if (user != null) {
     issueResultEntity.user = user;
   }
@@ -68,18 +33,8 @@ IssueResultEntity $IssueResultEntityFromJson(Map<String, dynamic> json) {
   if (labels != null) {
     issueResultEntity.labels = labels;
   }
-  final IssueResultAssignee? assignee =
-      jsonConvert.convert<IssueResultAssignee>(json['assignee']);
-  if (assignee != null) {
-    issueResultEntity.assignee = assignee;
-  }
-  final List<dynamic>? collaborators =
-      jsonConvert.convertListNotNull<dynamic>(json['collaborators']);
-  if (collaborators != null) {
-    issueResultEntity.collaborators = collaborators;
-  }
-  final RepositoryEntity? repository =
-      jsonConvert.convert<RepositoryEntity>(json['repository']);
+  final IssueResultEntityRepository? repository =
+      jsonConvert.convert<IssueResultEntityRepository>(json['repository']);
   if (repository != null) {
     issueResultEntity.repository = repository;
   }
@@ -114,13 +69,9 @@ IssueResultEntity $IssueResultEntityFromJson(Map<String, dynamic> json) {
   if (scheduledTime != null) {
     issueResultEntity.scheduledTime = scheduledTime;
   }
-  final double? comments = jsonConvert.convert<double>(json['comments']);
+  final int? comments = jsonConvert.convert<int>(json['comments']);
   if (comments != null) {
     issueResultEntity.comments = comments;
-  }
-  final double? priority = jsonConvert.convert<double>(json['priority']);
-  if (priority != null) {
-    issueResultEntity.priority = priority;
   }
   final String? issueType = jsonConvert.convert<String>(json['issue_type']);
   if (issueType != null) {
@@ -131,10 +82,6 @@ IssueResultEntity $IssueResultEntityFromJson(Map<String, dynamic> json) {
   if (program != null) {
     issueResultEntity.program = program;
   }
-  final bool? securityHole = jsonConvert.convert<bool>(json['security_hole']);
-  if (securityHole != null) {
-    issueResultEntity.securityHole = securityHole;
-  }
   final String? issueState = jsonConvert.convert<String>(json['issue_state']);
   if (issueState != null) {
     issueResultEntity.issueState = issueState;
@@ -142,11 +89,6 @@ IssueResultEntity $IssueResultEntityFromJson(Map<String, dynamic> json) {
   final String? branch = jsonConvert.convert<String>(json['branch']);
   if (branch != null) {
     issueResultEntity.branch = branch;
-  }
-  final IssueResultIssueTypeDetail? issueTypeDetail = jsonConvert
-      .convert<IssueResultIssueTypeDetail>(json['issue_type_detail']);
-  if (issueTypeDetail != null) {
-    issueResultEntity.issueTypeDetail = issueTypeDetail;
   }
   final IssueResultIssueStateDetail? issueStateDetail = jsonConvert
       .convert<IssueResultIssueStateDetail>(json['issue_state_detail']);
@@ -159,22 +101,12 @@ IssueResultEntity $IssueResultEntityFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> $IssueResultEntityToJson(IssueResultEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['id'] = entity.id;
-  data['url'] = entity.url;
-  data['repository_url'] = entity.repositoryUrl;
-  data['labels_url'] = entity.labelsUrl;
-  data['comments_url'] = entity.commentsUrl;
-  data['html_url'] = entity.htmlUrl;
-  data['parent_url'] = entity.parentUrl;
   data['number'] = entity.number;
-  data['parent_id'] = entity.parentId;
-  data['depth'] = entity.depth;
-  data['state'] = entity.state;
   data['title'] = entity.title;
   data['body'] = entity.body;
+  data['state'] = entity.state;
   data['user'] = entity.user?.toJson();
   data['labels'] = entity.labels?.map((v) => v.toJson()).toList();
-  data['assignee'] = entity.assignee?.toJson();
-  data['collaborators'] = entity.collaborators;
   data['repository'] = entity.repository?.toJson();
   data['milestone'] = entity.milestone?.toJson();
   data['created_at'] = entity.createdAt;
@@ -184,14 +116,71 @@ Map<String, dynamic> $IssueResultEntityToJson(IssueResultEntity entity) {
   data['finished_at'] = entity.finishedAt;
   data['scheduled_time'] = entity.scheduledTime;
   data['comments'] = entity.comments;
-  data['priority'] = entity.priority;
   data['issue_type'] = entity.issueType;
   data['program'] = entity.program?.toJson();
-  data['security_hole'] = entity.securityHole;
   data['issue_state'] = entity.issueState;
   data['branch'] = entity.branch;
-  data['issue_type_detail'] = entity.issueTypeDetail?.toJson();
   data['issue_state_detail'] = entity.issueStateDetail?.toJson();
+  return data;
+}
+
+IssueResultEntityRepository $IssueResultEntityRepositoryFromJson(
+    Map<String, dynamic> json) {
+  final IssueResultEntityRepository issueResultEntityRepository =
+      IssueResultEntityRepository();
+  final double? id = jsonConvert.convert<double>(json['id']);
+  if (id != null) {
+    issueResultEntityRepository.id = id;
+  }
+  final String? fullName = jsonConvert.convert<String>(json['full_name']);
+  if (fullName != null) {
+    issueResultEntityRepository.fullName = fullName;
+  }
+  final String? url = jsonConvert.convert<String>(json['url']);
+  if (url != null) {
+    issueResultEntityRepository.url = url;
+  }
+  return issueResultEntityRepository;
+}
+
+Map<String, dynamic> $IssueResultEntityRepositoryToJson(
+    IssueResultEntityRepository entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['id'] = entity.id;
+  data['full_name'] = entity.fullName;
+  data['url'] = entity.url;
+  return data;
+}
+
+IssueResultEntityUser $IssueResultEntityUserFromJson(
+    Map<String, dynamic> json) {
+  final IssueResultEntityUser issueResultEntityUser = IssueResultEntityUser();
+  final int? id = jsonConvert.convert<int>(json['id']);
+  if (id != null) {
+    issueResultEntityUser.id = id;
+  }
+  final String? login = jsonConvert.convert<String>(json['login']);
+  if (login != null) {
+    issueResultEntityUser.login = login;
+  }
+  final String? name = jsonConvert.convert<String>(json['name']);
+  if (name != null) {
+    issueResultEntityUser.name = name;
+  }
+  final String? avatarUrl = jsonConvert.convert<String>(json['avatar_url']);
+  if (avatarUrl != null) {
+    issueResultEntityUser.avatarUrl = avatarUrl;
+  }
+  return issueResultEntityUser;
+}
+
+Map<String, dynamic> $IssueResultEntityUserToJson(
+    IssueResultEntityUser entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['id'] = entity.id;
+  data['login'] = entity.login;
+  data['name'] = entity.name;
+  data['avatar_url'] = entity.avatarUrl;
   return data;
 }
 
@@ -208,10 +197,6 @@ IssueResultLabel $IssueResultLabelFromJson(Map<String, dynamic> json) {
   final String? color = jsonConvert.convert<String>(json['color']);
   if (color != null) {
     issueResultLabel.color = color;
-  }
-  final int? repositoryId = jsonConvert.convert<int>(json['repository_id']);
-  if (repositoryId != null) {
-    issueResultLabel.repositoryId = repositoryId;
   }
   final String? url = jsonConvert.convert<String>(json['url']);
   if (url != null) {
@@ -233,7 +218,6 @@ Map<String, dynamic> $IssueResultLabelToJson(IssueResultLabel entity) {
   data['id'] = entity.id;
   data['name'] = entity.name;
   data['color'] = entity.color;
-  data['repository_id'] = entity.repositoryId;
   data['url'] = entity.url;
   data['created_at'] = entity.createdAt;
   data['updated_at'] = entity.updatedAt;
@@ -258,63 +242,6 @@ IssueResultAssignee $IssueResultAssigneeFromJson(Map<String, dynamic> json) {
   if (avatarUrl != null) {
     issueResultAssignee.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    issueResultAssignee.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    issueResultAssignee.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    issueResultAssignee.remark = remark;
-  }
-  final String? followersUrl =
-      jsonConvert.convert<String>(json['followers_url']);
-  if (followersUrl != null) {
-    issueResultAssignee.followersUrl = followersUrl;
-  }
-  final String? followingUrl =
-      jsonConvert.convert<String>(json['following_url']);
-  if (followingUrl != null) {
-    issueResultAssignee.followingUrl = followingUrl;
-  }
-  final String? gistsUrl = jsonConvert.convert<String>(json['gists_url']);
-  if (gistsUrl != null) {
-    issueResultAssignee.gistsUrl = gistsUrl;
-  }
-  final String? starredUrl = jsonConvert.convert<String>(json['starred_url']);
-  if (starredUrl != null) {
-    issueResultAssignee.starredUrl = starredUrl;
-  }
-  final String? subscriptionsUrl =
-      jsonConvert.convert<String>(json['subscriptions_url']);
-  if (subscriptionsUrl != null) {
-    issueResultAssignee.subscriptionsUrl = subscriptionsUrl;
-  }
-  final String? organizationsUrl =
-      jsonConvert.convert<String>(json['organizations_url']);
-  if (organizationsUrl != null) {
-    issueResultAssignee.organizationsUrl = organizationsUrl;
-  }
-  final String? reposUrl = jsonConvert.convert<String>(json['repos_url']);
-  if (reposUrl != null) {
-    issueResultAssignee.reposUrl = reposUrl;
-  }
-  final String? eventsUrl = jsonConvert.convert<String>(json['events_url']);
-  if (eventsUrl != null) {
-    issueResultAssignee.eventsUrl = eventsUrl;
-  }
-  final String? receivedEventsUrl =
-      jsonConvert.convert<String>(json['received_events_url']);
-  if (receivedEventsUrl != null) {
-    issueResultAssignee.receivedEventsUrl = receivedEventsUrl;
-  }
-  final String? type = jsonConvert.convert<String>(json['type']);
-  if (type != null) {
-    issueResultAssignee.type = type;
-  }
   return issueResultAssignee;
 }
 
@@ -324,19 +251,6 @@ Map<String, dynamic> $IssueResultAssigneeToJson(IssueResultAssignee entity) {
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
-  data['followers_url'] = entity.followersUrl;
-  data['following_url'] = entity.followingUrl;
-  data['gists_url'] = entity.gistsUrl;
-  data['starred_url'] = entity.starredUrl;
-  data['subscriptions_url'] = entity.subscriptionsUrl;
-  data['organizations_url'] = entity.organizationsUrl;
-  data['repos_url'] = entity.reposUrl;
-  data['events_url'] = entity.eventsUrl;
-  data['received_events_url'] = entity.receivedEventsUrl;
-  data['type'] = entity.type;
   return data;
 }
 
@@ -474,63 +388,6 @@ IssueResultProgramAssignee $IssueResultProgramAssigneeFromJson(
   if (avatarUrl != null) {
     issueResultProgramAssignee.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    issueResultProgramAssignee.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    issueResultProgramAssignee.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    issueResultProgramAssignee.remark = remark;
-  }
-  final String? followersUrl =
-      jsonConvert.convert<String>(json['followers_url']);
-  if (followersUrl != null) {
-    issueResultProgramAssignee.followersUrl = followersUrl;
-  }
-  final String? followingUrl =
-      jsonConvert.convert<String>(json['following_url']);
-  if (followingUrl != null) {
-    issueResultProgramAssignee.followingUrl = followingUrl;
-  }
-  final String? gistsUrl = jsonConvert.convert<String>(json['gists_url']);
-  if (gistsUrl != null) {
-    issueResultProgramAssignee.gistsUrl = gistsUrl;
-  }
-  final String? starredUrl = jsonConvert.convert<String>(json['starred_url']);
-  if (starredUrl != null) {
-    issueResultProgramAssignee.starredUrl = starredUrl;
-  }
-  final String? subscriptionsUrl =
-      jsonConvert.convert<String>(json['subscriptions_url']);
-  if (subscriptionsUrl != null) {
-    issueResultProgramAssignee.subscriptionsUrl = subscriptionsUrl;
-  }
-  final String? organizationsUrl =
-      jsonConvert.convert<String>(json['organizations_url']);
-  if (organizationsUrl != null) {
-    issueResultProgramAssignee.organizationsUrl = organizationsUrl;
-  }
-  final String? reposUrl = jsonConvert.convert<String>(json['repos_url']);
-  if (reposUrl != null) {
-    issueResultProgramAssignee.reposUrl = reposUrl;
-  }
-  final String? eventsUrl = jsonConvert.convert<String>(json['events_url']);
-  if (eventsUrl != null) {
-    issueResultProgramAssignee.eventsUrl = eventsUrl;
-  }
-  final String? receivedEventsUrl =
-      jsonConvert.convert<String>(json['received_events_url']);
-  if (receivedEventsUrl != null) {
-    issueResultProgramAssignee.receivedEventsUrl = receivedEventsUrl;
-  }
-  final String? type = jsonConvert.convert<String>(json['type']);
-  if (type != null) {
-    issueResultProgramAssignee.type = type;
-  }
   return issueResultProgramAssignee;
 }
 
@@ -541,19 +398,6 @@ Map<String, dynamic> $IssueResultProgramAssigneeToJson(
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
-  data['followers_url'] = entity.followersUrl;
-  data['following_url'] = entity.followingUrl;
-  data['gists_url'] = entity.gistsUrl;
-  data['starred_url'] = entity.starredUrl;
-  data['subscriptions_url'] = entity.subscriptionsUrl;
-  data['organizations_url'] = entity.organizationsUrl;
-  data['repos_url'] = entity.reposUrl;
-  data['events_url'] = entity.eventsUrl;
-  data['received_events_url'] = entity.receivedEventsUrl;
-  data['type'] = entity.type;
   return data;
 }
 
@@ -577,63 +421,6 @@ IssueResultProgramAuthor $IssueResultProgramAuthorFromJson(
   if (avatarUrl != null) {
     issueResultProgramAuthor.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    issueResultProgramAuthor.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    issueResultProgramAuthor.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    issueResultProgramAuthor.remark = remark;
-  }
-  final String? followersUrl =
-      jsonConvert.convert<String>(json['followers_url']);
-  if (followersUrl != null) {
-    issueResultProgramAuthor.followersUrl = followersUrl;
-  }
-  final String? followingUrl =
-      jsonConvert.convert<String>(json['following_url']);
-  if (followingUrl != null) {
-    issueResultProgramAuthor.followingUrl = followingUrl;
-  }
-  final String? gistsUrl = jsonConvert.convert<String>(json['gists_url']);
-  if (gistsUrl != null) {
-    issueResultProgramAuthor.gistsUrl = gistsUrl;
-  }
-  final String? starredUrl = jsonConvert.convert<String>(json['starred_url']);
-  if (starredUrl != null) {
-    issueResultProgramAuthor.starredUrl = starredUrl;
-  }
-  final String? subscriptionsUrl =
-      jsonConvert.convert<String>(json['subscriptions_url']);
-  if (subscriptionsUrl != null) {
-    issueResultProgramAuthor.subscriptionsUrl = subscriptionsUrl;
-  }
-  final String? organizationsUrl =
-      jsonConvert.convert<String>(json['organizations_url']);
-  if (organizationsUrl != null) {
-    issueResultProgramAuthor.organizationsUrl = organizationsUrl;
-  }
-  final String? reposUrl = jsonConvert.convert<String>(json['repos_url']);
-  if (reposUrl != null) {
-    issueResultProgramAuthor.reposUrl = reposUrl;
-  }
-  final String? eventsUrl = jsonConvert.convert<String>(json['events_url']);
-  if (eventsUrl != null) {
-    issueResultProgramAuthor.eventsUrl = eventsUrl;
-  }
-  final String? receivedEventsUrl =
-      jsonConvert.convert<String>(json['received_events_url']);
-  if (receivedEventsUrl != null) {
-    issueResultProgramAuthor.receivedEventsUrl = receivedEventsUrl;
-  }
-  final String? type = jsonConvert.convert<String>(json['type']);
-  if (type != null) {
-    issueResultProgramAuthor.type = type;
-  }
   return issueResultProgramAuthor;
 }
 
@@ -644,19 +431,6 @@ Map<String, dynamic> $IssueResultProgramAuthorToJson(
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
-  data['followers_url'] = entity.followersUrl;
-  data['following_url'] = entity.followingUrl;
-  data['gists_url'] = entity.gistsUrl;
-  data['starred_url'] = entity.starredUrl;
-  data['subscriptions_url'] = entity.subscriptionsUrl;
-  data['organizations_url'] = entity.organizationsUrl;
-  data['repos_url'] = entity.reposUrl;
-  data['events_url'] = entity.eventsUrl;
-  data['received_events_url'] = entity.receivedEventsUrl;
-  data['type'] = entity.type;
   return data;
 }
 

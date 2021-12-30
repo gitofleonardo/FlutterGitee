@@ -8,8 +8,6 @@ class BranchEntity {
   String? name;
   BranchCommit? commit;
   bool? protected;
-  @JSONField(name: "protection_url")
-  String? protectionUrl;
 
   BranchEntity();
 

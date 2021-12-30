@@ -110,12 +110,6 @@ class JsonConvert {
     if (type == (CommitDetailCommitTree).toString()) {
       return CommitDetailCommitTree.fromJson(json) as M;
     }
-    if (type == (CommitDetailParents).toString()) {
-      return CommitDetailParents.fromJson(json) as M;
-    }
-    if (type == (CommitDetailStats).toString()) {
-      return CommitDetailStats.fromJson(json) as M;
-    }
     if (type == (CommitDetailFiles).toString()) {
       return CommitDetailFiles.fromJson(json) as M;
     }
@@ -133,6 +127,12 @@ class JsonConvert {
     }
     if (type == (IssueResultEntity).toString()) {
       return IssueResultEntity.fromJson(json) as M;
+    }
+    if (type == (IssueResultEntityRepository).toString()) {
+      return IssueResultEntityRepository.fromJson(json) as M;
+    }
+    if (type == (IssueResultEntityUser).toString()) {
+      return IssueResultEntityUser.fromJson(json) as M;
     }
     if (type == (IssueResultLabel).toString()) {
       return IssueResultLabel.fromJson(json) as M;
@@ -302,6 +302,9 @@ class JsonConvert {
     if (type == (EventResultPayloadComment).toString()) {
       return EventResultPayloadComment.fromJson(json) as M;
     }
+    if (type == (EventResultPayloadCommentUser).toString()) {
+      return EventResultPayloadCommentUser.fromJson(json) as M;
+    }
     if (type == (EventResultPayloadIssue).toString()) {
       return EventResultPayloadIssue.fromJson(json) as M;
     }
@@ -370,16 +373,6 @@ class JsonConvert {
               (e) => CommitDetailCommitTree.fromJson(e))
           .toList() as M;
     }
-    if (<CommitDetailParents>[] is M) {
-      return data
-          .map<CommitDetailParents>((e) => CommitDetailParents.fromJson(e))
-          .toList() as M;
-    }
-    if (<CommitDetailStats>[] is M) {
-      return data
-          .map<CommitDetailStats>((e) => CommitDetailStats.fromJson(e))
-          .toList() as M;
-    }
     if (<CommitDetailFiles>[] is M) {
       return data
           .map<CommitDetailFiles>((e) => CommitDetailFiles.fromJson(e))
@@ -409,6 +402,17 @@ class JsonConvert {
     if (<IssueResultEntity>[] is M) {
       return data
           .map<IssueResultEntity>((e) => IssueResultEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<IssueResultEntityRepository>[] is M) {
+      return data
+          .map<IssueResultEntityRepository>(
+              (e) => IssueResultEntityRepository.fromJson(e))
+          .toList() as M;
+    }
+    if (<IssueResultEntityUser>[] is M) {
+      return data
+          .map<IssueResultEntityUser>((e) => IssueResultEntityUser.fromJson(e))
           .toList() as M;
     }
     if (<IssueResultLabel>[] is M) {
@@ -705,6 +709,12 @@ class JsonConvert {
       return data
           .map<EventResultPayloadComment>(
               (e) => EventResultPayloadComment.fromJson(e))
+          .toList() as M;
+    }
+    if (<EventResultPayloadCommentUser>[] is M) {
+      return data
+          .map<EventResultPayloadCommentUser>(
+              (e) => EventResultPayloadCommentUser.fromJson(e))
           .toList() as M;
     }
     if (<EventResultPayloadIssue>[] is M) {

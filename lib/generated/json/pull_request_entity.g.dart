@@ -11,40 +11,6 @@ PullRequestEntity $PullRequestEntityFromJson(Map<String, dynamic> json) {
   if (url != null) {
     pullRequestEntity.url = url;
   }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    pullRequestEntity.htmlUrl = htmlUrl;
-  }
-  final String? diffUrl = jsonConvert.convert<String>(json['diff_url']);
-  if (diffUrl != null) {
-    pullRequestEntity.diffUrl = diffUrl;
-  }
-  final String? patchUrl = jsonConvert.convert<String>(json['patch_url']);
-  if (patchUrl != null) {
-    pullRequestEntity.patchUrl = patchUrl;
-  }
-  final String? issueUrl = jsonConvert.convert<String>(json['issue_url']);
-  if (issueUrl != null) {
-    pullRequestEntity.issueUrl = issueUrl;
-  }
-  final String? commitsUrl = jsonConvert.convert<String>(json['commits_url']);
-  if (commitsUrl != null) {
-    pullRequestEntity.commitsUrl = commitsUrl;
-  }
-  final String? reviewCommentsUrl =
-      jsonConvert.convert<String>(json['review_comments_url']);
-  if (reviewCommentsUrl != null) {
-    pullRequestEntity.reviewCommentsUrl = reviewCommentsUrl;
-  }
-  final String? reviewCommentUrl =
-      jsonConvert.convert<String>(json['review_comment_url']);
-  if (reviewCommentUrl != null) {
-    pullRequestEntity.reviewCommentUrl = reviewCommentUrl;
-  }
-  final String? commentsUrl = jsonConvert.convert<String>(json['comments_url']);
-  if (commentsUrl != null) {
-    pullRequestEntity.commentsUrl = commentsUrl;
-  }
   final double? number = jsonConvert.convert<double>(json['number']);
   if (number != null) {
     pullRequestEntity.number = number;
@@ -132,14 +98,6 @@ Map<String, dynamic> $PullRequestEntityToJson(PullRequestEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['id'] = entity.id;
   data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['diff_url'] = entity.diffUrl;
-  data['patch_url'] = entity.patchUrl;
-  data['issue_url'] = entity.issueUrl;
-  data['commits_url'] = entity.commitsUrl;
-  data['review_comments_url'] = entity.reviewCommentsUrl;
-  data['review_comment_url'] = entity.reviewCommentUrl;
-  data['comments_url'] = entity.commentsUrl;
   data['number'] = entity.number;
   data['state'] = entity.state;
   data['title'] = entity.title;
@@ -179,10 +137,6 @@ PullRequestLabel $PullRequestLabelFromJson(Map<String, dynamic> json) {
   if (repositoryId != null) {
     pullRequestLabel.repositoryId = repositoryId;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    pullRequestLabel.url = url;
-  }
   final String? createdAt = jsonConvert.convert<String>(json['created_at']);
   if (createdAt != null) {
     pullRequestLabel.createdAt = createdAt;
@@ -200,7 +154,6 @@ Map<String, dynamic> $PullRequestLabelToJson(PullRequestLabel entity) {
   data['name'] = entity.name;
   data['color'] = entity.color;
   data['repository_id'] = entity.repositoryId;
-  data['url'] = entity.url;
   data['created_at'] = entity.createdAt;
   data['updated_at'] = entity.updatedAt;
   return data;
@@ -261,63 +214,6 @@ PullRequestHeadUser $PullRequestHeadUserFromJson(Map<String, dynamic> json) {
   if (avatarUrl != null) {
     pullRequestHeadUser.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    pullRequestHeadUser.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    pullRequestHeadUser.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    pullRequestHeadUser.remark = remark;
-  }
-  final String? followersUrl =
-      jsonConvert.convert<String>(json['followers_url']);
-  if (followersUrl != null) {
-    pullRequestHeadUser.followersUrl = followersUrl;
-  }
-  final String? followingUrl =
-      jsonConvert.convert<String>(json['following_url']);
-  if (followingUrl != null) {
-    pullRequestHeadUser.followingUrl = followingUrl;
-  }
-  final String? gistsUrl = jsonConvert.convert<String>(json['gists_url']);
-  if (gistsUrl != null) {
-    pullRequestHeadUser.gistsUrl = gistsUrl;
-  }
-  final String? starredUrl = jsonConvert.convert<String>(json['starred_url']);
-  if (starredUrl != null) {
-    pullRequestHeadUser.starredUrl = starredUrl;
-  }
-  final String? subscriptionsUrl =
-      jsonConvert.convert<String>(json['subscriptions_url']);
-  if (subscriptionsUrl != null) {
-    pullRequestHeadUser.subscriptionsUrl = subscriptionsUrl;
-  }
-  final String? organizationsUrl =
-      jsonConvert.convert<String>(json['organizations_url']);
-  if (organizationsUrl != null) {
-    pullRequestHeadUser.organizationsUrl = organizationsUrl;
-  }
-  final String? reposUrl = jsonConvert.convert<String>(json['repos_url']);
-  if (reposUrl != null) {
-    pullRequestHeadUser.reposUrl = reposUrl;
-  }
-  final String? eventsUrl = jsonConvert.convert<String>(json['events_url']);
-  if (eventsUrl != null) {
-    pullRequestHeadUser.eventsUrl = eventsUrl;
-  }
-  final String? receivedEventsUrl =
-      jsonConvert.convert<String>(json['received_events_url']);
-  if (receivedEventsUrl != null) {
-    pullRequestHeadUser.receivedEventsUrl = receivedEventsUrl;
-  }
-  final String? type = jsonConvert.convert<String>(json['type']);
-  if (type != null) {
-    pullRequestHeadUser.type = type;
-  }
   return pullRequestHeadUser;
 }
 
@@ -327,19 +223,6 @@ Map<String, dynamic> $PullRequestHeadUserToJson(PullRequestHeadUser entity) {
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
-  data['followers_url'] = entity.followersUrl;
-  data['following_url'] = entity.followingUrl;
-  data['gists_url'] = entity.gistsUrl;
-  data['starred_url'] = entity.starredUrl;
-  data['subscriptions_url'] = entity.subscriptionsUrl;
-  data['organizations_url'] = entity.organizationsUrl;
-  data['repos_url'] = entity.reposUrl;
-  data['events_url'] = entity.eventsUrl;
-  data['received_events_url'] = entity.receivedEventsUrl;
-  data['type'] = entity.type;
   return data;
 }
 
@@ -353,65 +236,6 @@ PullRequestHeadRepo $PullRequestHeadRepoFromJson(Map<String, dynamic> json) {
   if (fullName != null) {
     pullRequestHeadRepo.fullName = fullName;
   }
-  final String? humanName = jsonConvert.convert<String>(json['human_name']);
-  if (humanName != null) {
-    pullRequestHeadRepo.humanName = humanName;
-  }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    pullRequestHeadRepo.url = url;
-  }
-  final PullRequestHeadRepoNamespace? namespace =
-      jsonConvert.convert<PullRequestHeadRepoNamespace>(json['namespace']);
-  if (namespace != null) {
-    pullRequestHeadRepo.namespace = namespace;
-  }
-  final String? path = jsonConvert.convert<String>(json['path']);
-  if (path != null) {
-    pullRequestHeadRepo.path = path;
-  }
-  final String? name = jsonConvert.convert<String>(json['name']);
-  if (name != null) {
-    pullRequestHeadRepo.name = name;
-  }
-  final PullRequestHeadRepoOwner? owner =
-      jsonConvert.convert<PullRequestHeadRepoOwner>(json['owner']);
-  if (owner != null) {
-    pullRequestHeadRepo.owner = owner;
-  }
-  final PullRequestHeadRepoAssigner? assigner =
-      jsonConvert.convert<PullRequestHeadRepoAssigner>(json['assigner']);
-  if (assigner != null) {
-    pullRequestHeadRepo.assigner = assigner;
-  }
-  final String? description = jsonConvert.convert<String>(json['description']);
-  if (description != null) {
-    pullRequestHeadRepo.description = description;
-  }
-  final bool? private = jsonConvert.convert<bool>(json['private']);
-  if (private != null) {
-    pullRequestHeadRepo.private = private;
-  }
-  final bool? public = jsonConvert.convert<bool>(json['public']);
-  if (public != null) {
-    pullRequestHeadRepo.public = public;
-  }
-  final bool? internal = jsonConvert.convert<bool>(json['internal']);
-  if (internal != null) {
-    pullRequestHeadRepo.internal = internal;
-  }
-  final bool? fork = jsonConvert.convert<bool>(json['fork']);
-  if (fork != null) {
-    pullRequestHeadRepo.fork = fork;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    pullRequestHeadRepo.htmlUrl = htmlUrl;
-  }
-  final String? sshUrl = jsonConvert.convert<String>(json['ssh_url']);
-  if (sshUrl != null) {
-    pullRequestHeadRepo.sshUrl = sshUrl;
-  }
   return pullRequestHeadRepo;
 }
 
@@ -419,20 +243,6 @@ Map<String, dynamic> $PullRequestHeadRepoToJson(PullRequestHeadRepo entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['id'] = entity.id;
   data['full_name'] = entity.fullName;
-  data['human_name'] = entity.humanName;
-  data['url'] = entity.url;
-  data['namespace'] = entity.namespace?.toJson();
-  data['path'] = entity.path;
-  data['name'] = entity.name;
-  data['owner'] = entity.owner?.toJson();
-  data['assigner'] = entity.assigner?.toJson();
-  data['description'] = entity.description;
-  data['private'] = entity.private;
-  data['public'] = entity.public;
-  data['internal'] = entity.internal;
-  data['fork'] = entity.fork;
-  data['html_url'] = entity.htmlUrl;
-  data['ssh_url'] = entity.sshUrl;
   return data;
 }
 
@@ -456,10 +266,6 @@ PullRequestHeadRepoNamespace $PullRequestHeadRepoNamespaceFromJson(
   if (path != null) {
     pullRequestHeadRepoNamespace.path = path;
   }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    pullRequestHeadRepoNamespace.htmlUrl = htmlUrl;
-  }
   return pullRequestHeadRepoNamespace;
 }
 
@@ -470,7 +276,6 @@ Map<String, dynamic> $PullRequestHeadRepoNamespaceToJson(
   data['type'] = entity.type;
   data['name'] = entity.name;
   data['path'] = entity.path;
-  data['html_url'] = entity.htmlUrl;
   return data;
 }
 
@@ -494,63 +299,6 @@ PullRequestHeadRepoOwner $PullRequestHeadRepoOwnerFromJson(
   if (avatarUrl != null) {
     pullRequestHeadRepoOwner.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    pullRequestHeadRepoOwner.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    pullRequestHeadRepoOwner.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    pullRequestHeadRepoOwner.remark = remark;
-  }
-  final String? followersUrl =
-      jsonConvert.convert<String>(json['followers_url']);
-  if (followersUrl != null) {
-    pullRequestHeadRepoOwner.followersUrl = followersUrl;
-  }
-  final String? followingUrl =
-      jsonConvert.convert<String>(json['following_url']);
-  if (followingUrl != null) {
-    pullRequestHeadRepoOwner.followingUrl = followingUrl;
-  }
-  final String? gistsUrl = jsonConvert.convert<String>(json['gists_url']);
-  if (gistsUrl != null) {
-    pullRequestHeadRepoOwner.gistsUrl = gistsUrl;
-  }
-  final String? starredUrl = jsonConvert.convert<String>(json['starred_url']);
-  if (starredUrl != null) {
-    pullRequestHeadRepoOwner.starredUrl = starredUrl;
-  }
-  final String? subscriptionsUrl =
-      jsonConvert.convert<String>(json['subscriptions_url']);
-  if (subscriptionsUrl != null) {
-    pullRequestHeadRepoOwner.subscriptionsUrl = subscriptionsUrl;
-  }
-  final String? organizationsUrl =
-      jsonConvert.convert<String>(json['organizations_url']);
-  if (organizationsUrl != null) {
-    pullRequestHeadRepoOwner.organizationsUrl = organizationsUrl;
-  }
-  final String? reposUrl = jsonConvert.convert<String>(json['repos_url']);
-  if (reposUrl != null) {
-    pullRequestHeadRepoOwner.reposUrl = reposUrl;
-  }
-  final String? eventsUrl = jsonConvert.convert<String>(json['events_url']);
-  if (eventsUrl != null) {
-    pullRequestHeadRepoOwner.eventsUrl = eventsUrl;
-  }
-  final String? receivedEventsUrl =
-      jsonConvert.convert<String>(json['received_events_url']);
-  if (receivedEventsUrl != null) {
-    pullRequestHeadRepoOwner.receivedEventsUrl = receivedEventsUrl;
-  }
-  final String? type = jsonConvert.convert<String>(json['type']);
-  if (type != null) {
-    pullRequestHeadRepoOwner.type = type;
-  }
   return pullRequestHeadRepoOwner;
 }
 
@@ -561,19 +309,6 @@ Map<String, dynamic> $PullRequestHeadRepoOwnerToJson(
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
-  data['followers_url'] = entity.followersUrl;
-  data['following_url'] = entity.followingUrl;
-  data['gists_url'] = entity.gistsUrl;
-  data['starred_url'] = entity.starredUrl;
-  data['subscriptions_url'] = entity.subscriptionsUrl;
-  data['organizations_url'] = entity.organizationsUrl;
-  data['repos_url'] = entity.reposUrl;
-  data['events_url'] = entity.eventsUrl;
-  data['received_events_url'] = entity.receivedEventsUrl;
-  data['type'] = entity.type;
   return data;
 }
 
@@ -597,63 +332,6 @@ PullRequestHeadRepoAssigner $PullRequestHeadRepoAssignerFromJson(
   if (avatarUrl != null) {
     pullRequestHeadRepoAssigner.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    pullRequestHeadRepoAssigner.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    pullRequestHeadRepoAssigner.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    pullRequestHeadRepoAssigner.remark = remark;
-  }
-  final String? followersUrl =
-      jsonConvert.convert<String>(json['followers_url']);
-  if (followersUrl != null) {
-    pullRequestHeadRepoAssigner.followersUrl = followersUrl;
-  }
-  final String? followingUrl =
-      jsonConvert.convert<String>(json['following_url']);
-  if (followingUrl != null) {
-    pullRequestHeadRepoAssigner.followingUrl = followingUrl;
-  }
-  final String? gistsUrl = jsonConvert.convert<String>(json['gists_url']);
-  if (gistsUrl != null) {
-    pullRequestHeadRepoAssigner.gistsUrl = gistsUrl;
-  }
-  final String? starredUrl = jsonConvert.convert<String>(json['starred_url']);
-  if (starredUrl != null) {
-    pullRequestHeadRepoAssigner.starredUrl = starredUrl;
-  }
-  final String? subscriptionsUrl =
-      jsonConvert.convert<String>(json['subscriptions_url']);
-  if (subscriptionsUrl != null) {
-    pullRequestHeadRepoAssigner.subscriptionsUrl = subscriptionsUrl;
-  }
-  final String? organizationsUrl =
-      jsonConvert.convert<String>(json['organizations_url']);
-  if (organizationsUrl != null) {
-    pullRequestHeadRepoAssigner.organizationsUrl = organizationsUrl;
-  }
-  final String? reposUrl = jsonConvert.convert<String>(json['repos_url']);
-  if (reposUrl != null) {
-    pullRequestHeadRepoAssigner.reposUrl = reposUrl;
-  }
-  final String? eventsUrl = jsonConvert.convert<String>(json['events_url']);
-  if (eventsUrl != null) {
-    pullRequestHeadRepoAssigner.eventsUrl = eventsUrl;
-  }
-  final String? receivedEventsUrl =
-      jsonConvert.convert<String>(json['received_events_url']);
-  if (receivedEventsUrl != null) {
-    pullRequestHeadRepoAssigner.receivedEventsUrl = receivedEventsUrl;
-  }
-  final String? type = jsonConvert.convert<String>(json['type']);
-  if (type != null) {
-    pullRequestHeadRepoAssigner.type = type;
-  }
   return pullRequestHeadRepoAssigner;
 }
 
@@ -664,19 +342,6 @@ Map<String, dynamic> $PullRequestHeadRepoAssignerToJson(
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
-  data['followers_url'] = entity.followersUrl;
-  data['following_url'] = entity.followingUrl;
-  data['gists_url'] = entity.gistsUrl;
-  data['starred_url'] = entity.starredUrl;
-  data['subscriptions_url'] = entity.subscriptionsUrl;
-  data['organizations_url'] = entity.organizationsUrl;
-  data['repos_url'] = entity.reposUrl;
-  data['events_url'] = entity.eventsUrl;
-  data['received_events_url'] = entity.receivedEventsUrl;
-  data['type'] = entity.type;
   return data;
 }
 
@@ -735,63 +400,6 @@ PullRequestBaseUser $PullRequestBaseUserFromJson(Map<String, dynamic> json) {
   if (avatarUrl != null) {
     pullRequestBaseUser.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    pullRequestBaseUser.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    pullRequestBaseUser.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    pullRequestBaseUser.remark = remark;
-  }
-  final String? followersUrl =
-      jsonConvert.convert<String>(json['followers_url']);
-  if (followersUrl != null) {
-    pullRequestBaseUser.followersUrl = followersUrl;
-  }
-  final String? followingUrl =
-      jsonConvert.convert<String>(json['following_url']);
-  if (followingUrl != null) {
-    pullRequestBaseUser.followingUrl = followingUrl;
-  }
-  final String? gistsUrl = jsonConvert.convert<String>(json['gists_url']);
-  if (gistsUrl != null) {
-    pullRequestBaseUser.gistsUrl = gistsUrl;
-  }
-  final String? starredUrl = jsonConvert.convert<String>(json['starred_url']);
-  if (starredUrl != null) {
-    pullRequestBaseUser.starredUrl = starredUrl;
-  }
-  final String? subscriptionsUrl =
-      jsonConvert.convert<String>(json['subscriptions_url']);
-  if (subscriptionsUrl != null) {
-    pullRequestBaseUser.subscriptionsUrl = subscriptionsUrl;
-  }
-  final String? organizationsUrl =
-      jsonConvert.convert<String>(json['organizations_url']);
-  if (organizationsUrl != null) {
-    pullRequestBaseUser.organizationsUrl = organizationsUrl;
-  }
-  final String? reposUrl = jsonConvert.convert<String>(json['repos_url']);
-  if (reposUrl != null) {
-    pullRequestBaseUser.reposUrl = reposUrl;
-  }
-  final String? eventsUrl = jsonConvert.convert<String>(json['events_url']);
-  if (eventsUrl != null) {
-    pullRequestBaseUser.eventsUrl = eventsUrl;
-  }
-  final String? receivedEventsUrl =
-      jsonConvert.convert<String>(json['received_events_url']);
-  if (receivedEventsUrl != null) {
-    pullRequestBaseUser.receivedEventsUrl = receivedEventsUrl;
-  }
-  final String? type = jsonConvert.convert<String>(json['type']);
-  if (type != null) {
-    pullRequestBaseUser.type = type;
-  }
   return pullRequestBaseUser;
 }
 
@@ -801,19 +409,6 @@ Map<String, dynamic> $PullRequestBaseUserToJson(PullRequestBaseUser entity) {
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
-  data['followers_url'] = entity.followersUrl;
-  data['following_url'] = entity.followingUrl;
-  data['gists_url'] = entity.gistsUrl;
-  data['starred_url'] = entity.starredUrl;
-  data['subscriptions_url'] = entity.subscriptionsUrl;
-  data['organizations_url'] = entity.organizationsUrl;
-  data['repos_url'] = entity.reposUrl;
-  data['events_url'] = entity.eventsUrl;
-  data['received_events_url'] = entity.receivedEventsUrl;
-  data['type'] = entity.type;
   return data;
 }
 
@@ -878,14 +473,6 @@ PullRequestBaseRepo $PullRequestBaseRepoFromJson(Map<String, dynamic> json) {
   if (fork != null) {
     pullRequestBaseRepo.fork = fork;
   }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    pullRequestBaseRepo.htmlUrl = htmlUrl;
-  }
-  final String? sshUrl = jsonConvert.convert<String>(json['ssh_url']);
-  if (sshUrl != null) {
-    pullRequestBaseRepo.sshUrl = sshUrl;
-  }
   return pullRequestBaseRepo;
 }
 
@@ -905,8 +492,6 @@ Map<String, dynamic> $PullRequestBaseRepoToJson(PullRequestBaseRepo entity) {
   data['public'] = entity.public;
   data['internal'] = entity.internal;
   data['fork'] = entity.fork;
-  data['html_url'] = entity.htmlUrl;
-  data['ssh_url'] = entity.sshUrl;
   return data;
 }
 
@@ -930,10 +515,6 @@ PullRequestBaseRepoNamespace $PullRequestBaseRepoNamespaceFromJson(
   if (path != null) {
     pullRequestBaseRepoNamespace.path = path;
   }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    pullRequestBaseRepoNamespace.htmlUrl = htmlUrl;
-  }
   return pullRequestBaseRepoNamespace;
 }
 
@@ -944,7 +525,6 @@ Map<String, dynamic> $PullRequestBaseRepoNamespaceToJson(
   data['type'] = entity.type;
   data['name'] = entity.name;
   data['path'] = entity.path;
-  data['html_url'] = entity.htmlUrl;
   return data;
 }
 
@@ -968,63 +548,6 @@ PullRequestBaseRepoOwner $PullRequestBaseRepoOwnerFromJson(
   if (avatarUrl != null) {
     pullRequestBaseRepoOwner.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    pullRequestBaseRepoOwner.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    pullRequestBaseRepoOwner.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    pullRequestBaseRepoOwner.remark = remark;
-  }
-  final String? followersUrl =
-      jsonConvert.convert<String>(json['followers_url']);
-  if (followersUrl != null) {
-    pullRequestBaseRepoOwner.followersUrl = followersUrl;
-  }
-  final String? followingUrl =
-      jsonConvert.convert<String>(json['following_url']);
-  if (followingUrl != null) {
-    pullRequestBaseRepoOwner.followingUrl = followingUrl;
-  }
-  final String? gistsUrl = jsonConvert.convert<String>(json['gists_url']);
-  if (gistsUrl != null) {
-    pullRequestBaseRepoOwner.gistsUrl = gistsUrl;
-  }
-  final String? starredUrl = jsonConvert.convert<String>(json['starred_url']);
-  if (starredUrl != null) {
-    pullRequestBaseRepoOwner.starredUrl = starredUrl;
-  }
-  final String? subscriptionsUrl =
-      jsonConvert.convert<String>(json['subscriptions_url']);
-  if (subscriptionsUrl != null) {
-    pullRequestBaseRepoOwner.subscriptionsUrl = subscriptionsUrl;
-  }
-  final String? organizationsUrl =
-      jsonConvert.convert<String>(json['organizations_url']);
-  if (organizationsUrl != null) {
-    pullRequestBaseRepoOwner.organizationsUrl = organizationsUrl;
-  }
-  final String? reposUrl = jsonConvert.convert<String>(json['repos_url']);
-  if (reposUrl != null) {
-    pullRequestBaseRepoOwner.reposUrl = reposUrl;
-  }
-  final String? eventsUrl = jsonConvert.convert<String>(json['events_url']);
-  if (eventsUrl != null) {
-    pullRequestBaseRepoOwner.eventsUrl = eventsUrl;
-  }
-  final String? receivedEventsUrl =
-      jsonConvert.convert<String>(json['received_events_url']);
-  if (receivedEventsUrl != null) {
-    pullRequestBaseRepoOwner.receivedEventsUrl = receivedEventsUrl;
-  }
-  final String? type = jsonConvert.convert<String>(json['type']);
-  if (type != null) {
-    pullRequestBaseRepoOwner.type = type;
-  }
   return pullRequestBaseRepoOwner;
 }
 
@@ -1035,19 +558,6 @@ Map<String, dynamic> $PullRequestBaseRepoOwnerToJson(
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
-  data['followers_url'] = entity.followersUrl;
-  data['following_url'] = entity.followingUrl;
-  data['gists_url'] = entity.gistsUrl;
-  data['starred_url'] = entity.starredUrl;
-  data['subscriptions_url'] = entity.subscriptionsUrl;
-  data['organizations_url'] = entity.organizationsUrl;
-  data['repos_url'] = entity.reposUrl;
-  data['events_url'] = entity.eventsUrl;
-  data['received_events_url'] = entity.receivedEventsUrl;
-  data['type'] = entity.type;
   return data;
 }
 
@@ -1071,63 +581,6 @@ PullRequestBaseRepoAssigner $PullRequestBaseRepoAssignerFromJson(
   if (avatarUrl != null) {
     pullRequestBaseRepoAssigner.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    pullRequestBaseRepoAssigner.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    pullRequestBaseRepoAssigner.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    pullRequestBaseRepoAssigner.remark = remark;
-  }
-  final String? followersUrl =
-      jsonConvert.convert<String>(json['followers_url']);
-  if (followersUrl != null) {
-    pullRequestBaseRepoAssigner.followersUrl = followersUrl;
-  }
-  final String? followingUrl =
-      jsonConvert.convert<String>(json['following_url']);
-  if (followingUrl != null) {
-    pullRequestBaseRepoAssigner.followingUrl = followingUrl;
-  }
-  final String? gistsUrl = jsonConvert.convert<String>(json['gists_url']);
-  if (gistsUrl != null) {
-    pullRequestBaseRepoAssigner.gistsUrl = gistsUrl;
-  }
-  final String? starredUrl = jsonConvert.convert<String>(json['starred_url']);
-  if (starredUrl != null) {
-    pullRequestBaseRepoAssigner.starredUrl = starredUrl;
-  }
-  final String? subscriptionsUrl =
-      jsonConvert.convert<String>(json['subscriptions_url']);
-  if (subscriptionsUrl != null) {
-    pullRequestBaseRepoAssigner.subscriptionsUrl = subscriptionsUrl;
-  }
-  final String? organizationsUrl =
-      jsonConvert.convert<String>(json['organizations_url']);
-  if (organizationsUrl != null) {
-    pullRequestBaseRepoAssigner.organizationsUrl = organizationsUrl;
-  }
-  final String? reposUrl = jsonConvert.convert<String>(json['repos_url']);
-  if (reposUrl != null) {
-    pullRequestBaseRepoAssigner.reposUrl = reposUrl;
-  }
-  final String? eventsUrl = jsonConvert.convert<String>(json['events_url']);
-  if (eventsUrl != null) {
-    pullRequestBaseRepoAssigner.eventsUrl = eventsUrl;
-  }
-  final String? receivedEventsUrl =
-      jsonConvert.convert<String>(json['received_events_url']);
-  if (receivedEventsUrl != null) {
-    pullRequestBaseRepoAssigner.receivedEventsUrl = receivedEventsUrl;
-  }
-  final String? type = jsonConvert.convert<String>(json['type']);
-  if (type != null) {
-    pullRequestBaseRepoAssigner.type = type;
-  }
   return pullRequestBaseRepoAssigner;
 }
 
@@ -1138,19 +591,6 @@ Map<String, dynamic> $PullRequestBaseRepoAssignerToJson(
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
-  data['followers_url'] = entity.followersUrl;
-  data['following_url'] = entity.followingUrl;
-  data['gists_url'] = entity.gistsUrl;
-  data['starred_url'] = entity.starredUrl;
-  data['subscriptions_url'] = entity.subscriptionsUrl;
-  data['organizations_url'] = entity.organizationsUrl;
-  data['repos_url'] = entity.reposUrl;
-  data['events_url'] = entity.eventsUrl;
-  data['received_events_url'] = entity.receivedEventsUrl;
-  data['type'] = entity.type;
   return data;
 }
 
@@ -1343,63 +783,6 @@ PullRequestUser $PullRequestUserFromJson(Map<String, dynamic> json) {
   if (avatarUrl != null) {
     pullRequestUser.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    pullRequestUser.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    pullRequestUser.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    pullRequestUser.remark = remark;
-  }
-  final String? followersUrl =
-      jsonConvert.convert<String>(json['followers_url']);
-  if (followersUrl != null) {
-    pullRequestUser.followersUrl = followersUrl;
-  }
-  final String? followingUrl =
-      jsonConvert.convert<String>(json['following_url']);
-  if (followingUrl != null) {
-    pullRequestUser.followingUrl = followingUrl;
-  }
-  final String? gistsUrl = jsonConvert.convert<String>(json['gists_url']);
-  if (gistsUrl != null) {
-    pullRequestUser.gistsUrl = gistsUrl;
-  }
-  final String? starredUrl = jsonConvert.convert<String>(json['starred_url']);
-  if (starredUrl != null) {
-    pullRequestUser.starredUrl = starredUrl;
-  }
-  final String? subscriptionsUrl =
-      jsonConvert.convert<String>(json['subscriptions_url']);
-  if (subscriptionsUrl != null) {
-    pullRequestUser.subscriptionsUrl = subscriptionsUrl;
-  }
-  final String? organizationsUrl =
-      jsonConvert.convert<String>(json['organizations_url']);
-  if (organizationsUrl != null) {
-    pullRequestUser.organizationsUrl = organizationsUrl;
-  }
-  final String? reposUrl = jsonConvert.convert<String>(json['repos_url']);
-  if (reposUrl != null) {
-    pullRequestUser.reposUrl = reposUrl;
-  }
-  final String? eventsUrl = jsonConvert.convert<String>(json['events_url']);
-  if (eventsUrl != null) {
-    pullRequestUser.eventsUrl = eventsUrl;
-  }
-  final String? receivedEventsUrl =
-      jsonConvert.convert<String>(json['received_events_url']);
-  if (receivedEventsUrl != null) {
-    pullRequestUser.receivedEventsUrl = receivedEventsUrl;
-  }
-  final String? type = jsonConvert.convert<String>(json['type']);
-  if (type != null) {
-    pullRequestUser.type = type;
-  }
   return pullRequestUser;
 }
 
@@ -1409,18 +792,5 @@ Map<String, dynamic> $PullRequestUserToJson(PullRequestUser entity) {
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
-  data['followers_url'] = entity.followersUrl;
-  data['following_url'] = entity.followingUrl;
-  data['gists_url'] = entity.gistsUrl;
-  data['starred_url'] = entity.starredUrl;
-  data['subscriptions_url'] = entity.subscriptionsUrl;
-  data['organizations_url'] = entity.organizationsUrl;
-  data['repos_url'] = entity.reposUrl;
-  data['events_url'] = entity.eventsUrl;
-  data['received_events_url'] = entity.receivedEventsUrl;
-  data['type'] = entity.type;
   return data;
 }

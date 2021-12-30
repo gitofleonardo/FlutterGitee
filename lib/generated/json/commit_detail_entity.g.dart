@@ -11,36 +11,10 @@ CommitDetailEntity $CommitDetailEntityFromJson(Map<String, dynamic> json) {
   if (sha != null) {
     commitDetailEntity.sha = sha;
   }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    commitDetailEntity.htmlUrl = htmlUrl;
-  }
-  final String? commentsUrl = jsonConvert.convert<String>(json['comments_url']);
-  if (commentsUrl != null) {
-    commitDetailEntity.commentsUrl = commentsUrl;
-  }
   final CommitDetailCommit? commit =
       jsonConvert.convert<CommitDetailCommit>(json['commit']);
   if (commit != null) {
     commitDetailEntity.commit = commit;
-  }
-  final dynamic? author = jsonConvert.convert<dynamic>(json['author']);
-  if (author != null) {
-    commitDetailEntity.author = author;
-  }
-  final dynamic? committer = jsonConvert.convert<dynamic>(json['committer']);
-  if (committer != null) {
-    commitDetailEntity.committer = committer;
-  }
-  final List<CommitDetailParents>? parents =
-      jsonConvert.convertListNotNull<CommitDetailParents>(json['parents']);
-  if (parents != null) {
-    commitDetailEntity.parents = parents;
-  }
-  final CommitDetailStats? stats =
-      jsonConvert.convert<CommitDetailStats>(json['stats']);
-  if (stats != null) {
-    commitDetailEntity.stats = stats;
   }
   final List<CommitDetailFiles>? files =
       jsonConvert.convertListNotNull<CommitDetailFiles>(json['files']);
@@ -54,13 +28,7 @@ Map<String, dynamic> $CommitDetailEntityToJson(CommitDetailEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['url'] = entity.url;
   data['sha'] = entity.sha;
-  data['html_url'] = entity.htmlUrl;
-  data['comments_url'] = entity.commentsUrl;
   data['commit'] = entity.commit?.toJson();
-  data['author'] = entity.author;
-  data['committer'] = entity.committer;
-  data['parents'] = entity.parents?.map((v) => v.toJson()).toList();
-  data['stats'] = entity.stats?.toJson();
   data['files'] = entity.files.map((v) => v.toJson()).toList();
   return data;
 }
@@ -177,56 +145,6 @@ Map<String, dynamic> $CommitDetailCommitTreeToJson(
   return data;
 }
 
-CommitDetailParents $CommitDetailParentsFromJson(Map<String, dynamic> json) {
-  final CommitDetailParents commitDetailParents = CommitDetailParents();
-  final String? sha = jsonConvert.convert<String>(json['sha']);
-  if (sha != null) {
-    commitDetailParents.sha = sha;
-  }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    commitDetailParents.url = url;
-  }
-  return commitDetailParents;
-}
-
-Map<String, dynamic> $CommitDetailParentsToJson(CommitDetailParents entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['sha'] = entity.sha;
-  data['url'] = entity.url;
-  return data;
-}
-
-CommitDetailStats $CommitDetailStatsFromJson(Map<String, dynamic> json) {
-  final CommitDetailStats commitDetailStats = CommitDetailStats();
-  final String? id = jsonConvert.convert<String>(json['id']);
-  if (id != null) {
-    commitDetailStats.id = id;
-  }
-  final int? additions = jsonConvert.convert<int>(json['additions']);
-  if (additions != null) {
-    commitDetailStats.additions = additions;
-  }
-  final int? deletions = jsonConvert.convert<int>(json['deletions']);
-  if (deletions != null) {
-    commitDetailStats.deletions = deletions;
-  }
-  final int? total = jsonConvert.convert<int>(json['total']);
-  if (total != null) {
-    commitDetailStats.total = total;
-  }
-  return commitDetailStats;
-}
-
-Map<String, dynamic> $CommitDetailStatsToJson(CommitDetailStats entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['id'] = entity.id;
-  data['additions'] = entity.additions;
-  data['deletions'] = entity.deletions;
-  data['total'] = entity.total;
-  return data;
-}
-
 CommitDetailFiles $CommitDetailFilesFromJson(Map<String, dynamic> json) {
   final CommitDetailFiles commitDetailFiles = CommitDetailFiles();
   final String? sha = jsonConvert.convert<String>(json['sha']);
@@ -241,31 +159,7 @@ CommitDetailFiles $CommitDetailFilesFromJson(Map<String, dynamic> json) {
   if (status != null) {
     commitDetailFiles.status = status;
   }
-  final int? additions = jsonConvert.convert<int>(json['additions']);
-  if (additions != null) {
-    commitDetailFiles.additions = additions;
-  }
-  final int? deletions = jsonConvert.convert<int>(json['deletions']);
-  if (deletions != null) {
-    commitDetailFiles.deletions = deletions;
-  }
-  final int? changes = jsonConvert.convert<int>(json['changes']);
-  if (changes != null) {
-    commitDetailFiles.changes = changes;
-  }
-  final String? blobUrl = jsonConvert.convert<String>(json['blob_url']);
-  if (blobUrl != null) {
-    commitDetailFiles.blobUrl = blobUrl;
-  }
-  final String? rawUrl = jsonConvert.convert<String>(json['raw_url']);
-  if (rawUrl != null) {
-    commitDetailFiles.rawUrl = rawUrl;
-  }
-  final String? contentUrl = jsonConvert.convert<String>(json['content_url']);
-  if (contentUrl != null) {
-    commitDetailFiles.contentUrl = contentUrl;
-  }
-  final String? xPatch = jsonConvert.convert<String>(json['patch']);
+  final String? xPatch = jsonConvert.convert<String>(json['xPatch']);
   if (xPatch != null) {
     commitDetailFiles.xPatch = xPatch;
   }
@@ -277,12 +171,6 @@ Map<String, dynamic> $CommitDetailFilesToJson(CommitDetailFiles entity) {
   data['sha'] = entity.sha;
   data['filename'] = entity.filename;
   data['status'] = entity.status;
-  data['additions'] = entity.additions;
-  data['deletions'] = entity.deletions;
-  data['changes'] = entity.changes;
-  data['blob_url'] = entity.blobUrl;
-  data['raw_url'] = entity.rawUrl;
-  data['content_url'] = entity.contentUrl;
-  data['patch'] = entity.xPatch;
+  data['xPatch'] = entity.xPatch;
   return data;
 }

@@ -8,8 +8,6 @@ class IssueCommentEntity {
   double? id;
   String? body;
   IssueCommentUser? user;
-  @JSONField(name: "source")
-  String? xSource;
   IssueCommentTarget? target;
   @JSONField(name: "created_at")
   String? createdAt;
@@ -36,29 +34,6 @@ class IssueCommentUser {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   IssueCommentUser();
 
@@ -76,8 +51,6 @@ class IssueCommentUser {
 @JsonSerializable()
 class IssueCommentTarget {
   IssueCommentTargetIssue? issue;
-  @JSONField(name: "pull_request")
-  dynamic? pullRequest;
 
   IssueCommentTarget();
 

@@ -4,6 +4,7 @@ import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
 import 'package:flutter_gitee/repo/bean/issue_comment_entity.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
+import 'package:flutter_gitee/repo/widget/issue_comment_list_item.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -209,36 +210,7 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
         _loadIssueComments();
       }
       final item = _issueComments[index];
-      return ListTile(
-        visualDensity: VisualDensity.compact,
-        contentPadding: EdgeInsets.zero,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, "user_profile_page",
-                arguments: "${item.user?.login}");
-          },
-          child: SizedBox(
-            width: 32,
-            height: 32,
-            child: ClipOval(
-              child: Image.network(
-                "${item.user?.avatarUrl}",
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-        ),
-        title: Text(
-          "${item.user?.login}",
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        subtitle: MarkdownBody(
-          data: "${item.body}",
-          selectable: true,
-        ),
-        trailing: Text(formatDate("${item.createdAt}"),
-            style: const TextStyle(color: Colors.grey, fontSize: 12)),
-      );
+      return IssueCommentListItem(issue: item);
     }, childCount: _issueComments.length));
   }
 }

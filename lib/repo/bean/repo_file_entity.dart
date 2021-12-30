@@ -13,10 +13,6 @@ class RepoFileEntity {
   String? content;
   String? sha;
   String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  @JSONField(name: "download_url")
-  String? downloadUrl;
   @JSONField(name: "_links")
   ReadmeLinks? rLinks;
 

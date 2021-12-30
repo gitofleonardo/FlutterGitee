@@ -19,56 +19,8 @@ UserProfileEntity $UserProfileEntityFromJson(Map<String, dynamic> json) {
   if (avatarUrl != null) {
     userProfileEntity.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    userProfileEntity.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    userProfileEntity.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    userProfileEntity.remark = remark;
-  }
-  final String? followersUrl =
-      jsonConvert.convert<String>(json['followers_url']);
-  if (followersUrl != null) {
-    userProfileEntity.followersUrl = followersUrl;
-  }
-  final String? followingUrl =
-      jsonConvert.convert<String>(json['following_url']);
-  if (followingUrl != null) {
-    userProfileEntity.followingUrl = followingUrl;
-  }
-  final String? gistsUrl = jsonConvert.convert<String>(json['gists_url']);
-  if (gistsUrl != null) {
-    userProfileEntity.gistsUrl = gistsUrl;
-  }
-  final String? starredUrl = jsonConvert.convert<String>(json['starred_url']);
-  if (starredUrl != null) {
-    userProfileEntity.starredUrl = starredUrl;
-  }
-  final String? subscriptionsUrl =
-      jsonConvert.convert<String>(json['subscriptions_url']);
-  if (subscriptionsUrl != null) {
-    userProfileEntity.subscriptionsUrl = subscriptionsUrl;
-  }
-  final String? organizationsUrl =
-      jsonConvert.convert<String>(json['organizations_url']);
-  if (organizationsUrl != null) {
-    userProfileEntity.organizationsUrl = organizationsUrl;
-  }
-  final String? reposUrl = jsonConvert.convert<String>(json['repos_url']);
-  if (reposUrl != null) {
-    userProfileEntity.reposUrl = reposUrl;
-  }
-  final String? eventsUrl = jsonConvert.convert<String>(json['events_url']);
-  if (eventsUrl != null) {
-    userProfileEntity.eventsUrl = eventsUrl;
-  }
   final String? receivedEventsUrl =
-      jsonConvert.convert<String>(json['received_events_url']);
+      jsonConvert.convert<String>(json['receivedEventsUrl']);
   if (receivedEventsUrl != null) {
     userProfileEntity.receivedEventsUrl = receivedEventsUrl;
   }
@@ -137,18 +89,7 @@ Map<String, dynamic> $UserProfileEntityToJson(UserProfileEntity entity) {
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
-  data['followers_url'] = entity.followersUrl;
-  data['following_url'] = entity.followingUrl;
-  data['gists_url'] = entity.gistsUrl;
-  data['starred_url'] = entity.starredUrl;
-  data['subscriptions_url'] = entity.subscriptionsUrl;
-  data['organizations_url'] = entity.organizationsUrl;
-  data['repos_url'] = entity.reposUrl;
-  data['events_url'] = entity.eventsUrl;
-  data['received_events_url'] = entity.receivedEventsUrl;
+  data['receivedEventsUrl'] = entity.receivedEventsUrl;
   data['type'] = entity.type;
   data['blog'] = entity.blog;
   data['weibo'] = entity.weibo;

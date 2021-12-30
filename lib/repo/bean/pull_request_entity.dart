@@ -7,22 +7,6 @@ import 'package:flutter_gitee/generated/json/pull_request_entity.g.dart';
 class PullRequestEntity {
   double? id;
   String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  @JSONField(name: "diff_url")
-  String? diffUrl;
-  @JSONField(name: "patch_url")
-  String? patchUrl;
-  @JSONField(name: "issue_url")
-  String? issueUrl;
-  @JSONField(name: "commits_url")
-  String? commitsUrl;
-  @JSONField(name: "review_comments_url")
-  String? reviewCommentsUrl;
-  @JSONField(name: "review_comment_url")
-  String? reviewCommentUrl;
-  @JSONField(name: "comments_url")
-  String? commentsUrl;
   double? number;
   String? state;
   String? title;
@@ -70,7 +54,6 @@ class PullRequestLabel {
   String? color;
   @JSONField(name: "repository_id")
   int? repositoryId;
-  String? url;
   @JSONField(name: "created_at")
   String? createdAt;
   @JSONField(name: "updated_at")
@@ -117,29 +100,6 @@ class PullRequestHeadUser {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   PullRequestHeadUser();
 
@@ -159,23 +119,6 @@ class PullRequestHeadRepo {
   double? id;
   @JSONField(name: "full_name")
   String? fullName;
-  @JSONField(name: "human_name")
-  String? humanName;
-  String? url;
-  PullRequestHeadRepoNamespace? namespace;
-  String? path;
-  String? name;
-  PullRequestHeadRepoOwner? owner;
-  PullRequestHeadRepoAssigner? assigner;
-  String? description;
-  bool? private;
-  bool? public;
-  bool? internal;
-  bool? fork;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  @JSONField(name: "ssh_url")
-  String? sshUrl;
 
   PullRequestHeadRepo();
 
@@ -196,8 +139,6 @@ class PullRequestHeadRepoNamespace {
   String? type;
   String? name;
   String? path;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
 
   PullRequestHeadRepoNamespace();
 
@@ -219,29 +160,6 @@ class PullRequestHeadRepoOwner {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   PullRequestHeadRepoOwner();
 
@@ -263,29 +181,6 @@ class PullRequestHeadRepoAssigner {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   PullRequestHeadRepoAssigner();
 
@@ -328,29 +223,6 @@ class PullRequestBaseUser {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   PullRequestBaseUser();
 
@@ -383,10 +255,6 @@ class PullRequestBaseRepo {
   bool? public;
   bool? internal;
   bool? fork;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  @JSONField(name: "ssh_url")
-  String? sshUrl;
 
   PullRequestBaseRepo();
 
@@ -407,8 +275,6 @@ class PullRequestBaseRepoNamespace {
   String? type;
   String? name;
   String? path;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
 
   PullRequestBaseRepoNamespace();
 
@@ -430,29 +296,6 @@ class PullRequestBaseRepoOwner {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   PullRequestBaseRepoOwner();
 
@@ -474,29 +317,6 @@ class PullRequestBaseRepoAssigner {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   PullRequestBaseRepoAssigner();
 
@@ -662,29 +482,6 @@ class PullRequestUser {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   PullRequestUser();
 

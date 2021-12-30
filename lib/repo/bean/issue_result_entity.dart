@@ -2,35 +2,17 @@ import 'dart:convert';
 
 import 'package:flutter_gitee/generated/json/base/json_field.dart';
 import 'package:flutter_gitee/generated/json/issue_result_entity.g.dart';
-import 'package:flutter_gitee/repo/bean/repository_entity.dart';
-import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 
 @JsonSerializable()
 class IssueResultEntity {
   double? id;
-  String? url;
-  @JSONField(name: "repository_url")
-  String? repositoryUrl;
-  @JSONField(name: "labels_url")
-  String? labelsUrl;
-  @JSONField(name: "comments_url")
-  String? commentsUrl;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  @JSONField(name: "parent_url")
-  String? parentUrl;
   String? number;
-  @JSONField(name: "parent_id")
-  double? parentId;
-  double? depth;
-  String? state;
   String? title;
   String? body;
-  UserProfileEntity? user;
+  String? state;
+  IssueResultEntityUser? user;
   List<IssueResultLabel>? labels;
-  IssueResultAssignee? assignee;
-  List<dynamic>? collaborators;
-  RepositoryEntity? repository;
+  IssueResultEntityRepository? repository;
   IssueResultMilestone? milestone;
   @JSONField(name: "created_at")
   String? createdAt;
@@ -43,18 +25,13 @@ class IssueResultEntity {
   String? finishedAt;
   @JSONField(name: "scheduled_time")
   double? scheduledTime;
-  double? comments;
-  double? priority;
+  int? comments;
   @JSONField(name: "issue_type")
   String? issueType;
   IssueResultProgram? program;
-  @JSONField(name: "security_hole")
-  bool? securityHole;
   @JSONField(name: "issue_state")
   String? issueState;
   String? branch;
-  @JSONField(name: "issue_type_detail")
-  IssueResultIssueTypeDetail? issueTypeDetail;
   @JSONField(name: "issue_state_detail")
   IssueResultIssueStateDetail? issueStateDetail;
 
@@ -72,12 +49,51 @@ class IssueResultEntity {
 }
 
 @JsonSerializable()
+class IssueResultEntityRepository {
+  double? id;
+  @JSONField(name: "full_name")
+  String? fullName;
+  String? url;
+
+  IssueResultEntityRepository();
+
+  factory IssueResultEntityRepository.fromJson(Map<String, dynamic> json) =>
+      $IssueResultEntityRepositoryFromJson(json);
+
+  Map<String, dynamic> toJson() => $IssueResultEntityRepositoryToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+}
+
+@JsonSerializable()
+class IssueResultEntityUser {
+  int? id;
+  String? login;
+  String? name;
+  @JSONField(name: "avatar_url")
+  String? avatarUrl;
+
+  IssueResultEntityUser();
+
+  factory IssueResultEntityUser.fromJson(Map<String, dynamic> json) =>
+      $IssueResultEntityUserFromJson(json);
+
+  Map<String, dynamic> toJson() => $IssueResultEntityUserToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+}
+
+@JsonSerializable()
 class IssueResultLabel {
   int? id;
   String? name;
   String? color;
-  @JSONField(name: "repository_id")
-  int? repositoryId;
   String? url;
   @JSONField(name: "created_at")
   String? createdAt;
@@ -104,29 +120,6 @@ class IssueResultAssignee {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   IssueResultAssignee();
 
@@ -205,29 +198,6 @@ class IssueResultProgramAssignee {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   IssueResultProgramAssignee();
 
@@ -249,29 +219,6 @@ class IssueResultProgramAuthor {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   IssueResultProgramAuthor();
 

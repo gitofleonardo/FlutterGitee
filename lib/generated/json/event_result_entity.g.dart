@@ -1,6 +1,5 @@
 import 'package:flutter_gitee/generated/json/base/json_convert_content.dart';
 import 'package:flutter_gitee/user/bean/event_result_entity.dart';
-import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 
 EventResultEntity $EventResultEntityFromJson(Map<String, dynamic> json) {
   final EventResultEntity eventResultEntity = EventResultEntity();
@@ -73,18 +72,6 @@ EventResultActor $EventResultActorFromJson(Map<String, dynamic> json) {
   if (avatarUrl != null) {
     eventResultActor.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    eventResultActor.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    eventResultActor.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    eventResultActor.remark = remark;
-  }
   return eventResultActor;
 }
 
@@ -94,9 +81,6 @@ Map<String, dynamic> $EventResultActorToJson(EventResultActor entity) {
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
   return data;
 }
 
@@ -203,8 +187,8 @@ EventResultPayloadComment $EventResultPayloadCommentFromJson(
     Map<String, dynamic> json) {
   final EventResultPayloadComment eventResultPayloadComment =
       EventResultPayloadComment();
-  final UserProfileEntity? user =
-      jsonConvert.convert<UserProfileEntity>(json['user']);
+  final EventResultPayloadCommentUser? user =
+      jsonConvert.convert<EventResultPayloadCommentUser>(json['user']);
   if (user != null) {
     eventResultPayloadComment.user = user;
   }
@@ -220,6 +204,39 @@ Map<String, dynamic> $EventResultPayloadCommentToJson(
   final Map<String, dynamic> data = <String, dynamic>{};
   data['user'] = entity.user?.toJson();
   data['body'] = entity.body;
+  return data;
+}
+
+EventResultPayloadCommentUser $EventResultPayloadCommentUserFromJson(
+    Map<String, dynamic> json) {
+  final EventResultPayloadCommentUser eventResultPayloadCommentUser =
+      EventResultPayloadCommentUser();
+  final int? id = jsonConvert.convert<int>(json['id']);
+  if (id != null) {
+    eventResultPayloadCommentUser.id = id;
+  }
+  final String? login = jsonConvert.convert<String>(json['login']);
+  if (login != null) {
+    eventResultPayloadCommentUser.login = login;
+  }
+  final String? name = jsonConvert.convert<String>(json['name']);
+  if (name != null) {
+    eventResultPayloadCommentUser.name = name;
+  }
+  final String? avatarUrl = jsonConvert.convert<String>(json['avatar_url']);
+  if (avatarUrl != null) {
+    eventResultPayloadCommentUser.avatarUrl = avatarUrl;
+  }
+  return eventResultPayloadCommentUser;
+}
+
+Map<String, dynamic> $EventResultPayloadCommentUserToJson(
+    EventResultPayloadCommentUser entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['id'] = entity.id;
+  data['login'] = entity.login;
+  data['name'] = entity.name;
+  data['avatar_url'] = entity.avatarUrl;
   return data;
 }
 
@@ -333,18 +350,6 @@ EventResultPayloadTarget $EventResultPayloadTargetFromJson(
   if (avatarUrl != null) {
     eventResultPayloadTarget.avatarUrl = avatarUrl;
   }
-  final String? url = jsonConvert.convert<String>(json['url']);
-  if (url != null) {
-    eventResultPayloadTarget.url = url;
-  }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    eventResultPayloadTarget.htmlUrl = htmlUrl;
-  }
-  final String? remark = jsonConvert.convert<String>(json['remark']);
-  if (remark != null) {
-    eventResultPayloadTarget.remark = remark;
-  }
   return eventResultPayloadTarget;
 }
 
@@ -355,9 +360,6 @@ Map<String, dynamic> $EventResultPayloadTargetToJson(
   data['login'] = entity.login;
   data['name'] = entity.name;
   data['avatar_url'] = entity.avatarUrl;
-  data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['remark'] = entity.remark;
   return data;
 }
 

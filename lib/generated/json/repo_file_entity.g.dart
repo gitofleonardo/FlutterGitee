@@ -35,14 +35,6 @@ RepoFileEntity $RepoFileEntityFromJson(Map<String, dynamic> json) {
   if (url != null) {
     repoFileEntity.url = url;
   }
-  final String? htmlUrl = jsonConvert.convert<String>(json['html_url']);
-  if (htmlUrl != null) {
-    repoFileEntity.htmlUrl = htmlUrl;
-  }
-  final String? downloadUrl = jsonConvert.convert<String>(json['download_url']);
-  if (downloadUrl != null) {
-    repoFileEntity.downloadUrl = downloadUrl;
-  }
   final ReadmeLinks? rLinks = jsonConvert.convert<ReadmeLinks>(json['_links']);
   if (rLinks != null) {
     repoFileEntity.rLinks = rLinks;
@@ -60,8 +52,6 @@ Map<String, dynamic> $RepoFileEntityToJson(RepoFileEntity entity) {
   data['content'] = entity.content;
   data['sha'] = entity.sha;
   data['url'] = entity.url;
-  data['html_url'] = entity.htmlUrl;
-  data['download_url'] = entity.downloadUrl;
   data['_links'] = entity.rLinks?.toJson();
   return data;
 }

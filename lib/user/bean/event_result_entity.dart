@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter_gitee/generated/json/base/json_field.dart';
 import 'package:flutter_gitee/generated/json/event_result_entity.g.dart';
-import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 
 @JsonSerializable()
 class EventResultEntity {
@@ -36,10 +35,6 @@ class EventResultActor {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
 
   EventResultActor();
 
@@ -106,7 +101,7 @@ class EventResultPayload {
 
 @JsonSerializable()
 class EventResultPayloadComment {
-  UserProfileEntity? user;
+  EventResultPayloadCommentUser? user;
   String? body;
 
   EventResultPayloadComment();
@@ -115,6 +110,27 @@ class EventResultPayloadComment {
       $EventResultPayloadCommentFromJson(json);
 
   Map<String, dynamic> toJson() => $EventResultPayloadCommentToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+}
+
+@JsonSerializable()
+class EventResultPayloadCommentUser {
+  int? id;
+  String? login;
+  String? name;
+  @JSONField(name: "avatar_url")
+  String? avatarUrl;
+
+  EventResultPayloadCommentUser();
+
+  factory EventResultPayloadCommentUser.fromJson(Map<String, dynamic> json) =>
+      $EventResultPayloadCommentUserFromJson(json);
+
+  Map<String, dynamic> toJson() => $EventResultPayloadCommentUserToJson(this);
 
   @override
   String toString() {
@@ -187,10 +203,6 @@ class EventResultPayloadTarget {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
 
   EventResultPayloadTarget();
 

@@ -22,46 +22,6 @@ class RepositoryEntity {
   bool? public;
   bool? internal;
   bool? fork;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  @JSONField(name: "ssh_url")
-  String? sshUrl;
-  @JSONField(name: "forks_url")
-  String? forksUrl;
-  @JSONField(name: "keys_url")
-  String? keysUrl;
-  @JSONField(name: "collaborators_url")
-  String? collaboratorsUrl;
-  @JSONField(name: "hooks_url")
-  String? hooksUrl;
-  @JSONField(name: "branches_url")
-  String? branchesUrl;
-  @JSONField(name: "tags_url")
-  String? tagsUrl;
-  @JSONField(name: "blobs_url")
-  String? blobsUrl;
-  @JSONField(name: "stargazers_url")
-  String? stargazersUrl;
-  @JSONField(name: "contributors_url")
-  String? contributorsUrl;
-  @JSONField(name: "commits_url")
-  String? commitsUrl;
-  @JSONField(name: "comments_url")
-  String? commentsUrl;
-  @JSONField(name: "issue_comment_url")
-  String? issueCommentUrl;
-  @JSONField(name: "issues_url")
-  String? issuesUrl;
-  @JSONField(name: "pulls_url")
-  String? pullsUrl;
-  @JSONField(name: "milestones_url")
-  String? milestonesUrl;
-  @JSONField(name: "notifications_url")
-  String? notificationsUrl;
-  @JSONField(name: "labels_url")
-  String? labelsUrl;
-  @JSONField(name: "releases_url")
-  String? releasesUrl;
   bool? recommend;
   bool? gvp;
   String? homepage;
@@ -105,19 +65,9 @@ class RepositoryEntity {
   bool? watched;
   RepositoryPermission? permission;
   String? relation;
-  @JSONField(name: "assignees_number")
-  double? assigneesNumber;
-  @JSONField(name: "testers_number")
-  double? testersNumber;
-  List<RepositoryAssignee>? assignee;
-  List<RepositoryTesters>? testers;
   String? status;
   @JSONField(name: "empty_repo")
   bool? emptyRepo;
-  List<dynamic>? programs;
-  dynamic? enterprise;
-  @JSONField(name: "project_labels")
-  List<dynamic>? projectLabels;
   RepoFileEntity? readme;
 
   RepositoryEntity();
@@ -139,8 +89,6 @@ class RepositoryNamespace {
   String? type;
   String? name;
   String? path;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
 
   RepositoryNamespace();
 
@@ -162,29 +110,6 @@ class RepositoryOwner {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   RepositoryOwner();
 
@@ -206,29 +131,6 @@ class RepositoryAssigner {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   RepositoryAssigner();
 
@@ -269,29 +171,6 @@ class RepositoryAssignee {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   RepositoryAssignee();
 
@@ -313,29 +192,6 @@ class RepositoryTesters {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   RepositoryTesters();
 
