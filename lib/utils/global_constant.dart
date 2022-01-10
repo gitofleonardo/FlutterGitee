@@ -117,9 +117,10 @@ final globalThemes = [
       "BlueGrey"),
   GlobalTheme(
       ThemeData(
-          primarySwatch: Colors.purple,
-          scaffoldBackgroundColor: lightThemeBackgroundColor,
-          backgroundColor: Colors.white),
+        scaffoldBackgroundColor: lightThemeBackgroundColor,
+        backgroundColor: Colors.white,
+        primaryColor: Colors.purple,
+      ),
       "Purple"),
   GlobalTheme(
       ThemeData(

@@ -123,35 +123,42 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
           appBar: AppBar(
             title: const Text("Issue Details"),
           ),
-          body: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              child: Builder(
-                builder: (context) {
-                  switch (_pageState) {
-                    case _PageState.loading:
-                      return const Center(child: CircularProgressIndicator());
-                    case _PageState.done:
-                      return CustomScrollView(
-                        controller: _scrollController,
-                        slivers: [
-                          _createIssueHeader(),
-                          _createIssueContent(),
-                          _createCommentHeader(),
-                          _createCommentBody(),
-                        ],
-                      );
-                    case _PageState.fail:
-                      return TapToRetryWidget(
-                          onTap: () {
-                            setState(() {
-                              _pageState = _PageState.loading;
-                              _getIssueDetails();
-                            });
-                          },
-                          message: "Tap To Retry");
-                  }
-                },
-              )),
+          body: Builder(
+            builder: (context) {
+              switch (_pageState) {
+                case _PageState.loading:
+                  return const Center(child: CircularProgressIndicator());
+                case _PageState.done:
+                  return CustomScrollView(
+                    controller: _scrollController,
+                    slivers: [
+                      SliverPadding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 10, right: 10),
+                          sliver: _createIssueHeader()),
+                      SliverPadding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          sliver: _createIssueContent()),
+                      SliverPadding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          sliver: _createCommentHeader()),
+                      SliverPadding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          sliver: _createCommentBody()),
+                    ],
+                  );
+                case _PageState.fail:
+                  return TapToRetryWidget(
+                      onTap: () {
+                        setState(() {
+                          _pageState = _PageState.loading;
+                          _getIssueDetails();
+                        });
+                      },
+                      message: "Tap To Retry");
+              }
+            },
+          ),
           floatingActionButton: FloatingActionButton(
             backgroundColor: Theme.of(context).colorScheme.primary,
             onPressed: () {

@@ -21,7 +21,7 @@ class IssueCommentListItem extends StatelessWidget {
       onTap: onTap,
       onLongPress: onLongPress,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         child: Flex(
           crossAxisAlignment: CrossAxisAlignment.start,
           direction: Axis.horizontal,
