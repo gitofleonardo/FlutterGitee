@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
 import 'package:flutter_gitee/repo/bean/issue_comment_entity.dart';
@@ -33,6 +34,7 @@ class _IssueCommentsPageState extends State<IssueCommentsPage> {
   final _issueComments = <IssueCommentEntity>[];
   var _commentOrder = "desc";
   final _replyTextController = TextEditingController();
+  var _showFab = true;
 
   void _loadIssueComments() {
     getIssueComments(widget.fullName, widget.number, _currentPage, _pageSize,
@@ -120,6 +122,15 @@ class _IssueCommentsPageState extends State<IssueCommentsPage> {
   @override
   void initState() {
     super.initState();
+    _commentScrollController.addListener(() {
+      final showFab = _commentScrollController.position.userScrollDirection !=
+          ScrollDirection.reverse;
+      setState(() {
+        if (_showFab != showFab) {
+          _showFab = showFab;
+        }
+      });
+    });
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _refreshCommentController.requestRefresh();
     });
@@ -145,13 +156,16 @@ class _IssueCommentsPageState extends State<IssueCommentsPage> {
           controller: _commentScrollController,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        onPressed: () {
-          _showCommentBottomSheet(context);
-        },
-        child: const Icon(Icons.message, color: Colors.white),
-        tooltip: "Top",
+      floatingActionButton: AnimatedScale(
+        duration: const Duration(milliseconds: 250),
+        scale: _showFab ? 1.0 : 0.0,
+        child: FloatingActionButton(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          onPressed: () {
+            _showCommentBottomSheet(context);
+          },
+          child: const Icon(Icons.message, color: Colors.white),
+        ),
       ),
     );
   }
