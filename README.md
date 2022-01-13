@@ -26,14 +26,35 @@ My goal is to implement most of the Gitee APIs. You can find the documentation [
 
 ## Current progress
 
-![alt pic1](raw/pic1.jpg)
+### Basic Features
 
-![alt pic2](raw/pic2.jpg)
+- [x] Login/Logout
+- [x] View user events/activities
+- [x] View user repositories
+- [x] View user starred repositories
+- [x] View user watched repositories
+- [x] View user issues
+- [x] View user's subscribers and followings
+- [x] View user profile
+- [x] Change global theme
+- [x] Search for users
+- [ ] Auto login(Currently not supported due to lacking of api documentation)
+- [ ] View messages from server and users
+- [ ] Send messages to another user
+- [ ] More user-related processes
 
-![alt pic3](raw/pic3.jpg)
+### Repository Features
 
-![alt pic4](raw/pic4.jpg)
-
-![alt pic5](raw/pic5.jpg)
-
-![alt pic6](raw/pic6.jpg)
+- [x] View details of repositories, including stargazers/watchers/forks
+- [x] View files and codes of repositories
+- [x] View commits and their details
+- [x] View pull requests
+- [x] View collaborators of repositories
+- [x] View releases of repositories, and provide download url
+- [x] Star a repository
+- [x] Search for repositories
+- [x] Search for issues
+- [x] View issue details ,including comments
+- [x] Available commenting an issue
+- [ ] View opensource license
+- [ ] More repository-related processes
