@@ -1,15 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
-import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
-import 'package:flutter_gitee/repo/bean/issue_comment_entity.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
-import 'package:flutter_gitee/repo/widget/issue_comment_list_item.dart';
+import 'package:flutter_gitee/repo/ui/issue_comments_page.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 enum _PageState { loading, done, fail }
 
@@ -27,14 +24,10 @@ class IssueDetailPage extends StatefulWidget {
 
 class _IssueDetailPageState extends State<IssueDetailPage> {
   late IssueResultEntity _issue;
-  final _issueComments = <IssueCommentEntity>[];
-  var _hasMore = true;
-  var _currentPage = 1;
-  final _pageSize = 20;
   final _scrollController = ScrollController();
   var _pageState = _PageState.loading;
-  String? _replyTo;
-  final _replyTextController = TextEditingController();
+  var _currentIndex = 0;
+  final _pageController = PageController();
 
   void _getIssueDetails() {
     getRepoIssueDetails(widget.fullName, widget.number).then((value) {
@@ -47,66 +40,6 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
         }
       });
     });
-  }
-
-  void _loadIssueComments() {
-    if (!_hasMore) {
-      return;
-    }
-    getIssueComments("${_issue.repository?.fullName}", "${_issue.number}",
-            _currentPage, _pageSize)
-        .then((value) {
-      if (value.success) {
-        ++_currentPage;
-        final dat = value.data ?? [];
-        setState(() {
-          _issueComments.addAll(dat);
-          _hasMore = dat.length < _pageSize ? false : true;
-        });
-      }
-    });
-  }
-
-  void _replyToIssue(BuildContext context) {
-    final text = _replyTextController.text;
-    if (text.isEmpty) {
-      Fluttertoast.showToast(msg: "Message cannot be empty");
-      return;
-    }
-    FocusScope.of(context).unfocus();
-    _showLoading(context, "Loading");
-    commentOnIssue(widget.fullName, "${_issue.number}", text).then((value) {
-      Navigator.pop(context, true);
-      if (value.success && value.data != null) {
-        setState(() {
-          _issueComments.insert(0, value.data!);
-        });
-        Navigator.pop(context);
-        _replyTextController.clear();
-        Fluttertoast.showToast(msg: "Comment sent");
-      } else {
-        Fluttertoast.showToast(msg: "Failed sending comment");
-      }
-    });
-  }
-
-  void _showLoading(BuildContext context, String message) {
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-              content: Flex(
-            direction: Axis.horizontal,
-            children: [
-              const CircularProgressIndicator(),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(message)
-            ],
-          ));
-        });
   }
 
   @override
@@ -123,103 +56,41 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
           appBar: AppBar(
             title: const Text("Issue Details"),
           ),
-          body: Builder(
-            builder: (context) {
-              switch (_pageState) {
-                case _PageState.loading:
-                  return const Center(child: CircularProgressIndicator());
-                case _PageState.done:
-                  return CustomScrollView(
-                    controller: _scrollController,
-                    slivers: [
-                      SliverPadding(
-                          padding: const EdgeInsets.only(
-                              top: 10, left: 10, right: 10),
-                          sliver: _createIssueHeader()),
-                      SliverPadding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          sliver: _createIssueContent()),
-                      SliverPadding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          sliver: _createCommentHeader()),
-                      SliverPadding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          sliver: _createCommentBody()),
-                    ],
-                  );
-                case _PageState.fail:
-                  return TapToRetryWidget(
-                      onTap: () {
-                        setState(() {
-                          _pageState = _PageState.loading;
-                          _getIssueDetails();
-                        });
-                      },
-                      message: "Tap To Retry");
-              }
+          body: PageView(
+            children: [
+              _createIssuePage(),
+              IssueCommentsPage(
+                  fullName: widget.fullName, number: widget.number)
+            ],
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
             },
           ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            onPressed: () {
-              _showCommentBottomSheet(context);
-            },
-            child: const Icon(Icons.message, color: Colors.white),
-            tooltip: "Top",
-          ),
+          bottomNavigationBar: _createBottomNavigation(),
         );
       },
     ));
   }
 
-  void _showCommentBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-        isScrollControlled: true,
-        shape: bottomSheetShape,
-        context: context,
-        builder: (context) {
-          return Padding(
-            padding: MediaQuery.of(context).viewInsets,
-            child: _createCommentBottomSheet(),
-          );
+  Widget _createBottomNavigation() {
+    return BottomNavigationBar(
+      items: const [
+        BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.dotCircle), label: "Details"),
+        BottomNavigationBarItem(icon: Icon(Icons.message), label: "Comments")
+      ],
+      currentIndex: _currentIndex,
+      onTap: (index) {
+        setState(() {
+          _currentIndex = index;
+          _pageController.animateToPage(_currentIndex,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.decelerate);
         });
-  }
-
-  Widget _createCommentBottomSheet() {
-    return Builder(builder: (context) {
-      return HeaderContentBottomSheet(
-          title: "Comment",
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Flex(
-              direction: Axis.horizontal,
-              children: [
-                Expanded(
-                    child: TextField(
-                  controller: _replyTextController,
-                  decoration:
-                      const InputDecoration(hintText: "Comment on issue"),
-                )),
-                TextButton(
-                    onPressed: () {
-                      _replyToIssue(context);
-                    },
-                    child: const Text("Reply"))
-              ],
-            ),
-          ));
-    });
-  }
-
-  Widget _createCommentHeader() {
-    return SliverToBoxAdapter(
-      child: Container(
-        padding: const EdgeInsets.only(top: 10),
-        child: const Text(
-          "Comments",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
+      },
     );
   }
 
@@ -290,22 +161,31 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
     );
   }
 
-  Widget _createCommentBody() {
-    if (_hasMore && _issueComments.isEmpty) {
-      _loadIssueComments();
+  Widget _createIssuePage() {
+    switch (_pageState) {
+      case _PageState.loading:
+        return const Center(child: CircularProgressIndicator());
+      case _PageState.done:
+        return CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            SliverPadding(
+                padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+                sliver: _createIssueHeader()),
+            SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                sliver: _createIssueContent()),
+          ],
+        );
+      case _PageState.fail:
+        return TapToRetryWidget(
+            onTap: () {
+              setState(() {
+                _pageState = _PageState.loading;
+                _getIssueDetails();
+              });
+            },
+            message: "Tap To Retry");
     }
-    return SliverList(
-        delegate: SliverChildBuilderDelegate((context, index) {
-      if (_hasMore && index == _issueComments.length - 1) {
-        _loadIssueComments();
-      }
-      final item = _issueComments[index];
-      return IssueCommentListItem(
-          issue: item,
-          onTap: () {
-            _replyTo = item.user?.login;
-          },
-          onLongPress: () {});
-    }, childCount: _issueComments.length));
   }
 }

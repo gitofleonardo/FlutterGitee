@@ -388,11 +388,14 @@ Future<BaseResult<IssueResultEntity>> getRepoIssueDetails(
 }
 
 Future<BaseResult<List<IssueCommentEntity>>> getIssueComments(
-    String fullName, String number, int page, int perPage) {
+    String fullName, String number, int page, int perPage, String order) {
   return postRequest<List<IssueCommentEntity>>(
-      "api/v5/repos/$fullName/issues/$number/comments",
-      RequestType.get,
-      {"access_token": globalToken, "page": page, "per_page": perPage});
+      "api/v5/repos/$fullName/issues/$number/comments", RequestType.get, {
+    "access_token": globalToken,
+    "page": page,
+    "per_page": perPage,
+    "order": order
+  });
 }
 
 Future<BaseResult<List<IssueResultEntity>>> getMyIssues(int page, int perPage,
