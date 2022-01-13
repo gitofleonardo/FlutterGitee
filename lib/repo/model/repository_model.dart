@@ -9,6 +9,7 @@ import 'package:flutter_gitee/repo/bean/repo_commit_entity.dart';
 import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_blob_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
+import 'package:flutter_gitee/repo/bean/repository_release_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_tree_entity.dart';
 import 'package:flutter_gitee/repo/ui/repository_page.dart';
 import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
@@ -422,4 +423,12 @@ Future<BaseResult<IssueCommentEntity>> commentOnIssue(
       "api/v5/repos/$fullName/issues/$number/comments",
       RequestType.post,
       {"access_token": globalToken, "body": body});
+}
+
+Future<BaseResult<List<RepositoryReleaseEntity>>> getRepoReleases(
+    String fullName, int page, int perPage) {
+  return postRequest<List<RepositoryReleaseEntity>>(
+      "api/v5/repos/$fullName/releases",
+      RequestType.get,
+      {"access_token": globalToken, "page": page, "per_page": perPage});
 }

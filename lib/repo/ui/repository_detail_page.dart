@@ -246,18 +246,20 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
           }
           return Text(desc);
         }),
-        Row(
+        Flex(
+          direction: Axis.horizontal,
           children: [
-            TextButton.icon(
-                onPressed: () {
-                  Navigator.pushNamed(context, "repository_stargazers_page",
-                      arguments: widget.fullname);
-                },
-                icon: const Icon(Icons.star_border, size: 20),
-                label: Text(
-                    "${formatGitCount(repo.stargazersCount?.toInt() ?? 0)} Stars")),
-            const SizedBox(width: 10),
-            TextButton.icon(
+            Expanded(
+                child: TextButton.icon(
+                    onPressed: () {
+                      Navigator.pushNamed(context, "repository_stargazers_page",
+                          arguments: widget.fullname);
+                    },
+                    icon: const Icon(Icons.star_border, size: 20),
+                    label: Text(
+                        "${formatGitCount(repo.stargazersCount?.toInt() ?? 0)} Stars"))),
+            Expanded(
+                child: TextButton.icon(
               icon: const Icon(
                 FontAwesomeIcons.bullseye,
                 size: 16,
@@ -268,9 +270,9 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
                 Navigator.pushNamed(context, "repository_watchers_page",
                     arguments: widget.fullname);
               },
-            ),
-            const SizedBox(width: 10),
-            TextButton.icon(
+            )),
+            Expanded(
+                child: TextButton.icon(
               icon: const Icon(
                 FontAwesomeIcons.codeBranch,
                 size: 16,
@@ -281,7 +283,7 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
                 Navigator.pushNamed(context, "repository_forks_page",
                     arguments: widget.fullname);
               },
-            )
+            ))
           ],
         )
       ],
@@ -347,6 +349,18 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
                 arguments: widget.fullname);
           },
         ),
+        IconTextButton(
+            leading: const Icon(
+              FontAwesomeIcons.file,
+              color: Colors.white,
+              size: 18,
+            ),
+            text: const Text("Releases"),
+            onTap: () {
+              Navigator.pushNamed(context, "repository_releases_page",
+                  arguments: widget.fullname);
+            },
+            leadingColor: Colors.blue),
         IconTextButton(
           leadingColor: Colors.green,
           leading: const Icon(FontAwesomeIcons.dotCircle,

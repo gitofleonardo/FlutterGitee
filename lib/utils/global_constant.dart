@@ -9,6 +9,7 @@ import 'package:flutter_gitee/repo/ui/repo_collaborator_page.dart';
 import 'package:flutter_gitee/repo/ui/repo_forks_page.dart';
 import 'package:flutter_gitee/repo/ui/repo_issue_page.dart';
 import 'package:flutter_gitee/repo/ui/repo_pull_request_page.dart';
+import 'package:flutter_gitee/repo/ui/repo_releases_page.dart';
 import 'package:flutter_gitee/repo/ui/repo_stargazers_page.dart';
 import 'package:flutter_gitee/repo/ui/repo_watchers_page.dart';
 import 'package:flutter_gitee/repo/ui/repository_detail_page.dart';
@@ -55,6 +56,8 @@ final routes = {
   "repository_pull_request_page": (ctx) => RepoPullRequestPage(
       fullName: ModalRoute.of(ctx)!.settings.arguments.toString()),
   "my_issue_page": (ctx) => const MyIssuePage(),
+  "repository_releases_page": (ctx) => RepoReleasesPage(
+      fullName: ModalRoute.of(ctx)!.settings.arguments.toString()),
 };
 
 class GlobalTheme {

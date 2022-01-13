@@ -12,6 +12,7 @@ import 'package:flutter_gitee/repo/bean/repo_commit_entity.dart';
 import 'package:flutter_gitee/repo/bean/repo_file_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_blob_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
+import 'package:flutter_gitee/repo/bean/repository_release_entity.dart';
 import 'package:flutter_gitee/repo/bean/repository_tree_entity.dart';
 import 'package:flutter_gitee/user/bean/event_result_entity.dart';
 import 'package:flutter_gitee/user/bean/follow_result_entity.dart';
@@ -281,6 +282,15 @@ class JsonConvert {
     if (type == (RepositoryTesters).toString()) {
       return RepositoryTesters.fromJson(json) as M;
     }
+    if (type == (RepositoryReleaseEntity).toString()) {
+      return RepositoryReleaseEntity.fromJson(json) as M;
+    }
+    if (type == (RepositoryReleaseAuthor).toString()) {
+      return RepositoryReleaseAuthor.fromJson(json) as M;
+    }
+    if (type == (RepositoryReleaseAssets).toString()) {
+      return RepositoryReleaseAssets.fromJson(json) as M;
+    }
     if (type == (RepositoryTreeEntity).toString()) {
       return RepositoryTreeEntity.fromJson(json) as M;
     }
@@ -336,430 +346,502 @@ class JsonConvert {
   }
 
   //list is returned by type
-  static M? _getListChildType<M>(List<dynamic> data) {
+  static M? _getListChildType<M>(List<Map<String, dynamic>> data) {
     if (<BranchEntity>[] is M) {
-      return data.map<BranchEntity>((e) => BranchEntity.fromJson(e)).toList()
-          as M;
+      return data
+          .map<BranchEntity>(
+              (Map<String, dynamic> e) => BranchEntity.fromJson(e))
+          .toList() as M;
     }
     if (<BranchCommit>[] is M) {
-      return data.map<BranchCommit>((e) => BranchCommit.fromJson(e)).toList()
-          as M;
+      return data
+          .map<BranchCommit>(
+              (Map<String, dynamic> e) => BranchCommit.fromJson(e))
+          .toList() as M;
     }
     if (<CommitDetailEntity>[] is M) {
       return data
-          .map<CommitDetailEntity>((e) => CommitDetailEntity.fromJson(e))
+          .map<CommitDetailEntity>(
+              (Map<String, dynamic> e) => CommitDetailEntity.fromJson(e))
           .toList() as M;
     }
     if (<CommitDetailCommit>[] is M) {
       return data
-          .map<CommitDetailCommit>((e) => CommitDetailCommit.fromJson(e))
+          .map<CommitDetailCommit>(
+              (Map<String, dynamic> e) => CommitDetailCommit.fromJson(e))
           .toList() as M;
     }
     if (<CommitDetailCommitAuthor>[] is M) {
       return data
           .map<CommitDetailCommitAuthor>(
-              (e) => CommitDetailCommitAuthor.fromJson(e))
+              (Map<String, dynamic> e) => CommitDetailCommitAuthor.fromJson(e))
           .toList() as M;
     }
     if (<CommitDetailCommitCommitter>[] is M) {
       return data
-          .map<CommitDetailCommitCommitter>(
-              (e) => CommitDetailCommitCommitter.fromJson(e))
+          .map<CommitDetailCommitCommitter>((Map<String, dynamic> e) =>
+              CommitDetailCommitCommitter.fromJson(e))
           .toList() as M;
     }
     if (<CommitDetailCommitTree>[] is M) {
       return data
           .map<CommitDetailCommitTree>(
-              (e) => CommitDetailCommitTree.fromJson(e))
+              (Map<String, dynamic> e) => CommitDetailCommitTree.fromJson(e))
           .toList() as M;
     }
     if (<CommitDetailFiles>[] is M) {
       return data
-          .map<CommitDetailFiles>((e) => CommitDetailFiles.fromJson(e))
+          .map<CommitDetailFiles>(
+              (Map<String, dynamic> e) => CommitDetailFiles.fromJson(e))
           .toList() as M;
     }
     if (<IssueCommentEntity>[] is M) {
       return data
-          .map<IssueCommentEntity>((e) => IssueCommentEntity.fromJson(e))
+          .map<IssueCommentEntity>(
+              (Map<String, dynamic> e) => IssueCommentEntity.fromJson(e))
           .toList() as M;
     }
     if (<IssueCommentUser>[] is M) {
       return data
-          .map<IssueCommentUser>((e) => IssueCommentUser.fromJson(e))
+          .map<IssueCommentUser>(
+              (Map<String, dynamic> e) => IssueCommentUser.fromJson(e))
           .toList() as M;
     }
     if (<IssueCommentTarget>[] is M) {
       return data
-          .map<IssueCommentTarget>((e) => IssueCommentTarget.fromJson(e))
+          .map<IssueCommentTarget>(
+              (Map<String, dynamic> e) => IssueCommentTarget.fromJson(e))
           .toList() as M;
     }
     if (<IssueCommentTargetIssue>[] is M) {
       return data
           .map<IssueCommentTargetIssue>(
-              (e) => IssueCommentTargetIssue.fromJson(e))
+              (Map<String, dynamic> e) => IssueCommentTargetIssue.fromJson(e))
           .toList() as M;
     }
     if (<IssueResultEntity>[] is M) {
       return data
-          .map<IssueResultEntity>((e) => IssueResultEntity.fromJson(e))
+          .map<IssueResultEntity>(
+              (Map<String, dynamic> e) => IssueResultEntity.fromJson(e))
           .toList() as M;
     }
     if (<IssueResultEntityRepository>[] is M) {
       return data
-          .map<IssueResultEntityRepository>(
-              (e) => IssueResultEntityRepository.fromJson(e))
+          .map<IssueResultEntityRepository>((Map<String, dynamic> e) =>
+              IssueResultEntityRepository.fromJson(e))
           .toList() as M;
     }
     if (<IssueResultEntityUser>[] is M) {
       return data
-          .map<IssueResultEntityUser>((e) => IssueResultEntityUser.fromJson(e))
+          .map<IssueResultEntityUser>(
+              (Map<String, dynamic> e) => IssueResultEntityUser.fromJson(e))
           .toList() as M;
     }
     if (<IssueResultLabel>[] is M) {
       return data
-          .map<IssueResultLabel>((e) => IssueResultLabel.fromJson(e))
+          .map<IssueResultLabel>(
+              (Map<String, dynamic> e) => IssueResultLabel.fromJson(e))
           .toList() as M;
     }
     if (<IssueResultAssignee>[] is M) {
       return data
-          .map<IssueResultAssignee>((e) => IssueResultAssignee.fromJson(e))
+          .map<IssueResultAssignee>(
+              (Map<String, dynamic> e) => IssueResultAssignee.fromJson(e))
           .toList() as M;
     }
     if (<IssueResultMilestone>[] is M) {
       return data
-          .map<IssueResultMilestone>((e) => IssueResultMilestone.fromJson(e))
+          .map<IssueResultMilestone>(
+              (Map<String, dynamic> e) => IssueResultMilestone.fromJson(e))
           .toList() as M;
     }
     if (<IssueResultProgram>[] is M) {
       return data
-          .map<IssueResultProgram>((e) => IssueResultProgram.fromJson(e))
+          .map<IssueResultProgram>(
+              (Map<String, dynamic> e) => IssueResultProgram.fromJson(e))
           .toList() as M;
     }
     if (<IssueResultProgramAssignee>[] is M) {
       return data
-          .map<IssueResultProgramAssignee>(
-              (e) => IssueResultProgramAssignee.fromJson(e))
+          .map<IssueResultProgramAssignee>((Map<String, dynamic> e) =>
+              IssueResultProgramAssignee.fromJson(e))
           .toList() as M;
     }
     if (<IssueResultProgramAuthor>[] is M) {
       return data
           .map<IssueResultProgramAuthor>(
-              (e) => IssueResultProgramAuthor.fromJson(e))
+              (Map<String, dynamic> e) => IssueResultProgramAuthor.fromJson(e))
           .toList() as M;
     }
     if (<IssueResultIssueTypeDetail>[] is M) {
       return data
-          .map<IssueResultIssueTypeDetail>(
-              (e) => IssueResultIssueTypeDetail.fromJson(e))
+          .map<IssueResultIssueTypeDetail>((Map<String, dynamic> e) =>
+              IssueResultIssueTypeDetail.fromJson(e))
           .toList() as M;
     }
     if (<IssueResultIssueStateDetail>[] is M) {
       return data
-          .map<IssueResultIssueStateDetail>(
-              (e) => IssueResultIssueStateDetail.fromJson(e))
+          .map<IssueResultIssueStateDetail>((Map<String, dynamic> e) =>
+              IssueResultIssueStateDetail.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestEntity>[] is M) {
       return data
-          .map<PullRequestEntity>((e) => PullRequestEntity.fromJson(e))
+          .map<PullRequestEntity>(
+              (Map<String, dynamic> e) => PullRequestEntity.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestLabel>[] is M) {
       return data
-          .map<PullRequestLabel>((e) => PullRequestLabel.fromJson(e))
+          .map<PullRequestLabel>(
+              (Map<String, dynamic> e) => PullRequestLabel.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestHead>[] is M) {
       return data
-          .map<PullRequestHead>((e) => PullRequestHead.fromJson(e))
+          .map<PullRequestHead>(
+              (Map<String, dynamic> e) => PullRequestHead.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestHeadUser>[] is M) {
       return data
-          .map<PullRequestHeadUser>((e) => PullRequestHeadUser.fromJson(e))
+          .map<PullRequestHeadUser>(
+              (Map<String, dynamic> e) => PullRequestHeadUser.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestHeadRepo>[] is M) {
       return data
-          .map<PullRequestHeadRepo>((e) => PullRequestHeadRepo.fromJson(e))
+          .map<PullRequestHeadRepo>(
+              (Map<String, dynamic> e) => PullRequestHeadRepo.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestHeadRepoNamespace>[] is M) {
       return data
-          .map<PullRequestHeadRepoNamespace>(
-              (e) => PullRequestHeadRepoNamespace.fromJson(e))
+          .map<PullRequestHeadRepoNamespace>((Map<String, dynamic> e) =>
+              PullRequestHeadRepoNamespace.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestHeadRepoOwner>[] is M) {
       return data
           .map<PullRequestHeadRepoOwner>(
-              (e) => PullRequestHeadRepoOwner.fromJson(e))
+              (Map<String, dynamic> e) => PullRequestHeadRepoOwner.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestHeadRepoAssigner>[] is M) {
       return data
-          .map<PullRequestHeadRepoAssigner>(
-              (e) => PullRequestHeadRepoAssigner.fromJson(e))
+          .map<PullRequestHeadRepoAssigner>((Map<String, dynamic> e) =>
+              PullRequestHeadRepoAssigner.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestBase>[] is M) {
       return data
-          .map<PullRequestBase>((e) => PullRequestBase.fromJson(e))
+          .map<PullRequestBase>(
+              (Map<String, dynamic> e) => PullRequestBase.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestBaseUser>[] is M) {
       return data
-          .map<PullRequestBaseUser>((e) => PullRequestBaseUser.fromJson(e))
+          .map<PullRequestBaseUser>(
+              (Map<String, dynamic> e) => PullRequestBaseUser.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestBaseRepo>[] is M) {
       return data
-          .map<PullRequestBaseRepo>((e) => PullRequestBaseRepo.fromJson(e))
+          .map<PullRequestBaseRepo>(
+              (Map<String, dynamic> e) => PullRequestBaseRepo.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestBaseRepoNamespace>[] is M) {
       return data
-          .map<PullRequestBaseRepoNamespace>(
-              (e) => PullRequestBaseRepoNamespace.fromJson(e))
+          .map<PullRequestBaseRepoNamespace>((Map<String, dynamic> e) =>
+              PullRequestBaseRepoNamespace.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestBaseRepoOwner>[] is M) {
       return data
           .map<PullRequestBaseRepoOwner>(
-              (e) => PullRequestBaseRepoOwner.fromJson(e))
+              (Map<String, dynamic> e) => PullRequestBaseRepoOwner.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestBaseRepoAssigner>[] is M) {
       return data
-          .map<PullRequestBaseRepoAssigner>(
-              (e) => PullRequestBaseRepoAssigner.fromJson(e))
+          .map<PullRequestBaseRepoAssigner>((Map<String, dynamic> e) =>
+              PullRequestBaseRepoAssigner.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestLinks>[] is M) {
       return data
-          .map<PullRequestLinks>((e) => PullRequestLinks.fromJson(e))
+          .map<PullRequestLinks>(
+              (Map<String, dynamic> e) => PullRequestLinks.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestLinksSelf>[] is M) {
       return data
-          .map<PullRequestLinksSelf>((e) => PullRequestLinksSelf.fromJson(e))
+          .map<PullRequestLinksSelf>(
+              (Map<String, dynamic> e) => PullRequestLinksSelf.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestLinksHtml>[] is M) {
       return data
-          .map<PullRequestLinksHtml>((e) => PullRequestLinksHtml.fromJson(e))
+          .map<PullRequestLinksHtml>(
+              (Map<String, dynamic> e) => PullRequestLinksHtml.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestLinksIssue>[] is M) {
       return data
-          .map<PullRequestLinksIssue>((e) => PullRequestLinksIssue.fromJson(e))
+          .map<PullRequestLinksIssue>(
+              (Map<String, dynamic> e) => PullRequestLinksIssue.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestLinksComments>[] is M) {
       return data
           .map<PullRequestLinksComments>(
-              (e) => PullRequestLinksComments.fromJson(e))
+              (Map<String, dynamic> e) => PullRequestLinksComments.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestLinksReviewComments>[] is M) {
       return data
-          .map<PullRequestLinksReviewComments>(
-              (e) => PullRequestLinksReviewComments.fromJson(e))
+          .map<PullRequestLinksReviewComments>((Map<String, dynamic> e) =>
+              PullRequestLinksReviewComments.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestLinksReviewComment>[] is M) {
       return data
-          .map<PullRequestLinksReviewComment>(
-              (e) => PullRequestLinksReviewComment.fromJson(e))
+          .map<PullRequestLinksReviewComment>((Map<String, dynamic> e) =>
+              PullRequestLinksReviewComment.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestLinksCommits>[] is M) {
       return data
           .map<PullRequestLinksCommits>(
-              (e) => PullRequestLinksCommits.fromJson(e))
+              (Map<String, dynamic> e) => PullRequestLinksCommits.fromJson(e))
           .toList() as M;
     }
     if (<PullRequestUser>[] is M) {
       return data
-          .map<PullRequestUser>((e) => PullRequestUser.fromJson(e))
+          .map<PullRequestUser>(
+              (Map<String, dynamic> e) => PullRequestUser.fromJson(e))
           .toList() as M;
     }
     if (<RepoCommitEntity>[] is M) {
       return data
-          .map<RepoCommitEntity>((e) => RepoCommitEntity.fromJson(e))
+          .map<RepoCommitEntity>(
+              (Map<String, dynamic> e) => RepoCommitEntity.fromJson(e))
           .toList() as M;
     }
     if (<RepoCommitCommit>[] is M) {
       return data
-          .map<RepoCommitCommit>((e) => RepoCommitCommit.fromJson(e))
+          .map<RepoCommitCommit>(
+              (Map<String, dynamic> e) => RepoCommitCommit.fromJson(e))
           .toList() as M;
     }
     if (<RepoCommitCommitAuthor>[] is M) {
       return data
           .map<RepoCommitCommitAuthor>(
-              (e) => RepoCommitCommitAuthor.fromJson(e))
+              (Map<String, dynamic> e) => RepoCommitCommitAuthor.fromJson(e))
           .toList() as M;
     }
     if (<RepoCommitCommitCommitter>[] is M) {
       return data
           .map<RepoCommitCommitCommitter>(
-              (e) => RepoCommitCommitCommitter.fromJson(e))
+              (Map<String, dynamic> e) => RepoCommitCommitCommitter.fromJson(e))
           .toList() as M;
     }
     if (<RepoCommitCommitTree>[] is M) {
       return data
-          .map<RepoCommitCommitTree>((e) => RepoCommitCommitTree.fromJson(e))
+          .map<RepoCommitCommitTree>(
+              (Map<String, dynamic> e) => RepoCommitCommitTree.fromJson(e))
           .toList() as M;
     }
     if (<RepoCommitAuthor>[] is M) {
       return data
-          .map<RepoCommitAuthor>((e) => RepoCommitAuthor.fromJson(e))
+          .map<RepoCommitAuthor>(
+              (Map<String, dynamic> e) => RepoCommitAuthor.fromJson(e))
           .toList() as M;
     }
     if (<RepoCommitCommitter>[] is M) {
       return data
-          .map<RepoCommitCommitter>((e) => RepoCommitCommitter.fromJson(e))
+          .map<RepoCommitCommitter>(
+              (Map<String, dynamic> e) => RepoCommitCommitter.fromJson(e))
           .toList() as M;
     }
     if (<RepoCommitParents>[] is M) {
       return data
-          .map<RepoCommitParents>((e) => RepoCommitParents.fromJson(e))
+          .map<RepoCommitParents>(
+              (Map<String, dynamic> e) => RepoCommitParents.fromJson(e))
           .toList() as M;
     }
     if (<RepoFileEntity>[] is M) {
       return data
-          .map<RepoFileEntity>((e) => RepoFileEntity.fromJson(e))
+          .map<RepoFileEntity>(
+              (Map<String, dynamic> e) => RepoFileEntity.fromJson(e))
           .toList() as M;
     }
     if (<ReadmeLinks>[] is M) {
-      return data.map<ReadmeLinks>((e) => ReadmeLinks.fromJson(e)).toList()
-          as M;
+      return data
+          .map<ReadmeLinks>((Map<String, dynamic> e) => ReadmeLinks.fromJson(e))
+          .toList() as M;
     }
     if (<RepositoryBlobEntity>[] is M) {
       return data
-          .map<RepositoryBlobEntity>((e) => RepositoryBlobEntity.fromJson(e))
+          .map<RepositoryBlobEntity>(
+              (Map<String, dynamic> e) => RepositoryBlobEntity.fromJson(e))
           .toList() as M;
     }
     if (<RepositoryEntity>[] is M) {
       return data
-          .map<RepositoryEntity>((e) => RepositoryEntity.fromJson(e))
+          .map<RepositoryEntity>(
+              (Map<String, dynamic> e) => RepositoryEntity.fromJson(e))
           .toList() as M;
     }
     if (<RepositoryNamespace>[] is M) {
       return data
-          .map<RepositoryNamespace>((e) => RepositoryNamespace.fromJson(e))
+          .map<RepositoryNamespace>(
+              (Map<String, dynamic> e) => RepositoryNamespace.fromJson(e))
           .toList() as M;
     }
     if (<RepositoryOwner>[] is M) {
       return data
-          .map<RepositoryOwner>((e) => RepositoryOwner.fromJson(e))
+          .map<RepositoryOwner>(
+              (Map<String, dynamic> e) => RepositoryOwner.fromJson(e))
           .toList() as M;
     }
     if (<RepositoryAssigner>[] is M) {
       return data
-          .map<RepositoryAssigner>((e) => RepositoryAssigner.fromJson(e))
+          .map<RepositoryAssigner>(
+              (Map<String, dynamic> e) => RepositoryAssigner.fromJson(e))
           .toList() as M;
     }
     if (<RepositoryPermission>[] is M) {
       return data
-          .map<RepositoryPermission>((e) => RepositoryPermission.fromJson(e))
+          .map<RepositoryPermission>(
+              (Map<String, dynamic> e) => RepositoryPermission.fromJson(e))
           .toList() as M;
     }
     if (<RepositoryAssignee>[] is M) {
       return data
-          .map<RepositoryAssignee>((e) => RepositoryAssignee.fromJson(e))
+          .map<RepositoryAssignee>(
+              (Map<String, dynamic> e) => RepositoryAssignee.fromJson(e))
           .toList() as M;
     }
     if (<RepositoryTesters>[] is M) {
       return data
-          .map<RepositoryTesters>((e) => RepositoryTesters.fromJson(e))
+          .map<RepositoryTesters>(
+              (Map<String, dynamic> e) => RepositoryTesters.fromJson(e))
+          .toList() as M;
+    }
+    if (<RepositoryReleaseEntity>[] is M) {
+      return data
+          .map<RepositoryReleaseEntity>(
+              (Map<String, dynamic> e) => RepositoryReleaseEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<RepositoryReleaseAuthor>[] is M) {
+      return data
+          .map<RepositoryReleaseAuthor>(
+              (Map<String, dynamic> e) => RepositoryReleaseAuthor.fromJson(e))
+          .toList() as M;
+    }
+    if (<RepositoryReleaseAssets>[] is M) {
+      return data
+          .map<RepositoryReleaseAssets>(
+              (Map<String, dynamic> e) => RepositoryReleaseAssets.fromJson(e))
           .toList() as M;
     }
     if (<RepositoryTreeEntity>[] is M) {
       return data
-          .map<RepositoryTreeEntity>((e) => RepositoryTreeEntity.fromJson(e))
+          .map<RepositoryTreeEntity>(
+              (Map<String, dynamic> e) => RepositoryTreeEntity.fromJson(e))
           .toList() as M;
     }
     if (<RepositoryTreeTree>[] is M) {
       return data
-          .map<RepositoryTreeTree>((e) => RepositoryTreeTree.fromJson(e))
+          .map<RepositoryTreeTree>(
+              (Map<String, dynamic> e) => RepositoryTreeTree.fromJson(e))
           .toList() as M;
     }
     if (<EventResultEntity>[] is M) {
       return data
-          .map<EventResultEntity>((e) => EventResultEntity.fromJson(e))
+          .map<EventResultEntity>(
+              (Map<String, dynamic> e) => EventResultEntity.fromJson(e))
           .toList() as M;
     }
     if (<EventResultActor>[] is M) {
       return data
-          .map<EventResultActor>((e) => EventResultActor.fromJson(e))
+          .map<EventResultActor>(
+              (Map<String, dynamic> e) => EventResultActor.fromJson(e))
           .toList() as M;
     }
     if (<EventResultRepo>[] is M) {
       return data
-          .map<EventResultRepo>((e) => EventResultRepo.fromJson(e))
+          .map<EventResultRepo>(
+              (Map<String, dynamic> e) => EventResultRepo.fromJson(e))
           .toList() as M;
     }
     if (<EventResultPayload>[] is M) {
       return data
-          .map<EventResultPayload>((e) => EventResultPayload.fromJson(e))
+          .map<EventResultPayload>(
+              (Map<String, dynamic> e) => EventResultPayload.fromJson(e))
           .toList() as M;
     }
     if (<EventResultPayloadComment>[] is M) {
       return data
           .map<EventResultPayloadComment>(
-              (e) => EventResultPayloadComment.fromJson(e))
+              (Map<String, dynamic> e) => EventResultPayloadComment.fromJson(e))
           .toList() as M;
     }
     if (<EventResultPayloadCommentUser>[] is M) {
       return data
-          .map<EventResultPayloadCommentUser>(
-              (e) => EventResultPayloadCommentUser.fromJson(e))
+          .map<EventResultPayloadCommentUser>((Map<String, dynamic> e) =>
+              EventResultPayloadCommentUser.fromJson(e))
           .toList() as M;
     }
     if (<EventResultPayloadIssue>[] is M) {
       return data
           .map<EventResultPayloadIssue>(
-              (e) => EventResultPayloadIssue.fromJson(e))
+              (Map<String, dynamic> e) => EventResultPayloadIssue.fromJson(e))
           .toList() as M;
     }
     if (<EventResultPayloadCommit>[] is M) {
       return data
           .map<EventResultPayloadCommit>(
-              (e) => EventResultPayloadCommit.fromJson(e))
+              (Map<String, dynamic> e) => EventResultPayloadCommit.fromJson(e))
           .toList() as M;
     }
     if (<EventResultPayloadCommitAuthor>[] is M) {
       return data
-          .map<EventResultPayloadCommitAuthor>(
-              (e) => EventResultPayloadCommitAuthor.fromJson(e))
+          .map<EventResultPayloadCommitAuthor>((Map<String, dynamic> e) =>
+              EventResultPayloadCommitAuthor.fromJson(e))
           .toList() as M;
     }
     if (<EventResultPayloadTarget>[] is M) {
       return data
           .map<EventResultPayloadTarget>(
-              (e) => EventResultPayloadTarget.fromJson(e))
+              (Map<String, dynamic> e) => EventResultPayloadTarget.fromJson(e))
           .toList() as M;
     }
     if (<EventResultOrg>[] is M) {
       return data
-          .map<EventResultOrg>((e) => EventResultOrg.fromJson(e))
+          .map<EventResultOrg>(
+              (Map<String, dynamic> e) => EventResultOrg.fromJson(e))
           .toList() as M;
     }
     if (<FollowResultEntity>[] is M) {
       return data
-          .map<FollowResultEntity>((e) => FollowResultEntity.fromJson(e))
+          .map<FollowResultEntity>(
+              (Map<String, dynamic> e) => FollowResultEntity.fromJson(e))
           .toList() as M;
     }
     if (<LoginSuccessResultEntity>[] is M) {
       return data
           .map<LoginSuccessResultEntity>(
-              (e) => LoginSuccessResultEntity.fromJson(e))
+              (Map<String, dynamic> e) => LoginSuccessResultEntity.fromJson(e))
           .toList() as M;
     }
     if (<UserProfileEntity>[] is M) {
       return data
-          .map<UserProfileEntity>((e) => UserProfileEntity.fromJson(e))
+          .map<UserProfileEntity>(
+              (Map<String, dynamic> e) => UserProfileEntity.fromJson(e))
           .toList() as M;
     }
 
@@ -773,7 +855,8 @@ class JsonConvert {
       return null;
     }
     if (json is List) {
-      return _getListChildType<M>(json);
+      return _getListChildType<M>(
+          json.map((e) => e as Map<String, dynamic>).toList());
     } else {
       return _fromJsonSingle<M>(json as Map<String, dynamic>);
     }
