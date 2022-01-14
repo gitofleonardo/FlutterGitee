@@ -12,6 +12,13 @@ First of all, if you want to compile this project, you need to install flutter a
 
 For now, flutter supports Android, IOS, WEB and Linux client.
 
+### Plugin Recommendation
+
++ [Flutter](https://plugins.jetbrains.com/plugin/9212-flutter). Necessary plugin for developing flutter applications.
++ [Dart](https://plugins.jetbrains.com/plugin/6351-dart). Necessary plugin for dart langauge.
++ [FlutterJsonBeanFactory(Only Null Safety)](https://plugins.jetbrains.com/plugin/11415-flutterjsonbeanfactory-only-null-safety-). Generate bean class conveniently.
++ [Flutter Enhancement Suite](https://plugins.jetbrains.com/plugin/12693-flutter-enhancement-suite). Create flutter widget conveniently.
+
 ## Contribution
 
 Before making contribution, make sure you have obtained client ID and client secret in Gitee. You should follow [this instruction](https://gitee.com/api/v5/oauth_doc#/list-item-3) to create your personal third-party application.
