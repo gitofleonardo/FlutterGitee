@@ -6,7 +6,7 @@ import 'package:flutter_gitee/repo/bean/commit_detail_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/repo_commit_file_page.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RepoCommitDetailPage extends StatefulWidget {
@@ -20,7 +20,7 @@ class RepoCommitDetailPage extends StatefulWidget {
   _RepoCommitDetailPageState createState() => _RepoCommitDetailPageState();
 }
 
-class _RepoCommitDetailPageState extends State<RepoCommitDetailPage> {
+class _RepoCommitDetailPageState extends BaseState<RepoCommitDetailPage> {
   final _pageController = PageController();
   CommitDetailEntity? _commit;
 
@@ -29,49 +29,47 @@ class _RepoCommitDetailPageState extends State<RepoCommitDetailPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GlobalThemeWidget(child: Builder(builder: (context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text("Commit"),
+  Widget create(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Commit"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        onPressed: () {
+          _showInfoBottomSheet(context);
+        },
+        child: const Icon(
+          FontAwesomeIcons.info,
+          color: Colors.white,
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          onPressed: () {
-            _showInfoBottomSheet(context);
-          },
-          child: const Icon(
-            FontAwesomeIcons.info,
-            color: Colors.white,
-          ),
-        ),
-        body: FutureBuilder<BaseResult<CommitDetailEntity>>(
-          future: _getCommitDetail(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.data?.success ?? false) {
-                _commit = snapshot.data?.data;
-                return CustomScrollView(
-                  scrollDirection: Axis.vertical,
-                  controller: _pageController,
-                  slivers: _createFilePages(_commit?.files ?? []),
-                );
-              } else {
-                return TapToRetryWidget(
-                    onTap: () {
-                      setState(() {});
-                    },
-                    message: "Tap To Retry");
-              }
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
+      ),
+      body: FutureBuilder<BaseResult<CommitDetailEntity>>(
+        future: _getCommitDetail(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.data?.success ?? false) {
+              _commit = snapshot.data?.data;
+              return CustomScrollView(
+                scrollDirection: Axis.vertical,
+                controller: _pageController,
+                slivers: _createFilePages(_commit?.files ?? []),
               );
+            } else {
+              return TapToRetryWidget(
+                  onTap: () {
+                    setState(() {});
+                  },
+                  message: "Tap To Retry");
             }
-          },
-        ),
-      );
-    }));
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
   }
 
   List<Widget> _createFilePages(List<CommitDetailFiles> files) {

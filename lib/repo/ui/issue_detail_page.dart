@@ -4,7 +4,7 @@ import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/ui/issue_comments_page.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -22,7 +22,7 @@ class IssueDetailPage extends StatefulWidget {
   _IssueDetailPageState createState() => _IssueDetailPageState();
 }
 
-class _IssueDetailPageState extends State<IssueDetailPage> {
+class _IssueDetailPageState extends BaseState<IssueDetailPage> {
   late IssueResultEntity _issue;
   final _scrollController = ScrollController();
   var _pageState = _PageState.loading;
@@ -49,30 +49,26 @@ class _IssueDetailPageState extends State<IssueDetailPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GlobalThemeWidget(child: Builder(
-      builder: (context) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text("Issue Details"),
-          ),
-          body: PageView(
-            children: [
-              _createIssuePage(),
-              IssueCommentsPage(
-                  fullName: widget.fullName, number: widget.number)
-            ],
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-          ),
-          bottomNavigationBar: _createBottomNavigation(),
-        );
-      },
-    ));
+  Widget create(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Issue Details"),
+      ),
+      body: PageView(
+        children: [
+          _createIssuePage(),
+          IssueCommentsPage(
+              fullName: widget.fullName, number: widget.number)
+        ],
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
+      bottomNavigationBar: _createBottomNavigation(),
+    );
   }
 
   Widget _createBottomNavigation() {

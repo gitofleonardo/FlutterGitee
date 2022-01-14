@@ -83,7 +83,7 @@ class _EventsPageState extends BaseState<EventsPage>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget create(BuildContext context) {
     super.build(context);
     return Container(
       constraints: const BoxConstraints.expand(),

@@ -4,7 +4,7 @@ import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/issue_list_item.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'issue_detail_page.dart';
@@ -30,7 +30,7 @@ class RepoIssuePage extends StatefulWidget {
   _RepoIssuePageState createState() => _RepoIssuePageState();
 }
 
-class _RepoIssuePageState extends State<RepoIssuePage> {
+class _RepoIssuePageState extends BaseState<RepoIssuePage> {
   final _refreshController = RefreshController();
   var _hasMore = false;
   final _pageSize = 20;
@@ -98,58 +98,52 @@ class _RepoIssuePageState extends State<RepoIssuePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GlobalThemeWidget(
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("Issue"),
-            ),
-            body: Flex(
-              direction: Axis.vertical,
-              children: [
-                ConstrainedBox(
-                  constraints: const BoxConstraints(minWidth: double.infinity),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Padding(
-                      child: Wrap(
-                        spacing: 10,
-                        children: _createFilterChips(context),
-                      ),
-                      padding: const EdgeInsets.only(left: 10),
-                    ),
-                  ),
+  Widget create(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Issue"),
+      ),
+      body: Flex(
+        direction: Axis.vertical,
+        children: [
+          ConstrainedBox(
+            constraints: const BoxConstraints(minWidth: double.infinity),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Padding(
+                child: Wrap(
+                  spacing: 10,
+                  children: _createFilterChips(context),
                 ),
-                Expanded(
-                    child: SmartRefresher(
-                  onRefresh: _refreshPage,
-                  onLoading: _loadMore,
-                  enablePullUp: _hasMore,
-                  enablePullDown: true,
-                  header: const WaterDropHeader(),
-                  controller: _refreshController,
-                  child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        final item = _issues[index];
-                        return IssueListItem(
-                            issue: item,
-                            onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return IssueDetailPage(
-                                    fullName: "${item.repository?.fullName}",
-                                    number: "${item.number}");
-                              }));
-                            });
-                      },
-                      itemCount: _issues.length),
-                )),
-              ],
+                padding: const EdgeInsets.only(left: 10),
+              ),
             ),
-          );
-        },
+          ),
+          Expanded(
+              child: SmartRefresher(
+                onRefresh: _refreshPage,
+                onLoading: _loadMore,
+                enablePullUp: _hasMore,
+                enablePullDown: true,
+                header: const WaterDropHeader(),
+                controller: _refreshController,
+                child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      final item = _issues[index];
+                      return IssueListItem(
+                          issue: item,
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                                  return IssueDetailPage(
+                                      fullName: "${item.repository?.fullName}",
+                                      number: "${item.number}");
+                                },),);
+                          },);
+                    },
+                    itemCount: _issues.length),
+              ),),
+        ],
       ),
     );
   }

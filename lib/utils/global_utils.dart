@@ -98,8 +98,23 @@ ThemeData getTheme(int themeIndex) {
   return globalThemes[themeIndex].theme;
 }
 
+Future<void> setCurrentLanguage(String lang) async {
+  globalLanguage = lang;
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setString(languageName, lang);
+}
+
+Future<String> getCurrentLanguage() async {
+  final prefs = await SharedPreferences.getInstance();
+  final lang = prefs.getString(languageName);
+  if (lang == null) {
+    return globalLanguages[0];
+  }
+  return lang;
+}
+
 Dio getDioInstance() {
-  final options = BaseOptions(baseUrl: "https://gitee.com/");
+  final options = BaseOptions(baseUrl: giteeBaseUrl);
   return Dio(options);
 }
 

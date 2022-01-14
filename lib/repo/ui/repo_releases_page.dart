@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/repo/bean/repository_release_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -16,7 +16,7 @@ class RepoReleasesPage extends StatefulWidget {
   _RepoReleasesPageState createState() => _RepoReleasesPageState();
 }
 
-class _RepoReleasesPageState extends State<RepoReleasesPage> {
+class _RepoReleasesPageState extends BaseState<RepoReleasesPage> {
   final _refreshController = RefreshController();
   final _releases = <RepositoryReleaseEntity>[];
   var _hasMore = false;
@@ -77,25 +77,23 @@ class _RepoReleasesPageState extends State<RepoReleasesPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GlobalThemeWidget(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Releases"),
-        ),
-        body: SmartRefresher(
-          controller: _refreshController,
-          onLoading: _loadMore,
-          onRefresh: _refresh,
-          enablePullUp: _hasMore,
-          header: const WaterDropHeader(),
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              final item = _releases[index];
-              return _releaseItem(item);
-            },
-            itemCount: _releases.length,
-          ),
+  Widget create(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Releases"),
+      ),
+      body: SmartRefresher(
+        controller: _refreshController,
+        onLoading: _loadMore,
+        onRefresh: _refresh,
+        enablePullUp: _hasMore,
+        header: const WaterDropHeader(),
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            final item = _releases[index];
+            return _releaseItem(item);
+          },
+          itemCount: _releases.length,
         ),
       ),
     );

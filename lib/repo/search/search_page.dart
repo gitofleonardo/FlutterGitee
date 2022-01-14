@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
@@ -8,7 +7,6 @@ import 'package:flutter_gitee/repo/search/repo_search_page.dart';
 import 'package:flutter_gitee/repo/search/user_search_page.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -101,67 +99,65 @@ class _SearchPageState extends BaseState<SearchPage>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GlobalThemeWidget(
-      child: InheritedSearchWidget(
-        repoFilter: RepositoryFilter.from(_repoFilter),
-        issueFilter: IssueFilter.from(_issueFilter),
-        userFilter: UserFilter.from(_userFilter),
-        searchText: _searchText,
-        searchChild: Scaffold(
-          appBar: AppBar(
-            bottom: TabBar(
-              controller: _tabController,
-              tabs: _tabs,
-            ),
-            title: TextField(
-              onSubmitted: (value) {
-                if (value.trim().isNotEmpty) {
-                  setState(() {
-                    _searchText = value;
-                  });
-                  FocusScope.of(context).unfocus();
-                }
-              },
-              textInputAction: TextInputAction.search,
-              focusNode: _focusNode,
-              controller: _searchController,
-              maxLines: 1,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white)),
-                  focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white)),
-                  hintStyle: const TextStyle(color: Colors.white),
-                  hintText: "Search repository, user or issue",
-                  suffixIcon: IconButton(
-                    icon: const Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
-                    onPressed: _onSearch,
-                  )),
-            ),
-          ),
-          body: TabBarView(
-            children: _tabPages,
+  Widget create(BuildContext context) {
+    return InheritedSearchWidget(
+      repoFilter: RepositoryFilter.from(_repoFilter),
+      issueFilter: IssueFilter.from(_issueFilter),
+      userFilter: UserFilter.from(_userFilter),
+      searchText: _searchText,
+      searchChild: Scaffold(
+        appBar: AppBar(
+          bottom: TabBar(
             controller: _tabController,
+            tabs: _tabs,
           ),
-          floatingActionButton: Builder(
-            builder: (context) {
-              return FloatingActionButton(
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                onPressed: () {
-                  _createFilterSelection(context);
-                },
-                child: const Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                ),
-              );
+          title: TextField(
+            onSubmitted: (value) {
+              if (value.trim().isNotEmpty) {
+                setState(() {
+                  _searchText = value;
+                });
+                FocusScope.of(context).unfocus();
+              }
             },
+            textInputAction: TextInputAction.search,
+            focusNode: _focusNode,
+            controller: _searchController,
+            maxLines: 1,
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+                enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white)),
+                focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white)),
+                hintStyle: const TextStyle(color: Colors.white),
+                hintText: "Search repository, user or issue",
+                suffixIcon: IconButton(
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                  onPressed: _onSearch,
+                )),
           ),
+        ),
+        body: TabBarView(
+          children: _tabPages,
+          controller: _tabController,
+        ),
+        floatingActionButton: Builder(
+          builder: (context) {
+            return FloatingActionButton(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              onPressed: () {
+                _createFilterSelection(context);
+              },
+              child: const Icon(
+                Icons.menu,
+                color: Colors.white,
+              ),
+            );
+          },
         ),
       ),
     );

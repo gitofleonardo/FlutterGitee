@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gitee/repo/bean/repository_tree_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/utils/repository_file_open_handler.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TreeInfo {
-  final String fullname;
+  final String fullName;
   final String branch;
-  TreeInfo({required this.fullname, required this.branch});
+  TreeInfo({required this.fullName, required this.branch});
 }
 
 class _Pair<T, E> {
@@ -28,7 +28,7 @@ class RepositoryTreeViewer extends StatefulWidget {
   State<StatefulWidget> createState() => _RepositoryTreeViewerState();
 }
 
-class _RepositoryTreeViewerState extends State<RepositoryTreeViewer> {
+class _RepositoryTreeViewerState extends BaseState<RepositoryTreeViewer> {
   late String _title = widget.treeInfo.branch;
   late String _currentSha = widget.treeInfo.branch;
   final _refreshController = RefreshController();
@@ -80,7 +80,7 @@ class _RepositoryTreeViewerState extends State<RepositoryTreeViewer> {
     });
     _currentTree = null;
     _currentSha = sha;
-    getRepositoryTree(widget.treeInfo.fullname, _currentSha).then((value) {
+    getRepositoryTree(widget.treeInfo.fullName, _currentSha).then((value) {
       if (value.success && value.data != null) {
         _refreshController.refreshCompleted();
         _currentTree = value.data;
@@ -96,7 +96,7 @@ class _RepositoryTreeViewerState extends State<RepositoryTreeViewer> {
   }
 
   void _refreshCurrentTree() {
-    getRepositoryTree(widget.treeInfo.fullname, _currentSha).then((value) {
+    getRepositoryTree(widget.treeInfo.fullName, _currentSha).then((value) {
       if (value.success) {
         _refreshController.refreshCompleted();
         _currentTree = value.data;
@@ -113,51 +113,49 @@ class _RepositoryTreeViewerState extends State<RepositoryTreeViewer> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget create(BuildContext context) {
     return WillPopScope(
-        child: GlobalThemeWidget(
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(_title),
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.close))
-              ],
-            ),
-            body: SmartRefresher(
-              onRefresh: _refreshCurrentTree,
-              controller: _refreshController,
-              enablePullDown: true,
-              enablePullUp: false,
-              header: const WaterDropHeader(),
-              child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    final item = _currentTreeNodes[index];
-                    final isDir = item.type == "tree";
-                    return DecoratedBox(
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).backgroundColor),
-                      child: ListTile(
-                        leading: _createFileIcon(isDir),
-                        title: Text("${item.path}"),
-                        onTap: () {
-                          if (isDir) {
-                            _nextTree("${item.sha}", "${item.path}");
-                          } else {
-                            RepositoryFileOpenHandler.getInstance().open(
-                                context,
-                                widget.treeInfo.fullname,
-                                RepositoryBlob.fromTree(item));
-                          }
-                        },
-                      ),
-                    );
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(_title),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
                   },
-                  itemCount: _currentTreeNodes.length),
-            ),
+                  icon: const Icon(Icons.close))
+            ],
+          ),
+          body: SmartRefresher(
+            onRefresh: _refreshCurrentTree,
+            controller: _refreshController,
+            enablePullDown: true,
+            enablePullUp: false,
+            header: const WaterDropHeader(),
+            child: ListView.builder(
+                itemBuilder: (context, index) {
+                  final item = _currentTreeNodes[index];
+                  final isDir = item.type == "tree";
+                  return DecoratedBox(
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).backgroundColor),
+                    child: ListTile(
+                      leading: _createFileIcon(isDir),
+                      title: Text("${item.path}"),
+                      onTap: () {
+                        if (isDir) {
+                          _nextTree("${item.sha}", "${item.path}");
+                        } else {
+                          RepositoryFileOpenHandler.getInstance().open(
+                              context,
+                              widget.treeInfo.fullName,
+                              RepositoryBlob.fromTree(item));
+                        }
+                      },
+                    ),
+                  );
+                },
+                itemCount: _currentTreeNodes.length),
           ),
         ),
         onWillPop: () async {

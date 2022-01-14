@@ -8,7 +8,6 @@ import 'package:flutter_gitee/repo/ui/repository_page.dart';
 import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class StartPage extends StatefulWidget {
@@ -19,7 +18,6 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends BaseState<StartPage> {
-  final _baseKey = GlobalKey<GlobalThemeWidgetState>();
   var _userProfile = UserProfileEntity();
   Widget _currentPage = const EventsPage();
   String _currentTitle = "Events";
@@ -28,7 +26,6 @@ class _StartPageState extends BaseState<StartPage> {
 
   void _refreshProfile() {
     getMyUserProfile().then((value) {
-      checkRequestBaseResult(value);
       if (value.state == BaseStatus.success && value.data != null) {
         setState(() {
           _userProfile = value.data!;
@@ -44,20 +41,17 @@ class _StartPageState extends BaseState<StartPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GlobalThemeWidget(
-      key: _baseKey,
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text(_currentTitle),
-          centerTitle: true,
-          elevation: 0,
-        ),
-        body: _currentPage,
-        drawer: _createDrawer(),
-        floatingActionButton: _createFab(),
+  Widget create(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text(_currentTitle),
+        centerTitle: true,
+        elevation: 0,
       ),
+      body: _currentPage,
+      drawer: _createDrawer(),
+      floatingActionButton: _createFab(),
     );
   }
 
@@ -317,8 +311,10 @@ class _StartPageState extends BaseState<StartPage> {
           return Builder(builder: (context) {
             return ThemeSelectDialog(
                 context: context,
-                onSelect: (theme) {
-                  _baseKey.currentState?.updateTheme(theme);
+                onSelect: (t) {
+                  setState(() {
+                    theme = t;
+                  });
                   Navigator.pop(context);
                 });
           });
@@ -339,7 +335,7 @@ class _StartPageState extends BaseState<StartPage> {
                   child: const Text("No")),
               TextButton(
                 onPressed: () {
-                  routeToLogin();
+                  logout();
                   Navigator.pop(context);
                 },
                 child: const Text("Yes"),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RepoWatchersPage extends StatefulWidget {
@@ -13,7 +13,7 @@ class RepoWatchersPage extends StatefulWidget {
   _RepoWatchersPageState createState() => _RepoWatchersPageState();
 }
 
-class _RepoWatchersPageState extends State<RepoWatchersPage> {
+class _RepoWatchersPageState extends BaseState<RepoWatchersPage> {
   final _refreshController = RefreshController();
   var _hasMore = false;
   final _pageSize = 20;
@@ -74,40 +74,38 @@ class _RepoWatchersPageState extends State<RepoWatchersPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GlobalThemeWidget(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Watchers"),
-        ),
-        body: SmartRefresher(
-          onRefresh: _refreshPage,
-          onLoading: _loadMore,
-          enablePullUp: _hasMore,
-          enablePullDown: true,
-          header: const WaterDropHeader(),
-          controller: _refreshController,
-          child: ListView.builder(
-              itemBuilder: (context, index) {
-                final item = _users[index];
-                return ListTile(
-                  leading: ClipOval(
-                    child: Image.network(
-                      "${item.avatarUrl}",
-                      width: 42,
-                      height: 42,
-                      fit: BoxFit.fill,
-                    ),
+  Widget create(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Watchers"),
+      ),
+      body: SmartRefresher(
+        onRefresh: _refreshPage,
+        onLoading: _loadMore,
+        enablePullUp: _hasMore,
+        enablePullDown: true,
+        header: const WaterDropHeader(),
+        controller: _refreshController,
+        child: ListView.builder(
+            itemBuilder: (context, index) {
+              final item = _users[index];
+              return ListTile(
+                leading: ClipOval(
+                  child: Image.network(
+                    "${item.avatarUrl}",
+                    width: 42,
+                    height: 42,
+                    fit: BoxFit.fill,
                   ),
-                  title: Text("${item.login}"),
-                  onTap: () {
-                    Navigator.pushNamed(context, "user_profile_page",
-                        arguments: item.login);
-                  },
-                );
-              },
-              itemCount: _users.length),
-        ),
+                ),
+                title: Text("${item.login}"),
+                onTap: () {
+                  Navigator.pushNamed(context, "user_profile_page",
+                      arguments: item.login);
+                },
+              );
+            },
+            itemCount: _users.length),
       ),
     );
   }

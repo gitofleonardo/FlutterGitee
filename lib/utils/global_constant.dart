@@ -19,11 +19,13 @@ import 'package:flutter_gitee/user/following_page.dart';
 import 'package:flutter_gitee/user/login_page.dart';
 import 'package:flutter_gitee/user/user_profile_page.dart';
 
+// local database keys
 const tokenName = "token";
 const refreshTokenName = "refreshToken";
 const themeName = "theme";
 const usernameName = "username";
 const passwordName = "password";
+const languageName = "language";
 
 //routes
 final routes = {
@@ -39,7 +41,7 @@ final routes = {
       UserProfilePage(user: ModalRoute.of(ctx)!.settings.arguments.toString()),
   "search_page": (ctx) => const SearchPage(),
   "repository_detail_page": (ctx) => RepositoryDetailPage(
-      fullname: ModalRoute.of(ctx)!.settings.arguments.toString()),
+      fullName: ModalRoute.of(ctx)!.settings.arguments.toString()),
   "repository_tree_page": (ctx) => RepositoryTreeViewer(
       treeInfo: ModalRoute.of(ctx)!.settings.arguments as TreeInfo),
   "repository_stargazers_page": (ctx) => RepoStargazersPage(
@@ -144,6 +146,11 @@ final globalThemes = [
           backgroundColor: Colors.white),
       "Light"),
   darkTheme
+];
+
+final globalLanguages = [
+  "zh",
+  "en"
 ];
 
 const giteeBaseUrl = "https://gitee.com/";

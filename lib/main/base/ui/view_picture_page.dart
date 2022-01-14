@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:photo_view/photo_view.dart';
 
 class ViewPicturePage extends StatefulWidget {
@@ -10,11 +10,10 @@ class ViewPicturePage extends StatefulWidget {
   _ViewPicturePageState createState() => _ViewPicturePageState();
 }
 
-class _ViewPicturePageState extends State<ViewPicturePage> {
+class _ViewPicturePageState extends BaseState<ViewPicturePage> {
   @override
-  Widget build(BuildContext context) {
-    return GlobalThemeWidget(
-        child: Scaffold(
+  Widget create(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
         title: const Text("View Picture"),
       ),
@@ -25,6 +24,6 @@ class _ViewPicturePageState extends State<ViewPicturePage> {
           child: PhotoView(imageProvider: NetworkImage(widget.url)),
         ),
       ),
-    ));
+    );
   }
 }

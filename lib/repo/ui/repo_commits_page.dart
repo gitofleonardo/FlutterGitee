@@ -3,7 +3,7 @@ import 'package:flutter_gitee/repo/bean/repo_commit_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/ui/repo_commit_detail_page.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RepoCommitsPage extends StatefulWidget {
@@ -18,7 +18,7 @@ class RepoCommitsPage extends StatefulWidget {
   _RepoCommitsPageState createState() => _RepoCommitsPageState();
 }
 
-class _RepoCommitsPageState extends State<RepoCommitsPage> {
+class _RepoCommitsPageState extends BaseState<RepoCommitsPage> {
   final _refreshController = RefreshController();
   final _pageSize = 20;
   final _commits = <RepoCommitEntity>[];
@@ -81,38 +81,36 @@ class _RepoCommitsPageState extends State<RepoCommitsPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GlobalThemeWidget(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Commits-${widget.branch}"),
-        ),
-        body: SmartRefresher(
-          header: const WaterDropHeader(),
-          onLoading: _loadMore,
-          onRefresh: _refresh,
-          enablePullDown: true,
-          enablePullUp: _hasMore,
-          controller: _refreshController,
-          child: ListView.builder(
-              itemBuilder: (context, index) {
-                final item = _commits[index];
-                return ListTile(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return RepoCommitDetailPage(
-                          fullName: widget.fullName, sha: item.sha!);
-                    }));
-                  },
-                  title: Text("${item.commit?.committer?.name}"),
-                  subtitle: Text("${item.commit?.message}".trim()),
-                  trailing:
-                      Text(formatDate(item.commit?.committer?.date ?? '')),
-                );
-              },
-              itemCount: _commits.length),
-        ),
+  Widget create(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Commits-${widget.branch}"),
+      ),
+      body: SmartRefresher(
+        header: const WaterDropHeader(),
+        onLoading: _loadMore,
+        onRefresh: _refresh,
+        enablePullDown: true,
+        enablePullUp: _hasMore,
+        controller: _refreshController,
+        child: ListView.builder(
+            itemBuilder: (context, index) {
+              final item = _commits[index];
+              return ListTile(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                        return RepoCommitDetailPage(
+                            fullName: widget.fullName, sha: item.sha!);
+                      }));
+                },
+                title: Text("${item.commit?.committer?.name}"),
+                subtitle: Text("${item.commit?.message}".trim()),
+                trailing:
+                Text(formatDate(item.commit?.committer?.date ?? '')),
+              );
+            },
+            itemCount: _commits.length),
       ),
     );
   }

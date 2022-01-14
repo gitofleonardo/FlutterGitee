@@ -4,7 +4,6 @@ import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
 import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 enum _FollowState { unknown, follow, noFollow }
@@ -77,9 +76,8 @@ class _UserProfilePageState extends BaseState<UserProfilePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GlobalThemeWidget(
-        child: Scaffold(
+  Widget create(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
         elevation: 0,
         title: const Text("User Profile"),
@@ -100,7 +98,7 @@ class _UserProfilePageState extends BaseState<UserProfilePage> {
           },
         ),
       ),
-    ));
+    );
   }
 
   Widget _createProfileContent() {

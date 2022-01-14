@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/repo_list_item.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RepoForksPage extends StatefulWidget {
@@ -14,7 +14,7 @@ class RepoForksPage extends StatefulWidget {
   _RepoForksPageState createState() => _RepoForksPageState();
 }
 
-class _RepoForksPageState extends State<RepoForksPage> {
+class _RepoForksPageState extends BaseState<RepoForksPage> {
   final _refreshController = RefreshController();
   var _hasMore = false;
   final _pageSize = 20;
@@ -75,31 +75,29 @@ class _RepoForksPageState extends State<RepoForksPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GlobalThemeWidget(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Forks"),
-        ),
-        body: SmartRefresher(
-          onRefresh: _refreshPage,
-          onLoading: _loadMore,
-          enablePullUp: _hasMore,
-          enablePullDown: true,
-          header: const WaterDropHeader(),
-          controller: _refreshController,
-          child: ListView.builder(
-              itemBuilder: (context, index) {
-                final item = _users[index];
-                return RepoListItem(
-                    repo: item,
-                    onTap: () {
-                      Navigator.pushNamed(context, "repository_detail_page",
-                          arguments: item.fullName);
-                    });
-              },
-              itemCount: _users.length),
-        ),
+  Widget create(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Forks"),
+      ),
+      body: SmartRefresher(
+        onRefresh: _refreshPage,
+        onLoading: _loadMore,
+        enablePullUp: _hasMore,
+        enablePullDown: true,
+        header: const WaterDropHeader(),
+        controller: _refreshController,
+        child: ListView.builder(
+            itemBuilder: (context, index) {
+              final item = _users[index];
+              return RepoListItem(
+                  repo: item,
+                  onTap: () {
+                    Navigator.pushNamed(context, "repository_detail_page",
+                        arguments: item.fullName);
+                  });
+            },
+            itemCount: _users.length),
       ),
     );
   }

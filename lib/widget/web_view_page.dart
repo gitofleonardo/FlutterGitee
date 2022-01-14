@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,7 +20,7 @@ class WebViewPage extends StatefulWidget {
   State<StatefulWidget> createState() => _WebViewState();
 }
 
-class _WebViewState extends State<WebViewPage> {
+class _WebViewState extends BaseState<WebViewPage> {
   var _titleText = "";
   InAppWebViewController? _webViewController;
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
@@ -55,7 +55,7 @@ class _WebViewState extends State<WebViewPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget create(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         if (_webViewController == null) {
@@ -67,42 +67,40 @@ class _WebViewState extends State<WebViewPage> {
         }
         return !canGoBack;
       },
-      child: GlobalThemeWidget(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(_titleText),
-            actions: [
-              IconButton(
-                  tooltip: "Open In Browser",
-                  onPressed: () {
-                    launch(widget.url);
-                  },
-                  icon: const Icon(FontAwesomeIcons.solidCompass))
-            ],
-          ),
-          body: Container(
-            constraints: const BoxConstraints.expand(),
-            child: InAppWebView(
-              initialUrlRequest: URLRequest(url: Uri.parse(widget.url)),
-              onWebViewCreated: (controller) {
-                _webViewController = controller;
-              },
-              onLoadStop: (controller, url) {
-                _webViewController?.getTitle().then((value) {
-                  setState(() {
-                    _titleText = value ?? "";
-                  });
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(_titleText),
+          actions: [
+            IconButton(
+                tooltip: "Open In Browser",
+                onPressed: () {
+                  launch(widget.url);
+                },
+                icon: const Icon(FontAwesomeIcons.solidCompass))
+          ],
+        ),
+        body: Container(
+          constraints: const BoxConstraints.expand(),
+          child: InAppWebView(
+            initialUrlRequest: URLRequest(url: Uri.parse(widget.url)),
+            onWebViewCreated: (controller) {
+              _webViewController = controller;
+            },
+            onLoadStop: (controller, url) {
+              _webViewController?.getTitle().then((value) {
+                setState(() {
+                  _titleText = value ?? "";
                 });
-              },
-              onLoadStart: (controller, url) {
-                debugPrint("OnPageLoad:$url");
-                if (widget.targetUrl == url.toString() &&
-                    widget.urlProcessor != null) {
-                  final result = widget.urlProcessor!(url.toString());
-                  Navigator.pop(context, result);
-                }
-              },
-            ),
+              });
+            },
+            onLoadStart: (controller, url) {
+              debugPrint("OnPageLoad:$url");
+              if (widget.targetUrl == url.toString() &&
+                  widget.urlProcessor != null) {
+                final result = widget.urlProcessor!(url.toString());
+                Navigator.pop(context, result);
+              }
+            },
           ),
         ),
       ),

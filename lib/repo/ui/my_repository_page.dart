@@ -5,6 +5,7 @@ import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/repo_list_item.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../attrs/filter_attrs.dart';
@@ -35,7 +36,7 @@ class MyRepositoryPage extends StatefulWidget {
   _RepositoryPageState createState() => _RepositoryPageState();
 }
 
-class _RepositoryPageState extends State<MyRepositoryPage> {
+class _RepositoryPageState extends BaseState<MyRepositoryPage> {
   final _refreshController = RefreshController();
 
   /// Start from 1, instead of 0
@@ -261,7 +262,7 @@ class _RepositoryPageState extends State<MyRepositoryPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget create(BuildContext context) {
     return Flex(
       direction: Axis.vertical,
       children: [

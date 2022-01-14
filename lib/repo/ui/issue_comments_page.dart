@@ -5,6 +5,7 @@ import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
 import 'package:flutter_gitee/repo/bean/issue_comment_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/issue_comment_list_item.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -25,7 +26,7 @@ class IssueCommentsPage extends StatefulWidget {
   _IssueCommentsPageState createState() => _IssueCommentsPageState();
 }
 
-class _IssueCommentsPageState extends State<IssueCommentsPage> {
+class _IssueCommentsPageState extends BaseState<IssueCommentsPage> {
   final _refreshCommentController = RefreshController();
   final _commentScrollController = ScrollController();
   var _hasMore = false;
@@ -137,7 +138,7 @@ class _IssueCommentsPageState extends State<IssueCommentsPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget create(BuildContext context) {
     return Scaffold(
       body: SmartRefresher(
         header: const WaterDropHeader(),

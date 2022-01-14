@@ -9,7 +9,7 @@ import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/ui/repo_commits_page.dart';
 import 'package:flutter_gitee/repo/ui/repository_tree_viewer.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
-import 'package:flutter_gitee/widget/global_theme_widget.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -26,16 +26,16 @@ class NoRippleScrollBehavior extends ScrollBehavior {
 }
 
 class RepositoryDetailPage extends StatefulWidget {
-  final String fullname;
+  final String fullName;
 
-  const RepositoryDetailPage({Key? key, required this.fullname})
+  const RepositoryDetailPage({Key? key, required this.fullName})
       : super(key: key);
 
   @override
   _RepositoryDetailPageState createState() => _RepositoryDetailPageState();
 }
 
-class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
+class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
   RepositoryEntity repo = RepositoryEntity();
   var _state = _LoadState.loading;
 
@@ -43,7 +43,7 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
     setState(() {
       _state = _LoadState.loading;
     });
-    getRepositoryInfo(widget.fullname).then((value) {
+    getRepositoryInfo(widget.fullName).then((value) {
       setState(() {
         if (value.success) {
           repo = value.data!;
@@ -77,29 +77,27 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GlobalThemeWidget(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.fullname, maxLines: 1),
-        ),
-        body: Builder(builder: (context) {
-          switch (_state) {
-            case _LoadState.done:
-              return _createRepoInfoBody();
-            case _LoadState.loading:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            case _LoadState.fail:
-              return TapToRetryWidget(
-                  onTap: () {
-                    _refreshRepoInfo();
-                  },
-                  message: "tap to retry");
-          }
-        }),
+  Widget create(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.fullName, maxLines: 1),
       ),
+      body: Builder(builder: (context) {
+        switch (_state) {
+          case _LoadState.done:
+            return _createRepoInfoBody();
+          case _LoadState.loading:
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          case _LoadState.fail:
+            return TapToRetryWidget(
+                onTap: () {
+                  _refreshRepoInfo();
+                },
+                message: "tap to retry");
+        }
+      }),
     );
   }
 
@@ -253,7 +251,7 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
                 child: TextButton.icon(
                     onPressed: () {
                       Navigator.pushNamed(context, "repository_stargazers_page",
-                          arguments: widget.fullname);
+                          arguments: widget.fullName);
                     },
                     icon: const Icon(Icons.star_border, size: 20),
                     label: Text(
@@ -268,7 +266,7 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
                   "${formatGitCount(repo.watchersCount?.toInt() ?? 0)} Watches"),
               onPressed: () {
                 Navigator.pushNamed(context, "repository_watchers_page",
-                    arguments: widget.fullname);
+                    arguments: widget.fullName);
               },
             )),
             Expanded(
@@ -281,7 +279,7 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
                   "${formatGitCount(repo.forksCount?.toInt() ?? 0)} Forks"),
               onPressed: () {
                 Navigator.pushNamed(context, "repository_forks_page",
-                    arguments: widget.fullname);
+                    arguments: widget.fullName);
               },
             ))
           ],
@@ -304,7 +302,7 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
           onTap: () {
             Navigator.pushNamed(context, "repository_tree_page",
                 arguments: TreeInfo(
-                    fullname: "${repo.fullName}",
+                    fullName: "${repo.fullName}",
                     branch: "${repo.defaultBranch}"));
           },
         ),
@@ -346,7 +344,7 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
           text: const Text("Collaborators"),
           onTap: () {
             Navigator.pushNamed(context, "repository_collaborator_page",
-                arguments: widget.fullname);
+                arguments: widget.fullName);
           },
         ),
         IconTextButton(
@@ -358,7 +356,7 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
             text: const Text("Releases"),
             onTap: () {
               Navigator.pushNamed(context, "repository_releases_page",
-                  arguments: widget.fullname);
+                  arguments: widget.fullName);
             },
             leadingColor: Colors.blue),
         IconTextButton(
@@ -368,7 +366,7 @@ class _RepositoryDetailPageState extends State<RepositoryDetailPage> {
           text: const Text("Issues"),
           onTap: () {
             Navigator.pushNamed(context, "repository_issue_page",
-                arguments: widget.fullname);
+                arguments: widget.fullName);
           },
           trailing: Text("${repo.openIssuesCount?.toInt() ?? 0}"),
         ),

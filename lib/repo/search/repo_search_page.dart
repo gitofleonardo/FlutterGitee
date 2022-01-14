@@ -4,6 +4,7 @@ import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
 import 'package:flutter_gitee/repo/widget/repo_list_item.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RepoSearchPage extends StatefulWidget {
@@ -13,7 +14,7 @@ class RepoSearchPage extends StatefulWidget {
   _RepoSearchPageState createState() => _RepoSearchPageState();
 }
 
-class _RepoSearchPageState extends State<RepoSearchPage>
+class _RepoSearchPageState extends BaseState<RepoSearchPage>
     with AutomaticKeepAliveClientMixin {
   var _searchText = "";
   final _refreshController = RefreshController();
@@ -93,7 +94,7 @@ class _RepoSearchPageState extends State<RepoSearchPage>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget create(BuildContext context) {
     super.build(context);
     return SmartRefresher(
       enablePullUp: _hasMore,

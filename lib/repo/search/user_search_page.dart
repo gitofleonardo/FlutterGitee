@@ -4,6 +4,7 @@ import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
 import 'package:flutter_gitee/repo/widget/user_list_item.dart';
 import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
+import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class UserSearchPage extends StatefulWidget {
@@ -13,7 +14,7 @@ class UserSearchPage extends StatefulWidget {
   _UserSearchPageState createState() => _UserSearchPageState();
 }
 
-class _UserSearchPageState extends State<UserSearchPage>
+class _UserSearchPageState extends BaseState<UserSearchPage>
     with AutomaticKeepAliveClientMixin {
   var _searchText = "";
   final _refreshController = RefreshController();
@@ -93,7 +94,7 @@ class _UserSearchPageState extends State<UserSearchPage>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget create(BuildContext context) {
     super.build(context);
     return SmartRefresher(
       enablePullUp: _hasMore,
