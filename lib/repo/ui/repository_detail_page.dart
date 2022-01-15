@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
@@ -95,7 +96,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
                 onTap: () {
                   _refreshRepoInfo();
                 },
-                message: "tap to retry");
+                message: S.of(context).tapToRetry);
         }
       }),
     );
@@ -199,17 +200,17 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
                           color: Colors.yellow,
                           size: 16,
                         ),
-                        label: const Text(
-                          "Starred",
-                          style: TextStyle(fontSize: 12),
+                        label: Text(
+                          S.of(context).starred,
+                          style: const TextStyle(fontSize: 12),
                         ));
                   }
                   return TextButton.icon(
                       onPressed: _toggleRepoStarState,
                       icon: const Icon(Icons.star_border, size: 12),
-                      label: const Text(
-                        "Star",
-                        style: TextStyle(fontSize: 12),
+                      label: Text(
+                        S.of(context).star,
+                        style: const TextStyle(fontSize: 12),
                       ));
                 },
               )
@@ -255,7 +256,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
                     },
                     icon: const Icon(Icons.star_border, size: 20),
                     label: Text(
-                        "${formatGitCount(repo.stargazersCount?.toInt() ?? 0)} Stars"))),
+                        "${formatGitCount(repo.stargazersCount?.toInt() ?? 0)} ${S.of(context).stargazers}"))),
             Expanded(
                 child: TextButton.icon(
               icon: const Icon(
@@ -263,7 +264,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
                 size: 16,
               ),
               label: Text(
-                  "${formatGitCount(repo.watchersCount?.toInt() ?? 0)} Watches"),
+                  "${formatGitCount(repo.watchersCount?.toInt() ?? 0)} ${S.of(context).watchers}"),
               onPressed: () {
                 Navigator.pushNamed(context, "repository_watchers_page",
                     arguments: widget.fullName);
@@ -276,7 +277,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
                 size: 16,
               ),
               label: Text(
-                  "${formatGitCount(repo.forksCount?.toInt() ?? 0)} Forks"),
+                  "${formatGitCount(repo.forksCount?.toInt() ?? 0)} ${S.of(context).fork}"),
               onPressed: () {
                 Navigator.pushNamed(context, "repository_forks_page",
                     arguments: widget.fullName);
@@ -298,7 +299,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
             size: 18,
           ),
           leadingColor: Colors.black54,
-          text: const Text("Codes"),
+          text: Text(S.of(context).sourceCode),
           onTap: () {
             Navigator.pushNamed(context, "repository_tree_page",
                 arguments: TreeInfo(
@@ -313,7 +314,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
             size: 18,
           ),
           leadingColor: Colors.black54,
-          text: const Text("Commits"),
+          text: Text(S.of(context).commits),
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return RepoCommitsPage(
@@ -328,7 +329,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
             size: 18,
           ),
           leadingColor: Colors.deepOrange,
-          text: const Text("Pull Requests"),
+          text: Text(S.of(context).pullRequest),
           onTap: () {
             Navigator.pushNamed(context, "repository_pull_request_page",
                 arguments: repo.fullName);
@@ -341,7 +342,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
             size: 18,
           ),
           leadingColor: Colors.deepPurple,
-          text: const Text("Collaborators"),
+          text: Text(S.of(context).collaborators),
           onTap: () {
             Navigator.pushNamed(context, "repository_collaborator_page",
                 arguments: widget.fullName);
@@ -353,7 +354,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
               color: Colors.white,
               size: 18,
             ),
-            text: const Text("Releases"),
+            text: Text(S.of(context).releases),
             onTap: () {
               Navigator.pushNamed(context, "repository_releases_page",
                   arguments: widget.fullName);
@@ -363,7 +364,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
           leadingColor: Colors.green,
           leading: const Icon(FontAwesomeIcons.dotCircle,
               color: Colors.white, size: 18),
-          text: const Text("Issues"),
+          text: Text(S.of(context).issues),
           onTap: () {
             Navigator.pushNamed(context, "repository_issue_page",
                 arguments: widget.fullName);
@@ -377,7 +378,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
             size: 18,
           ),
           leadingColor: Colors.redAccent,
-          text: const Text("License"),
+          text: Text(S.of(context).license),
           trailing: Text(repo.license ?? ''),
           onTap: () {},
         ),
@@ -390,7 +391,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
         onTap: () {
           setState(() {});
         },
-        message: "Tap To Retry");
+        message: S.of(context).tapToRetry);
     showModalBottomSheet(
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
@@ -400,7 +401,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
         builder: (context) {
           return HeaderContentBottomSheet(
               contentScrollable: true,
-              title: "Select Branch",
+              title: S.of(context).selectBranch,
               body: FutureBuilder<BaseResult<List<BranchEntity>>>(
                 future: _getBranches(),
                 builder: (context, snapshot) {

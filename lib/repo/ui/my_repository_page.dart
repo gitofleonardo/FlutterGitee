@@ -48,25 +48,6 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
   var _sortBy = SortBy.created;
   var _sortDirection = SortDirection.desc;
   var _repoType = RepoType.all;
-  final _sortByItems = [
-    SortByItem(SortBy.created, "Creation Time"),
-    SortByItem(SortBy.lastPush, "Last Push Time")
-  ];
-  final _sortDirectionItems = [
-    SortDirectionItem(SortDirection.desc, "DESC"),
-    SortDirectionItem(SortDirection.asc, "ASC")
-  ];
-  final _repoTypeItems = [
-    RepositoryTypeItem(RepoType.all, "All", "All repositories"),
-    RepositoryTypeItem(
-        RepoType.member, "Member", "You are the member of the repositories"),
-    RepositoryTypeItem(
-        RepoType.owner, "Owner", "You are the owner of the repositories"),
-    RepositoryTypeItem(
-        RepoType.personal, "Personal", "Your personal repositories"),
-    RepositoryTypeItem(RepoType.private, "Private", "Private repositories"),
-    RepositoryTypeItem(RepoType.public, "Public", "Public repositories"),
-  ];
 
   void _refreshPage() {
     _currentPage = 1;
@@ -145,7 +126,11 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
   }
 
   Widget _createSortBottomSheet() {
-    final children = _sortByItems.map((e) {
+    final sortByItems = [
+      SortByItem(SortBy.created, S.of(context).creationTime),
+      SortByItem(SortBy.lastPush, S.of(context).lastPushTime)
+    ];
+    final children = sortByItems.map((e) {
       return MyRadioListTile(
         myTitle: Text(e.title),
         value: e.value,
@@ -169,7 +154,11 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
   }
 
   Widget _createSortDirectionBottomSheet() {
-    final items = _sortDirectionItems.map((e) {
+    final sortDirectionItems = [
+      SortDirectionItem(SortDirection.desc, S.of(context).descending),
+      SortDirectionItem(SortDirection.asc, S.of(context).ascending)
+    ];
+    final items = sortDirectionItems.map((e) {
       return MyRadioListTile(
         myTitle: Text(e.title),
         value: e.value,
@@ -193,7 +182,21 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
   }
 
   Widget _createRepoTypeBottomSheet() {
-    final items = _repoTypeItems.map((e) {
+    final repoTypeItems = [
+      RepositoryTypeItem(
+          RepoType.all, S.of(context).all, S.of(context).repoAllDesc),
+      RepositoryTypeItem(
+          RepoType.member, S.of(context).member, S.of(context).repoMemberDesc),
+      RepositoryTypeItem(
+          RepoType.owner, S.of(context).owner, S.of(context).repoOwnerDesc),
+      RepositoryTypeItem(RepoType.personal, S.of(context).personal,
+          S.of(context).repoPersonalDesc),
+      RepositoryTypeItem(RepoType.private, S.of(context).private,
+          S.of(context).repoPrivateDesc),
+      RepositoryTypeItem(
+          RepoType.public, S.of(context).public, S.of(context).repoPublicDesc),
+    ];
+    final items = repoTypeItems.map((e) {
       return MyRadioListTile(
         value: e.value,
         groupValue: _repoType,

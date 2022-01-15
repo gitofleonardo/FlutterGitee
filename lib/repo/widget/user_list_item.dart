@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 
 class UserListItem extends StatelessWidget {
@@ -44,7 +45,7 @@ class UserListItem extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "${user.followers} Followers  ${user.following} Following",
+                          "${user.followers} ${S.of(context).followers}  ${user.following} ${S.of(context).followings}",
                           style:
                               const TextStyle(color: Colors.grey, fontSize: 12),
                         )

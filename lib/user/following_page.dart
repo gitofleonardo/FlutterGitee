@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -87,7 +88,7 @@ class _FollowingPageState extends BaseState<FollowingPage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Followings"),
+        title: Text(S.of(context).followings),
       ),
       body: SmartRefresher(
         header: const WaterDropHeader(),
@@ -126,20 +127,20 @@ class _FollowingPageState extends BaseState<FollowingPage> {
                   );
                 }
                 return TextButton(
-                  child: const Text("Unfollow"),
+                  child: Text(S.of(context).unfollow),
                   onPressed: () {
                     showDialog(
                         barrierDismissible: false,
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text("Confirm to unfollow"),
+                            title: Text(S.of(context).confirmUnfollow),
                             actions: [
                               TextButton(
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text("Cancel")),
+                                  child: Text(S.of(context).cancel)),
                               TextButton(
                                   onPressed: () {
                                     Navigator.pop(context);
@@ -152,16 +153,16 @@ class _FollowingPageState extends BaseState<FollowingPage> {
                                         _refreshController.requestRefresh();
                                       } else {
                                         String err = value.state ==
-                                            BaseStatus.networkFailure
-                                            ? "Network Failed"
-                                            : "Error";
+                                                BaseStatus.networkFailure
+                                            ? S.of(context).networkError
+                                            : S.of(context).error;
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
-                                            SnackBar(content: Text(err)));
+                                                SnackBar(content: Text(err)));
                                       }
                                     });
                                   },
-                                  child: const Text("Confirm")),
+                                  child: Text(S.of(context).confirm)),
                             ],
                           );
                         });

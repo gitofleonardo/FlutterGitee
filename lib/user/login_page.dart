@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/user/bean/login_success_result_entity.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
@@ -56,7 +57,7 @@ class _LoginPageState extends BaseState<LoginPage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login to Gitee"),
+        title: Text(S.of(context).loginToGitee),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -66,8 +67,7 @@ class _LoginPageState extends BaseState<LoginPage> {
             setState(() {
               _isLoggingIn = true;
             });
-            _login(_unameController.text, _pwdController.text)
-                .then((value) {
+            _login(_unameController.text, _pwdController.text).then((value) {
               //login success
               if (value.state == BaseStatus.success) {
                 Navigator.pop(context, true);
@@ -76,34 +76,34 @@ class _LoginPageState extends BaseState<LoginPage> {
                   _isLoggingIn = false;
                 });
                 final reason = value.state == BaseStatus.unauthorized
-                    ? "Wrong account or password"
-                    : "LoginError:${value.resultCode}";
+                    ? S.of(context).wrongAccountOrPwd
+                    : "${S.of(context).loginError}:${value.resultCode}";
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(reason),
                   action: value.errorMessage == null
                       ? null
                       : SnackBarAction(
-                    label: "Details",
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text("Details"),
-                              content: SingleChildScrollView(
-                                  child: Text(value.errorMessage!)),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("OK"),
-                                )
-                              ],
-                            );
-                          });
-                    },
-                  ),
+                          label: S.of(context).details,
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(S.of(context).details),
+                                    content: SingleChildScrollView(
+                                        child: Text(value.errorMessage!)),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(S.of(context).ok),
+                                      )
+                                    ],
+                                  );
+                                });
+                          },
+                        ),
                 ));
               }
             });
@@ -132,14 +132,14 @@ class _LoginPageState extends BaseState<LoginPage> {
                 enabled: _inputEnable,
                 controller: _unameController,
                 maxLines: 1,
-                decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.person),
-                    labelText: "Account",
-                    hintText: "Username/Email/Phone"),
+                decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.person),
+                    labelText: S.of(context).account,
+                    hintText: S.of(context).usernameEmailPhone),
                 validator: (username) {
                   return username!.trim().isNotEmpty
                       ? null
-                      : "Username cannot be empty";
+                      : S.of(context).usernameCannotBeEmpty;
                 },
               ),
               const SizedBox(
@@ -150,14 +150,14 @@ class _LoginPageState extends BaseState<LoginPage> {
                 obscureText: true,
                 controller: _pwdController,
                 maxLines: 1,
-                decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.lock),
-                    labelText: "Password",
-                    hintText: "Enter your password here"),
+                decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.lock),
+                    labelText: S.of(context).password,
+                    hintText: S.of(context).enterPwdHint),
                 validator: (password) {
                   return password!.trim().isNotEmpty
                       ? null
-                      : "Password cannot be empty";
+                      : S.of(context).pwdCannotBeEmpty;
                 },
               )
             ],

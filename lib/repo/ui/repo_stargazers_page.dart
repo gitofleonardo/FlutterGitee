@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
@@ -78,7 +79,7 @@ class _RepoStargazersPageState extends BaseState<RepoStargazersPage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Stargazers"),
+        title: Text(S.of(context).stargazers),
       ),
       body: SmartRefresher(
         onRefresh: _refreshPage,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
@@ -32,7 +33,7 @@ class _RepoCommitDetailPageState extends BaseState<RepoCommitDetailPage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Commit"),
+        title: Text(S.of(context).commit),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -60,7 +61,7 @@ class _RepoCommitDetailPageState extends BaseState<RepoCommitDetailPage> {
                   onTap: () {
                     setState(() {});
                   },
-                  message: "Tap To Retry");
+                  message: S.of(context).tapToRetry);
             }
           } else {
             return const Center(
@@ -92,19 +93,19 @@ class _RepoCommitDetailPageState extends BaseState<RepoCommitDetailPage> {
         builder: (context) {
           return HeaderContentBottomSheet(
               contentScrollable: true,
-              title: "About Commit",
+              title: S.of(context).about,
               body: Column(
                 children: [
                   ListTile(
-                    title: const Text("SHA"),
+                    title: Text(S.of(context).hash),
                     subtitle: Text("${_commit?.sha}"),
                   ),
                   ListTile(
-                    title: const Text("Author"),
+                    title: Text(S.of(context).author),
                     subtitle: Text("${_commit?.commit?.author?.name}"),
                   ),
                   ListTile(
-                    title: const Text("Commit Time"),
+                    title: Text(S.of(context).commitTime),
                     subtitle: Text(
                         formatDate(_commit?.commit?.committer?.date ?? "")),
                   )

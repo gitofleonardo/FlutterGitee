@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/repo_list_item.dart';
@@ -78,7 +79,7 @@ class _RepoForksPageState extends BaseState<RepoForksPage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Forks"),
+        title: Text(S.of(context).fork),
       ),
       body: SmartRefresher(
         onRefresh: _refreshPage,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 
@@ -37,7 +38,10 @@ class RepoListItem extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 5, vertical: 2),
-                        child: Text(repo.public ?? false ? 'Public' : 'Private',
+                        child: Text(
+                            repo.public ?? false
+                                ? S.of(context).public
+                                : S.of(context).private,
                             style: const TextStyle(
                                 color: Colors.grey, fontSize: 10)),
                       ),

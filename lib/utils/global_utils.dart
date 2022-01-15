@@ -110,7 +110,7 @@ Future<String> getCurrentLanguage() async {
   final prefs = await SharedPreferences.getInstance();
   final lang = prefs.getString(languageName);
   if (lang == null) {
-    return globalLanguages[0];
+    return globalLanguages[0].lang;
   }
   return lang;
 }

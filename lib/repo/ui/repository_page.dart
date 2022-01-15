@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
@@ -43,14 +44,6 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
   final _currentRepos = <RepositoryEntity>[];
   var _sortBy = SortBy.created;
   var _sortDirection = SortDirection.desc;
-  final _sortByItems = [
-    SortByItem(SortBy.created, "Creation Time"),
-    SortByItem(SortBy.lastPush, "Last Push Time")
-  ];
-  final _sortDirectionItems = [
-    SortDirectionItem(SortDirection.desc, "DESC"),
-    SortDirectionItem(SortDirection.asc, "ASC")
-  ];
 
   void _refreshPage() {
     _currentPage = 1;
@@ -127,6 +120,10 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
   }
 
   Widget _createSortBottomSheet() {
+    final _sortByItems = [
+      SortByItem(SortBy.created, S.of(context).creationTime),
+      SortByItem(SortBy.lastPush, S.of(context).lastPushTime)
+    ];
     final children = _sortByItems.map((e) {
       return MyRadioListTile(
         myTitle: Text(e.title),
@@ -142,7 +139,7 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
       );
     });
     return HeaderContentBottomSheet(
-        title: "Sort by",
+        title: S.of(context).sort,
         contentScrollable: true,
         body: Column(
           mainAxisSize: MainAxisSize.min,
@@ -151,6 +148,10 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
   }
 
   Widget _createSortDirectionBottomSheet() {
+    final _sortDirectionItems = [
+      SortDirectionItem(SortDirection.desc, S.of(context).descending),
+      SortDirectionItem(SortDirection.asc, S.of(context).ascending)
+    ];
     final items = _sortDirectionItems.map((e) {
       return MyRadioListTile(
         myTitle: Text(e.title),
@@ -166,7 +167,7 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
       );
     }).toList();
     return HeaderContentBottomSheet(
-        title: "Sort direction",
+        title: S.of(context).order,
         contentScrollable: true,
         body: Column(
           mainAxisSize: MainAxisSize.min,
@@ -194,14 +195,14 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
         children: [
           ActionChip(
               pressElevation: 0,
-              label: const Text("Sort by"),
+              label: Text(S.of(context).sort),
               avatar: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
               onPressed: () {
                 _showBottomSheetDialog(_createSortBottomSheet());
               }),
           ActionChip(
               pressElevation: 0,
-              label: const Text("Direction"),
+              label: Text(S.of(context).order),
               avatar: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
               onPressed: () {
                 _showBottomSheetDialog(_createSortDirectionBottomSheet());

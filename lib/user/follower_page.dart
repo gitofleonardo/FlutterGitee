@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/user/bean/follow_result_entity.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
@@ -76,7 +77,7 @@ class _FollowerPageState extends BaseState<FollowerPage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Followers"),
+        title: Text(S.of(context).followers),
       ),
       body: SmartRefresher(
         header: const WaterDropHeader(),

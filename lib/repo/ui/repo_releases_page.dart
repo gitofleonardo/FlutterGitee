@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/repo/bean/repository_release_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
@@ -80,7 +81,7 @@ class _RepoReleasesPageState extends BaseState<RepoReleasesPage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Releases"),
+        title: Text(S.of(context).releases),
       ),
       body: SmartRefresher(
         controller: _refreshController,
@@ -123,7 +124,7 @@ class _RepoReleasesPageState extends BaseState<RepoReleasesPage> {
               Column(
                 children: (release.assets ?? []).map((asset) {
                   return _createDownloadTile(
-                      asset.name ?? "Download Source Code",
+                      asset.name ?? S.of(context).downloadSourceCode,
                       asset.browserDownloadUrl ?? "");
                 }).toList(),
               ),

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/about_page.dart';
 import 'package:flutter_gitee/main/base/ui/view_picture_page.dart';
+import 'package:flutter_gitee/main/language_selection_page.dart';
 import 'package:flutter_gitee/main/start/start_page.dart';
 import 'package:flutter_gitee/repo/search/search_page.dart';
 import 'package:flutter_gitee/repo/ui/my_issue_page.dart';
@@ -60,6 +61,7 @@ final routes = {
   "my_issue_page": (ctx) => const MyIssuePage(),
   "repository_releases_page": (ctx) => RepoReleasesPage(
       fullName: ModalRoute.of(ctx)!.settings.arguments.toString()),
+  "language_page": (ctx) => const LanguageSelectionPage(),
 };
 
 class GlobalTheme {
@@ -112,6 +114,17 @@ final globalThemes = [
   darkTheme
 ];
 
-final globalLanguages = ["zh", "en"];
+class Language {
+  final String lang;
+  final String name;
+
+  Language(this.lang, this.name);
+}
+
+final globalLanguages = [
+  Language("default", "Auto"),
+  Language("zh_CN", "简体中文"),
+  Language("en", "English")
+];
 
 const giteeBaseUrl = "https://gitee.com/";

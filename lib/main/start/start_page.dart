@@ -76,6 +76,7 @@ class _StartPageState extends BaseState<StartPage> {
     return LayoutBuilder(builder: (context, constraints) {
       return DrawerHeader(
         decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+        margin: EdgeInsets.zero,
         child: Flex(
           mainAxisAlignment: MainAxisAlignment.center,
           direction: Axis.vertical,
@@ -278,6 +279,14 @@ class _StartPageState extends BaseState<StartPage> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.language, color: themePrimary),
+              title: Text(S.of(context).language),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "language_page");
+              },
+            ),
+            ListTile(
               leading: Icon(FontAwesomeIcons.infoCircle, color: themePrimary),
               title: Text(S.of(context).about),
               onTap: () {
@@ -300,8 +309,12 @@ class _StartPageState extends BaseState<StartPage> {
     return Drawer(
       child: MediaQuery.removePadding(
           context: context,
-          child: Column(
-            children: [_createDrawerHeader(), _createDrawerMenus()],
+          child: Flex(
+            direction: Axis.vertical,
+            children: [
+              _createDrawerHeader(),
+              Expanded(child: _createDrawerMenus())
+            ],
           )),
     );
   }

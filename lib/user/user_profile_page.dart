@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
 import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
@@ -80,7 +81,7 @@ class _UserProfilePageState extends BaseState<UserProfilePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text("User Profile"),
+        title: Text(S.of(context).userProfile),
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
@@ -93,7 +94,7 @@ class _UserProfilePageState extends BaseState<UserProfilePage> {
                 return _createProfileContent();
               case _PageState.failed:
                 return TapToRetryWidget(
-                    onTap: _getUserProfile, message: "Tap to retry");
+                    onTap: _getUserProfile, message: S.of(context).tapToRetry);
             }
           },
         ),
@@ -121,26 +122,26 @@ class _UserProfilePageState extends BaseState<UserProfilePage> {
               ListTile(
                 leading: Icon(Icons.message_outlined,
                     color: Theme.of(context).colorScheme.primary),
-                title: const Text("Bio"),
-                subtitle: Text(_profile.bio ?? 'Empty'),
+                title: Text(S.of(context).bio),
+                subtitle: Text(_profile.bio ?? S.of(context).empty),
               ),
               ListTile(
                 leading: Icon(Icons.email,
                     color: Theme.of(context).colorScheme.primary),
-                title: const Text("Email"),
-                subtitle: Text(_profile.email ?? 'Empty'),
+                title: Text(S.of(context).email),
+                subtitle: Text(_profile.email ?? S.of(context).empty),
               ),
               ListTile(
                 leading: Icon(Icons.house_sharp,
                     color: Theme.of(context).colorScheme.primary),
-                title: const Text("Company"),
-                subtitle: Text(_profile.company ?? "Empty"),
+                title: Text(S.of(context).company),
+                subtitle: Text(_profile.company ?? S.of(context).empty),
               ),
               ListTile(
                 leading: Icon(Icons.forum,
                     color: Theme.of(context).colorScheme.primary),
-                title: const Text("Blog"),
-                subtitle: Text(_profile.blog ?? "Empty"),
+                title: Text(S.of(context).blog),
+                subtitle: Text(_profile.blog ?? S.of(context).empty),
               ),
             ],
           ),
@@ -202,13 +203,13 @@ class _UserProfilePageState extends BaseState<UserProfilePage> {
                                 _unfollowUser();
                               },
                               icon: const Icon(Icons.check),
-                              label: const Text("Followed"));
+                              label: Text(S.of(context).followed));
                         case _FollowState.noFollow:
                           return TextButton(
                               onPressed: () {
                                 _followUser();
                               },
-                              child: const Text("Follow"));
+                              child: Text(S.of(context).follow));
                       }
                     })
                   ],
@@ -233,9 +234,10 @@ class _UserProfilePageState extends BaseState<UserProfilePage> {
                               text: "${_profile.followers ?? 0}",
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold)),
-                          const TextSpan(
-                              text: "  Followers",
-                              style: TextStyle(fontWeight: FontWeight.normal))
+                          TextSpan(
+                              text: "  ${S.of(context).followers}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.normal))
                         ])),
                       ),
                       const Text(" · ",
@@ -250,9 +252,10 @@ class _UserProfilePageState extends BaseState<UserProfilePage> {
                               text: "${_profile.following ?? 0}",
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold)),
-                          const TextSpan(
-                              text: "  Followings",
-                              style: TextStyle(fontWeight: FontWeight.normal))
+                          TextSpan(
+                              text: "  ${S.of(context).followings}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.normal))
                         ])),
                       )
                     ],

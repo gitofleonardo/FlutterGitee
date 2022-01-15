@@ -799,6 +799,526 @@ class S {
       args: [],
     );
   }
+
+  /// `Member`
+  String get member {
+    return Intl.message(
+      'Member',
+      name: 'member',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Owner`
+  String get owner {
+    return Intl.message(
+      'Owner',
+      name: 'owner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal`
+  String get personal {
+    return Intl.message(
+      'Personal',
+      name: 'personal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Private`
+  String get private {
+    return Intl.message(
+      'Private',
+      name: 'private',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Public`
+  String get public {
+    return Intl.message(
+      'Public',
+      name: 'public',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All repositories`
+  String get repoAllDesc {
+    return Intl.message(
+      'All repositories',
+      name: 'repoAllDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are the member of the repositories`
+  String get repoMemberDesc {
+    return Intl.message(
+      'You are the member of the repositories',
+      name: 'repoMemberDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are the owner of the repositories`
+  String get repoOwnerDesc {
+    return Intl.message(
+      'You are the owner of the repositories',
+      name: 'repoOwnerDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your personal repositories`
+  String get repoPersonalDesc {
+    return Intl.message(
+      'Your personal repositories',
+      name: 'repoPersonalDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Private repositories`
+  String get repoPrivateDesc {
+    return Intl.message(
+      'Private repositories',
+      name: 'repoPrivateDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Public repositories`
+  String get repoPublicDesc {
+    return Intl.message(
+      'Public repositories',
+      name: 'repoPublicDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Collaborators`
+  String get collaborators {
+    return Intl.message(
+      'Collaborators',
+      name: 'collaborators',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Commit`
+  String get commit {
+    return Intl.message(
+      'Commit',
+      name: 'commit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hash`
+  String get hash {
+    return Intl.message(
+      'Hash',
+      name: 'hash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Author`
+  String get author {
+    return Intl.message(
+      'Author',
+      name: 'author',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Commit Time`
+  String get commitTime {
+    return Intl.message(
+      'Commit Time',
+      name: 'commitTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Merged`
+  String get merged {
+    return Intl.message(
+      'Merged',
+      name: 'merged',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Popularity`
+  String get popularity {
+    return Intl.message(
+      'Popularity',
+      name: 'popularity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Long Running`
+  String get longRunning {
+    return Intl.message(
+      'Long Running',
+      name: 'longRunning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pull Request`
+  String get pullRequest {
+    return Intl.message(
+      'Pull Request',
+      name: 'pullRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Releases`
+  String get releases {
+    return Intl.message(
+      'Releases',
+      name: 'releases',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download Source Code`
+  String get downloadSourceCode {
+    return Intl.message(
+      'Download Source Code',
+      name: 'downloadSourceCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stargazers`
+  String get stargazers {
+    return Intl.message(
+      'Stargazers',
+      name: 'stargazers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Watchers`
+  String get watchers {
+    return Intl.message(
+      'Watchers',
+      name: 'watchers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Star`
+  String get star {
+    return Intl.message(
+      'Star',
+      name: 'star',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Source Code`
+  String get sourceCode {
+    return Intl.message(
+      'Source Code',
+      name: 'sourceCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Commits`
+  String get commits {
+    return Intl.message(
+      'Commits',
+      name: 'commits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Branch`
+  String get selectBranch {
+    return Intl.message(
+      'Select Branch',
+      name: 'selectBranch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `License`
+  String get license {
+    return Intl.message(
+      'License',
+      name: 'license',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unfollow`
+  String get unfollow {
+    return Intl.message(
+      'Unfollow',
+      name: 'unfollow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm to unfollow`
+  String get confirmUnfollow {
+    return Intl.message(
+      'Confirm to unfollow',
+      name: 'confirmUnfollow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message(
+      'Confirm',
+      name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error`
+  String get error {
+    return Intl.message(
+      'Error',
+      name: 'error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Network Error`
+  String get networkError {
+    return Intl.message(
+      'Network Error',
+      name: 'networkError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login To Gitee`
+  String get loginToGitee {
+    return Intl.message(
+      'Login To Gitee',
+      name: 'loginToGitee',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wrong account or passowrd`
+  String get wrongAccountOrPwd {
+    return Intl.message(
+      'Wrong account or passowrd',
+      name: 'wrongAccountOrPwd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login Error`
+  String get loginError {
+    return Intl.message(
+      'Login Error',
+      name: 'loginError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account`
+  String get account {
+    return Intl.message(
+      'Account',
+      name: 'account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username/Email/Phone`
+  String get usernameEmailPhone {
+    return Intl.message(
+      'Username/Email/Phone',
+      name: 'usernameEmailPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username cannot be empty`
+  String get usernameCannotBeEmpty {
+    return Intl.message(
+      'Username cannot be empty',
+      name: 'usernameCannotBeEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your password`
+  String get enterPwdHint {
+    return Intl.message(
+      'Enter your password',
+      name: 'enterPwdHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password cannot be empty`
+  String get pwdCannotBeEmpty {
+    return Intl.message(
+      'Password cannot be empty',
+      name: 'pwdCannotBeEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get ok {
+    return Intl.message(
+      'OK',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User Profile`
+  String get userProfile {
+    return Intl.message(
+      'User Profile',
+      name: 'userProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bio`
+  String get bio {
+    return Intl.message(
+      'Bio',
+      name: 'bio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Empty`
+  String get empty {
+    return Intl.message(
+      'Empty',
+      name: 'empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company`
+  String get company {
+    return Intl.message(
+      'Company',
+      name: 'company',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Blog`
+  String get blog {
+    return Intl.message(
+      'Blog',
+      name: 'blog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Follow`
+  String get follow {
+    return Intl.message(
+      'Follow',
+      name: 'follow',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

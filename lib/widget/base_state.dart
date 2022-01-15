@@ -9,6 +9,7 @@ import 'package:flutter_gitee/utils/global_events.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/global_share_data_widget.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 abstract class BaseState<T extends StatefulWidget> extends State<T>
     with AutomaticKeepAliveClientMixin {
@@ -36,7 +37,13 @@ abstract class BaseState<T extends StatefulWidget> extends State<T>
   }
 
   set language(String lang) {
+    if (lang == "default") {
+      Intl.defaultLocale = Localizations.localeOf(context).languageCode;
+    } else {
+      Intl.defaultLocale = lang;
+    }
     setCurrentLanguage(lang);
+    globalEventBus.fire(LanguageEvent(lang));
     setState(() {
       _currentLanguage = lang;
     });

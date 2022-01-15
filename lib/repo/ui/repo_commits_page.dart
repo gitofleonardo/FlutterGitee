@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/repo/bean/repo_commit_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/ui/repo_commit_detail_page.dart';
@@ -84,7 +85,7 @@ class _RepoCommitsPageState extends BaseState<RepoCommitsPage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Commits-${widget.branch}"),
+        title: Text("${S.of(context).commit}-${widget.branch}"),
       ),
       body: SmartRefresher(
         header: const WaterDropHeader(),
@@ -98,16 +99,14 @@ class _RepoCommitsPageState extends BaseState<RepoCommitsPage> {
               final item = _commits[index];
               return ListTile(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                        return RepoCommitDetailPage(
-                            fullName: widget.fullName, sha: item.sha!);
-                      }));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return RepoCommitDetailPage(
+                        fullName: widget.fullName, sha: item.sha!);
+                  }));
                 },
                 title: Text("${item.commit?.committer?.name}"),
                 subtitle: Text("${item.commit?.message}".trim()),
-                trailing:
-                Text(formatDate(item.commit?.committer?.date ?? '')),
+                trailing: Text(formatDate(item.commit?.committer?.date ?? '')),
               );
             },
             itemCount: _commits.length),

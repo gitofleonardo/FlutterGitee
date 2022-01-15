@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
 import 'package:flutter_gitee/repo/bean/pull_request_entity.dart';
@@ -6,22 +7,6 @@ import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/pull_request_list_item.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
-const stateMap = {
-  "Open": "open",
-  "Closed": "closed",
-  "Merged": "merged",
-  "All": "all"
-};
-
-const sortMap = {
-  "Created": "created",
-  "Updated": "updated",
-  "Popularity": "popularity",
-  "Long-Running": "long-running"
-};
-
-const directionMap = {"ASC": "asc", "DESC": "desc"};
 
 class RepoPullRequestPage extends StatefulWidget {
   final String fullName;
@@ -103,7 +88,7 @@ class _RepoPullRequestPageState extends BaseState<RepoPullRequestPage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Pull Request"),
+        title: Text(S.of(context).pullRequest),
       ),
       body: Flex(
         direction: Axis.vertical,
@@ -123,19 +108,19 @@ class _RepoPullRequestPageState extends BaseState<RepoPullRequestPage> {
           ),
           Expanded(
               child: SmartRefresher(
-                onRefresh: _refreshPage,
-                onLoading: _loadMore,
-                enablePullUp: _hasMore,
-                enablePullDown: true,
-                header: const WaterDropHeader(),
-                controller: _refreshController,
-                child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      final item = _pulls[index];
-                      return PullRequestListItem(pull: item, onTap: () {});
-                    },
-                    itemCount: _pulls.length),
-              )),
+            onRefresh: _refreshPage,
+            onLoading: _loadMore,
+            enablePullUp: _hasMore,
+            enablePullDown: true,
+            header: const WaterDropHeader(),
+            controller: _refreshController,
+            child: ListView.builder(
+                itemBuilder: (context, index) {
+                  final item = _pulls[index];
+                  return PullRequestListItem(pull: item, onTap: () {});
+                },
+                itemCount: _pulls.length),
+          )),
         ],
       ),
     );
@@ -146,21 +131,21 @@ class _RepoPullRequestPageState extends BaseState<RepoPullRequestPage> {
       ActionChip(
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
-          label: const Text("State"),
+          label: Text(S.of(context).state),
           onPressed: () {
             _createStateBottomSheet(context);
           }),
       ActionChip(
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
-          label: const Text("Sort"),
+          label: Text(S.of(context).sort),
           onPressed: () {
             _createSortBottomSheet(context);
           }),
       ActionChip(
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
-          label: const Text("SortDirection"),
+          label: Text(S.of(context).order),
           onPressed: () {
             _createSortDirectionBottomSheet(context);
           }),
@@ -168,12 +153,16 @@ class _RepoPullRequestPageState extends BaseState<RepoPullRequestPage> {
   }
 
   void _createSortDirectionBottomSheet(BuildContext context) {
+    final directionMap = {
+      S.of(context).ascending: "asc",
+      S.of(context).descending: "desc"
+    };
     showModalBottomSheet(
         shape: bottomSheetShape,
         context: context,
         builder: (context) {
           return HeaderContentBottomSheet(
-              title: 'SortDirection',
+              title: S.of(context).order,
               body: ListView(
                 children: directionMap.entries.map((e) {
                   return MyRadioListTile<String>(
@@ -195,12 +184,18 @@ class _RepoPullRequestPageState extends BaseState<RepoPullRequestPage> {
   }
 
   void _createSortBottomSheet(BuildContext context) {
+    final sortMap = {
+      S.of(context).creationTime: "created",
+      S.of(context).updateTime: "updated",
+      S.of(context).popularity: "popularity",
+      S.of(context).longRunning: "long-running"
+    };
     showModalBottomSheet(
         shape: bottomSheetShape,
         context: context,
         builder: (context) {
           return HeaderContentBottomSheet(
-              title: 'Sort',
+              title: S.of(context).sort,
               body: ListView(
                 children: sortMap.entries.map((e) {
                   return MyRadioListTile<String>(
@@ -222,12 +217,18 @@ class _RepoPullRequestPageState extends BaseState<RepoPullRequestPage> {
   }
 
   void _createStateBottomSheet(BuildContext context) {
+    final stateMap = {
+      S.of(context).open: "open",
+      S.of(context).closed: "closed",
+      S.of(context).merged: "merged",
+      S.of(context).all: "all"
+    };
     showModalBottomSheet(
         shape: bottomSheetShape,
         context: context,
         builder: (context) {
           return HeaderContentBottomSheet(
-              title: 'State',
+              title: S.of(context).state,
               body: ListView(
                 children: stateMap.entries.map((e) {
                   return MyRadioListTile<String>(
