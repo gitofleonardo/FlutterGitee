@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
@@ -50,10 +51,10 @@ class _NetworkSourceCodeReaderPageState
           IconButton(
             onPressed: () {
               Clipboard.setData(ClipboardData(text: _stringData));
-              Fluttertoast.showToast(msg: "Copied");
+              Fluttertoast.showToast(msg: S.of(context).copied);
             },
             icon: const Icon(FontAwesomeIcons.clipboard),
-            tooltip: "Copy All",
+            tooltip: S.of(context).copyAll,
           )
         ],
       ),
@@ -66,12 +67,11 @@ class _NetworkSourceCodeReaderPageState
                     onTap: () {
                       setState(() {});
                     },
-                    message: "Tap To Retry");
+                    message: S.of(context).tapToRetry);
               }
               _stringData = res.data ?? "";
-              _data.addAll((_stringData)
-                  .split("\n")
-                  .map((e) => CodeRowData(e, false)));
+              _data.addAll(
+                  (_stringData).split("\n").map((e) => CodeRowData(e, false)));
               final maxLen = "${_data.length}".length;
               return ListView.builder(
                 itemBuilder: (context, index) {
@@ -86,22 +86,21 @@ class _NetworkSourceCodeReaderPageState
                         const SizedBox(width: 5),
                         Expanded(
                             child: Material(
-                              child: InkWell(
-                                onTap: () {},
-                                onLongPress: () {
-                                  Clipboard.setData(
-                                      ClipboardData(text: _data[index].text));
-                                  Fluttertoast.showToast(msg: "Copied");
-                                },
-                                child: HighlightView(
-                                  _data[index].text,
-                                  language: widget.language,
-                                  theme: isDarkTheme ? darkTheme : githubTheme,
-                                  padding:
-                                  const EdgeInsets.symmetric(vertical: 2),
-                                ),
-                              ),
-                            ))
+                          child: InkWell(
+                            onTap: () {},
+                            onLongPress: () {
+                              Clipboard.setData(
+                                  ClipboardData(text: _data[index].text));
+                              Fluttertoast.showToast(msg: S.of(context).copied);
+                            },
+                            child: HighlightView(
+                              _data[index].text,
+                              language: widget.language,
+                              theme: isDarkTheme ? darkTheme : githubTheme,
+                              padding: const EdgeInsets.symmetric(vertical: 2),
+                            ),
+                          ),
+                        ))
                       ]);
                 },
                 itemCount: _data.length,

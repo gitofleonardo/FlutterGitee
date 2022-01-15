@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -72,7 +73,7 @@ class _WebViewState extends BaseState<WebViewPage> {
           title: Text(_titleText),
           actions: [
             IconButton(
-                tooltip: "Open In Browser",
+                tooltip: S.of(context).openInBrowser,
                 onPressed: () {
                   launch(widget.url);
                 },
@@ -94,7 +95,6 @@ class _WebViewState extends BaseState<WebViewPage> {
               });
             },
             onLoadStart: (controller, url) {
-              debugPrint("OnPageLoad:$url");
               if (widget.targetUrl == url.toString() &&
                   widget.urlProcessor != null) {
                 final result = widget.urlProcessor!(url.toString());

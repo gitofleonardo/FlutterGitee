@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
 import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
@@ -22,49 +23,10 @@ class _SearchPageState extends BaseState<SearchPage>
     const UserSearchPage(),
     const IssueSearchPage()
   ];
-  final _tabs = const [
-    Tab(
-      text: "Repository",
-      icon: Icon(Icons.book),
-    ),
-    Tab(
-      text: "User",
-      icon: Icon(Icons.person),
-    ),
-    Tab(
-      text: "Issue",
-      icon: Icon(Icons.question_answer),
-    )
-  ];
-  final _repoFilterTabs = [
-    const Tab(text: "Language"),
-    const Tab(
-      text: "Sort",
-    ),
-    const Tab(
-      text: "Order",
-    ),
-    const Tab(
-      text: "Fork",
-    )
-  ];
-
-  final _userFilterTabs = [const Tab(text: "Order"), const Tab(text: "Sort")];
-
-  final _issueFilterTabs = [
-    const Tab(
-      text: "Language",
-    ),
-    const Tab(
-      text: "State",
-    ),
-    const Tab(
-      text: "Sort",
-    ),
-    const Tab(
-      text: "Order",
-    )
-  ];
+  late final List<Tab> _tabs;
+  late final List<Tab> _repoFilterTabs;
+  late final List<Tab> _userFilterTabs;
+  late final List<Tab> _issueFilterTabs;
 
   late final TabController _tabController;
   final _searchController = TextEditingController();
@@ -73,20 +35,17 @@ class _SearchPageState extends BaseState<SearchPage>
   final _repoFilter = RepositoryFilter();
   final _issueFilter = IssueFilter();
   final _userFilter = UserFilter();
-  late final TabController _repoFilterTabController;
-  late final TabController _userFilterTabController;
-  late final TabController _issueFilterTabController;
+  late TabController _repoFilterTabController;
+  late TabController _userFilterTabController;
+  late TabController _issueFilterTabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: _tabs.length, vsync: this);
-    _repoFilterTabController =
-        TabController(length: _repoFilterTabs.length, vsync: this);
-    _userFilterTabController =
-        TabController(length: _userFilterTabs.length, vsync: this);
-    _issueFilterTabController =
-        TabController(length: _issueFilterTabs.length, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
+    _repoFilterTabController = TabController(length: 4, vsync: this);
+    _userFilterTabController = TabController(length: 2, vsync: this);
+    _issueFilterTabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -100,6 +59,50 @@ class _SearchPageState extends BaseState<SearchPage>
 
   @override
   Widget create(BuildContext context) {
+    _tabs = [
+      Tab(
+        text: S.of(context).repository,
+        icon: const Icon(Icons.book),
+      ),
+      Tab(
+        text: S.of(context).user,
+        icon: const Icon(Icons.person),
+      ),
+      Tab(
+        text: S.of(context).issues,
+        icon: const Icon(Icons.question_answer),
+      )
+    ];
+    _repoFilterTabs = [
+      Tab(text: S.of(context).language),
+      Tab(
+        text: S.of(context).sort,
+      ),
+      Tab(
+        text: S.of(context).order,
+      ),
+      Tab(
+        text: S.of(context).fork,
+      )
+    ];
+    _userFilterTabs = [
+      Tab(text: S.of(context).sort),
+      Tab(text: S.of(context).order)
+    ];
+    _issueFilterTabs = [
+      Tab(
+        text: S.of(context).language,
+      ),
+      Tab(
+        text: S.of(context).state,
+      ),
+      Tab(
+        text: S.of(context).sort,
+      ),
+      Tab(
+        text: S.of(context).order,
+      )
+    ];
     return InheritedSearchWidget(
       repoFilter: RepositoryFilter.from(_repoFilter),
       issueFilter: IssueFilter.from(_issueFilter),
@@ -131,7 +134,7 @@ class _SearchPageState extends BaseState<SearchPage>
                 focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.white)),
                 hintStyle: const TextStyle(color: Colors.white),
-                hintText: "Search repository, user or issue",
+                hintText: S.of(context).searchPageTips,
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.search,
@@ -181,7 +184,7 @@ class _SearchPageState extends BaseState<SearchPage>
     FocusScope.of(context).unfocus();
     final keyword = _searchController.text.trim();
     if (keyword.isEmpty) {
-      _showHintSnackBar("Empty search text");
+      _showHintSnackBar(S.of(context).searchTextEmpty);
       return;
     }
     setState(() {
@@ -194,7 +197,7 @@ class _SearchPageState extends BaseState<SearchPage>
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(hint),
       action: SnackBarAction(
-        label: "OK",
+        label: S.of(context).yes,
         onPressed: () {
           ScaffoldMessenger.of(context).clearSnackBars();
         },
@@ -214,7 +217,7 @@ class _SearchPageState extends BaseState<SearchPage>
           return Builder(
             builder: (context) {
               return HeaderContentBottomSheet(
-                title: "Issue Filter",
+                title: S.of(context).issueFilter,
                 body: Flex(
                   direction: Axis.vertical,
                   children: [
@@ -245,13 +248,13 @@ class _SearchPageState extends BaseState<SearchPage>
       final String title;
       switch (e) {
         case IssueFilterSort.createAt:
-          title = "Creation Time";
+          title = S.of(context).creationTime;
           break;
         case IssueFilterSort.updatedAt:
-          title = "Update Time";
+          title = S.of(context).updateTime;
           break;
         case IssueFilterSort.notesCount:
-          title = "Notes Count";
+          title = S.of(context).notesCount;
           break;
       }
       return MyRadioListTile(
@@ -302,16 +305,16 @@ class _SearchPageState extends BaseState<SearchPage>
       final String title;
       switch (e) {
         case IssueState.open:
-          title = "Open";
+          title = S.of(context).open;
           break;
         case IssueState.progressing:
-          title = "Progressing";
+          title = S.of(context).progressing;
           break;
         case IssueState.closed:
-          title = "Closed";
+          title = S.of(context).closed;
           break;
         case IssueState.rejected:
-          title = "Rejected";
+          title = S.of(context).rejected;
           break;
       }
       return MyRadioListTile(
@@ -337,10 +340,10 @@ class _SearchPageState extends BaseState<SearchPage>
       final String title;
       switch (e) {
         case SortDirection.asc:
-          title = "ASC";
+          title = S.of(context).ascending;
           break;
         case SortDirection.desc:
-          title = "DESC";
+          title = S.of(context).descending;
           break;
       }
       return MyRadioListTile(
@@ -376,7 +379,7 @@ class _SearchPageState extends BaseState<SearchPage>
           return Builder(
             builder: (context) {
               return HeaderContentBottomSheet(
-                title: "User Filter",
+                title: S.of(context).userFilter,
                 body: Flex(
                   direction: Axis.vertical,
                   children: [
@@ -402,7 +405,7 @@ class _SearchPageState extends BaseState<SearchPage>
 
   Widget _createUserSortSelection() {
     return MyRadioListTile(
-        myTitle: const Text("Join Gitee Time"),
+        myTitle: Text(S.of(context).joinGiteeTime),
         value: UserFilterSort.joinedAt,
         groupValue: _userFilter.sort,
         onChanged: (value) {
@@ -422,10 +425,10 @@ class _SearchPageState extends BaseState<SearchPage>
       final String title;
       switch (e) {
         case SortDirection.asc:
-          title = "ASC";
+          title = S.of(context).ascending;
           break;
         case SortDirection.desc:
-          title = "DESC";
+          title = S.of(context).descending;
           break;
       }
       return MyRadioListTile(
@@ -480,10 +483,10 @@ class _SearchPageState extends BaseState<SearchPage>
       final String title;
       switch (e) {
         case SortDirection.asc:
-          title = "ASC";
+          title = S.of(context).ascending;
           break;
         case SortDirection.desc:
-          title = "DESC";
+          title = S.of(context).descending;
           break;
       }
       return MyRadioListTile(
@@ -512,7 +515,7 @@ class _SearchPageState extends BaseState<SearchPage>
       children: [
         MyRadioListTile(
             toggleable: true,
-            myTitle: const Text("True"),
+            myTitle: Text(S.of(context).yes),
             value: true,
             groupValue: _repoFilter.fork,
             onChanged: (value) {
@@ -526,7 +529,7 @@ class _SearchPageState extends BaseState<SearchPage>
               Navigator.pop(context);
             }),
         MyRadioListTile(
-            myTitle: const Text("False"),
+            myTitle: Text(S.of(context).no),
             value: false,
             groupValue: _repoFilter.fork,
             onChanged: (value) {
@@ -548,16 +551,16 @@ class _SearchPageState extends BaseState<SearchPage>
       final String title;
       switch (e) {
         case RepositoryFilterSort.lastPushAt:
-          title = "Last Push Time";
+          title = S.of(context).lastPushTime;
           break;
         case RepositoryFilterSort.starsCount:
-          title = "Stars Count";
+          title = S.of(context).starsCount;
           break;
         case RepositoryFilterSort.forksCount:
-          title = "Forks Count";
+          title = S.of(context).forksCount;
           break;
         case RepositoryFilterSort.watchesCount:
-          title = "Watches Count";
+          title = S.of(context).watchesCount;
           break;
       }
       return MyRadioListTile(
@@ -592,7 +595,7 @@ class _SearchPageState extends BaseState<SearchPage>
           return Builder(
             builder: (context) {
               return HeaderContentBottomSheet(
-                title: "Repository Filter",
+                title: S.of(context).repositoryFilter,
                 body: Flex(
                   direction: Axis.vertical,
                   children: [

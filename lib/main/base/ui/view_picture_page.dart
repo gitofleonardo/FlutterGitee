@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -15,7 +16,7 @@ class _ViewPicturePageState extends BaseState<ViewPicturePage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("View Picture"),
+        title: Text(S.of(context).viewPicture),
       ),
       body: Container(
         constraints: const BoxConstraints.expand(),

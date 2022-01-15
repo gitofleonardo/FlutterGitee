@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
@@ -24,7 +25,8 @@ class NetworkMarkdownReaderPage extends StatefulWidget {
       _NetworkMarkdownReaderPageState();
 }
 
-class _NetworkMarkdownReaderPageState extends BaseState<NetworkMarkdownReaderPage> {
+class _NetworkMarkdownReaderPageState
+    extends BaseState<NetworkMarkdownReaderPage> {
   @override
   Widget create(BuildContext context) {
     return Scaffold(
@@ -41,7 +43,7 @@ class _NetworkMarkdownReaderPageState extends BaseState<NetworkMarkdownReaderPag
                     onTap: () {
                       setState(() {});
                     },
-                    message: "Tap To Retry");
+                    message: S.of(context).tapToRetry);
               }
               return Markdown(
                 data: res.data ?? "",

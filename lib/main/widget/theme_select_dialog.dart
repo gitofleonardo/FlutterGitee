@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/utils/global_constant.dart';
 
 typedef OnThemeSelect = void Function(GlobalTheme);
@@ -28,7 +29,7 @@ class ThemeSelectDialog extends StatelessWidget {
       ));
     }
     return AlertDialog(
-      title: const Text("Themes"),
+      title: Text(S.of(context).themes),
       content: Wrap(
         spacing: 5,
         runSpacing: -5,

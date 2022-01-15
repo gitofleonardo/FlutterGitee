@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -36,11 +37,11 @@ class _NetworkPlainTextReaderPageState
             onPressed: () {
               if (_dat.isNotEmpty) {
                 Clipboard.setData(ClipboardData(text: _dat));
-                Fluttertoast.showToast(msg: "Copied");
+                Fluttertoast.showToast(msg: S.of(context).copied);
               }
             },
             icon: const Icon(FontAwesomeIcons.clipboard),
-            tooltip: "Copy All",
+            tooltip: S.of(context).copyAll,
           )
         ],
       ),
@@ -54,17 +55,17 @@ class _NetworkPlainTextReaderPageState
                     onTap: () {
                       setState(() {});
                     },
-                    message: "Tap To Retry");
+                    message: S.of(context).tapToRetry);
               }
               _dat = res.data ?? "";
               return SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: ConstrainedBox(
                     child: SelectableText(_dat),
                     constraints:
-                    const BoxConstraints(minWidth: double.infinity),
+                        const BoxConstraints(minWidth: double.infinity),
                   ),
                 ),
               );

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/start/entry_page.dart';
 import 'package:flutter_gitee/utils/global_constant.dart';
 import 'package:flutter_gitee/utils/global_context.dart';
@@ -47,7 +48,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T>
 
   void _routeToLogin({bool showToast = true}) {
     if (showToast) {
-      Fluttertoast.showToast(msg: "Token expired");
+      Fluttertoast.showToast(msg: S.of(context).tokenExpired);
     }
     clearLocalAuth().then((value) {
       Navigator.pushAndRemoveUntil(context,
@@ -91,7 +92,6 @@ abstract class BaseState<T extends StatefulWidget> extends State<T>
       setState(() {
         _currentTheme = event.theme;
       });
-      debugPrint("Theme change: ${this}");
     });
     _languageSubscription = globalEventBus.on<LanguageEvent>().listen((event) {
       setState(() {

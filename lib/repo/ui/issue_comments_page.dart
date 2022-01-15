@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
 import 'package:flutter_gitee/repo/bean/issue_comment_entity.dart';
@@ -81,11 +82,11 @@ class _IssueCommentsPageState extends BaseState<IssueCommentsPage> {
   void _replyToIssue(BuildContext context) {
     final text = _replyTextController.text;
     if (text.isEmpty) {
-      Fluttertoast.showToast(msg: "Message cannot be empty");
+      Fluttertoast.showToast(msg: S.of(context).textCannotBeEmpty);
       return;
     }
     FocusScope.of(context).unfocus();
-    _showLoading(context, "Loading");
+    _showLoading(context, S.of(context).loading);
     commentOnIssue(widget.fullName, widget.number, text).then((value) {
       Navigator.pop(context, true);
       if (value.success && value.data != null) {
@@ -94,9 +95,9 @@ class _IssueCommentsPageState extends BaseState<IssueCommentsPage> {
         });
         Navigator.pop(context);
         _replyTextController.clear();
-        Fluttertoast.showToast(msg: "Comment sent");
+        Fluttertoast.showToast(msg: S.of(context).commentSent);
       } else {
-        Fluttertoast.showToast(msg: "Failed sending comment");
+        Fluttertoast.showToast(msg: S.of(context).failSendingComment);
       }
     });
   }
@@ -176,7 +177,7 @@ class _IssueCommentsPageState extends BaseState<IssueCommentsPage> {
         context: context,
         builder: (context) {
           return HeaderContentBottomSheet(
-            title: "Comment Order",
+            title: S.of(context).commentOrder,
             body: Column(
               children: _commentOrders.entries.map((e) {
                 return MyRadioListTile<String>(
@@ -211,7 +212,7 @@ class _IssueCommentsPageState extends BaseState<IssueCommentsPage> {
   Widget _createCommentBottomSheet() {
     return Builder(builder: (context) {
       return HeaderContentBottomSheet(
-          title: "Comment",
+          title: S.of(context).comment,
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Flex(
@@ -221,13 +222,13 @@ class _IssueCommentsPageState extends BaseState<IssueCommentsPage> {
                     child: TextField(
                   controller: _replyTextController,
                   decoration:
-                      const InputDecoration(hintText: "Comment on issue"),
+                      InputDecoration(hintText: S.of(context).saySomething),
                 )),
                 TextButton(
                     onPressed: () {
                       _replyToIssue(context);
                     },
-                    child: const Text("Reply"))
+                    child: Text(S.of(context).send))
               ],
             ),
           ));

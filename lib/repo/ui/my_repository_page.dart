@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
@@ -159,7 +160,7 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
       );
     });
     return HeaderContentBottomSheet(
-        title: "Sort by",
+        title: S.of(context).sort,
         contentScrollable: true,
         body: Column(
           mainAxisSize: MainAxisSize.min,
@@ -183,7 +184,7 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
       );
     }).toList();
     return HeaderContentBottomSheet(
-        title: "Sort direction",
+        title: S.of(context).order,
         contentScrollable: true,
         body: Column(
           mainAxisSize: MainAxisSize.min,
@@ -208,7 +209,7 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
       );
     }).toList();
     return HeaderContentBottomSheet(
-      title: "Repository type",
+      title: S.of(context).repositoryType,
       contentScrollable: true,
       body: Column(
         children: items,
@@ -237,21 +238,21 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
         children: [
           ActionChip(
               pressElevation: 0,
-              label: const Text("Sort by"),
+              label: Text(S.of(context).sort),
               avatar: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
               onPressed: () {
                 _showBottomSheetDialog(_createSortBottomSheet());
               }),
           ActionChip(
               pressElevation: 0,
-              label: const Text("Direction"),
+              label: Text(S.of(context).order),
               avatar: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
               onPressed: () {
                 _showBottomSheetDialog(_createSortDirectionBottomSheet());
               }),
           ActionChip(
               pressElevation: 0,
-              label: const Text("Repository Type"),
+              label: Text(S.of(context).repositoryType),
               avatar: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
               onPressed: () {
                 _showBottomSheetDialog(_createRepoTypeBottomSheet());

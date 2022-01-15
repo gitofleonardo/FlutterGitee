@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/repo/ui/issue_detail_page.dart';
 import 'package:flutter_gitee/user/bean/event_result_entity.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
@@ -67,7 +68,6 @@ class _UnsupportedEventListItemState extends State<UnsupportedEventListItem> {
               onTap: () {
                 setState(() {
                   _expanded = !_expanded;
-                  debugPrint("Expanded: $_expanded");
                 });
               },
               child: Text(
@@ -141,7 +141,7 @@ class FollowEventListItem extends StatelessWidget {
                   size: 20,
                 ),
                 const SizedBox(width: 10),
-                const Text("Follow"),
+                Text(S.of(context).followed),
                 const SizedBox(width: 10),
                 SizedBox(
                   width: 16,
@@ -189,10 +189,7 @@ class StarEventListItem extends StatelessWidget {
             Row(
               children: [
                 GestureDetector(
-                    onTap: () {
-                      // Navigator.pushNamed(context, "user_profile_page",
-                      //     arguments: "${event.actor?.login}");
-                    },
+                    onTap: () {},
                     child: SizedBox(
                       width: 42,
                       height: 42,
@@ -232,7 +229,7 @@ class StarEventListItem extends StatelessWidget {
                   size: 20,
                 ),
                 const SizedBox(width: 10),
-                const Text("Star"),
+                Text(S.of(context).starred),
                 const SizedBox(width: 10),
                 Expanded(
                     child: GestureDetector(
@@ -314,7 +311,7 @@ class PushEventListItem extends StatelessWidget {
                   size: 20,
                 ),
                 const SizedBox(width: 10),
-                const Text("Push to"),
+                Text(S.of(context).pushTo),
                 const SizedBox(width: 10),
                 Expanded(
                   child: GestureDetector(
@@ -448,7 +445,7 @@ class CreateEventListItem extends StatelessWidget {
                   size: 20,
                 ),
                 const SizedBox(width: 10),
-                const Text("Create"),
+                Text(S.of(context).created),
                 const SizedBox(width: 10),
                 Expanded(
                   child: GestureDetector(
@@ -530,7 +527,7 @@ class CreateIssueListItem extends StatelessWidget {
                   size: 20,
                 ),
                 const SizedBox(width: 10),
-                const Text("Create Issue"),
+                Text(S.of(context).createdIssue),
                 const SizedBox(width: 10),
                 Expanded(
                   child: GestureDetector(
@@ -626,7 +623,7 @@ class IssueCommentListItem extends StatelessWidget {
                   size: 20,
                 ),
                 const SizedBox(width: 10),
-                const Text("Comment On Issue"),
+                Text(S.of(context).commentOnIssue),
                 const SizedBox(width: 10),
                 Expanded(
                   child: GestureDetector(

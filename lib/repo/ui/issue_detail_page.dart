@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
@@ -52,13 +53,12 @@ class _IssueDetailPageState extends BaseState<IssueDetailPage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Issue Details"),
+        title: Text(S.of(context).issueDetails),
       ),
       body: PageView(
         children: [
           _createIssuePage(),
-          IssueCommentsPage(
-              fullName: widget.fullName, number: widget.number)
+          IssueCommentsPage(fullName: widget.fullName, number: widget.number)
         ],
         controller: _pageController,
         onPageChanged: (index) {
@@ -73,10 +73,12 @@ class _IssueDetailPageState extends BaseState<IssueDetailPage> {
 
   Widget _createBottomNavigation() {
     return BottomNavigationBar(
-      items: const [
+      items: [
         BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.dotCircle), label: "Details"),
-        BottomNavigationBarItem(icon: Icon(Icons.message), label: "Comments")
+            icon: const Icon(FontAwesomeIcons.dotCircle),
+            label: S.of(context).details),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.message), label: S.of(context).comment)
       ],
       currentIndex: _currentIndex,
       onTap: (index) {
@@ -181,7 +183,7 @@ class _IssueDetailPageState extends BaseState<IssueDetailPage> {
                 _getIssueDetails();
               });
             },
-            message: "Tap To Retry");
+            message: S.of(context).tapToRetry);
     }
   }
 }

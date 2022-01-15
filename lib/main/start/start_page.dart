@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/ui/view_picture_page.dart';
 import 'package:flutter_gitee/main/events_page.dart';
@@ -20,7 +21,7 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends BaseState<StartPage> {
   var _userProfile = UserProfileEntity();
   Widget _currentPage = const EventsPage();
-  String _currentTitle = "Events";
+  late String _currentTitle;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _repoMenuExpanded = true;
 
@@ -42,6 +43,7 @@ class _StartPageState extends BaseState<StartPage> {
 
   @override
   Widget create(BuildContext context) {
+    _currentTitle = S.of(context).events;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -173,9 +175,9 @@ class _StartPageState extends BaseState<StartPage> {
                       TextSpan(
                           text: "${_userProfile.followers ?? 0}",
                           style: const TextStyle(fontWeight: FontWeight.bold)),
-                      const TextSpan(
-                          text: "  Followers",
-                          style: TextStyle(fontWeight: FontWeight.normal))
+                      TextSpan(
+                          text: " ${S.of(context).followers}",
+                          style: const TextStyle(fontWeight: FontWeight.normal))
                     ], style: const TextStyle(color: Colors.white))),
                   ),
                   const Text(" · ",
@@ -190,9 +192,9 @@ class _StartPageState extends BaseState<StartPage> {
                       TextSpan(
                           text: "${_userProfile.following ?? 0}",
                           style: const TextStyle(fontWeight: FontWeight.bold)),
-                      const TextSpan(
-                          text: "  Followings",
-                          style: TextStyle(fontWeight: FontWeight.normal))
+                      TextSpan(
+                          text: "  ${S.of(context).followings}",
+                          style: const TextStyle(fontWeight: FontWeight.normal))
                     ], style: const TextStyle(color: Colors.white))),
                   )
                 ],
@@ -212,11 +214,11 @@ class _StartPageState extends BaseState<StartPage> {
           children: [
             ListTile(
               leading: Icon(Icons.event, color: themePrimary),
-              title: const Text("Events"),
+              title: Text(S.of(context).events),
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
-                  _currentTitle = "Events";
+                  _currentTitle = S.of(context).events;
                   _currentPage = const EventsPage();
                 });
               },
@@ -224,29 +226,29 @@ class _StartPageState extends BaseState<StartPage> {
             ExpansionTile(
               initiallyExpanded: _repoMenuExpanded,
               leading: const Icon(Icons.book),
-              title: const Text("Repository"),
+              title: Text(S.of(context).repository),
               onExpansionChanged: (expanded) {
                 _repoMenuExpanded = expanded;
               },
               children: [
                 ListTile(
                   leading: Icon(Icons.book, color: themePrimary),
-                  title: const Text("My Repository"),
+                  title: Text(S.of(context).myRepository),
                   onTap: () {
                     Navigator.pop(context);
                     setState(() {
-                      _currentTitle = "My Repository";
+                      _currentTitle = S.of(context).myRepository;
                       _currentPage = const MyRepositoryPage();
                     });
                   },
                 ),
                 ListTile(
                   leading: Icon(Icons.star, color: themePrimary),
-                  title: const Text("Starred Repository"),
+                  title: Text(S.of(context).starredRepository),
                   onTap: () {
                     Navigator.pop(context);
                     setState(() {
-                      _currentTitle = "Starred Repository";
+                      _currentTitle = S.of(context).starredRepository;
                       _currentPage =
                           const RepositoryPage(type: RepositoryType.star);
                     });
@@ -254,11 +256,11 @@ class _StartPageState extends BaseState<StartPage> {
                 ),
                 ListTile(
                   leading: Icon(Icons.remove_red_eye, color: themePrimary),
-                  title: const Text("Watched Repository"),
+                  title: Text(S.of(context).watchedRepository),
                   onTap: () {
                     Navigator.pop(context);
                     setState(() {
-                      _currentTitle = "Watched Repository";
+                      _currentTitle = S.of(context).watchedRepository;
                       _currentPage =
                           const RepositoryPage(type: RepositoryType.watch);
                     });
@@ -269,7 +271,7 @@ class _StartPageState extends BaseState<StartPage> {
             ListTile(
               leading:
                   Icon(FontAwesomeIcons.questionCircle, color: themePrimary),
-              title: const Text("Issues"),
+              title: Text(S.of(context).issues),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "my_issue_page");
@@ -277,7 +279,7 @@ class _StartPageState extends BaseState<StartPage> {
             ),
             ListTile(
               leading: Icon(FontAwesomeIcons.infoCircle, color: themePrimary),
-              title: const Text("About"),
+              title: Text(S.of(context).about),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "about_page");
@@ -287,7 +289,7 @@ class _StartPageState extends BaseState<StartPage> {
                 onPressed: () {
                   _showLogoutDialog(context);
                 },
-                child: const Text("Logout")),
+                child: Text(S.of(context).logout)),
           ],
         ),
       );
@@ -326,19 +328,19 @@ class _StartPageState extends BaseState<StartPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text("Confirm Logout"),
+            title: Text(S.of(context).confirmLogout),
             actions: [
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: const Text("No")),
+                  child: Text(S.of(context).no)),
               TextButton(
                 onPressed: () {
                   logout();
                   Navigator.pop(context);
                 },
-                child: const Text("Yes"),
+                child: Text(S.of(context).yes),
               )
             ],
           );

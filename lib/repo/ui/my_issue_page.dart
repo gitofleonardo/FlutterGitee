@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
@@ -8,20 +9,6 @@ import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'issue_detail_page.dart';
-
-const stateMap = {
-  "All": "all",
-  "Open": "open",
-  "Progressing": "progressing",
-  "Closed": "closed",
-  "Rejected": "rejected",
-};
-
-const sortMap = {"Created": "created", "Updated": "updated"};
-
-const directionMap = {"ASC": "asc", "DESC": "desc"};
-
-const filterMap = {"All": "all", "Created": "created", "Assigned": "assigned"};
 
 class MyIssuePage extends StatefulWidget {
   const MyIssuePage({Key? key}) : super(key: key);
@@ -100,7 +87,7 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My Issue"),
+        title: Text(S.of(context).myIssues),
       ),
       body: Flex(
         direction: Axis.vertical,
@@ -120,28 +107,28 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
           ),
           Expanded(
               child: SmartRefresher(
-                onRefresh: _refreshPage,
-                onLoading: _loadMore,
-                enablePullUp: _hasMore,
-                enablePullDown: true,
-                header: const WaterDropHeader(),
-                controller: _refreshController,
-                child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      final item = _issues[index];
-                      return IssueListItem(
-                          issue: item,
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                                  return IssueDetailPage(
-                                      fullName: "${item.repository?.fullName}",
-                                      number: "${item.number}");
-                                }));
-                          });
-                    },
-                    itemCount: _issues.length),
-              )),
+            onRefresh: _refreshPage,
+            onLoading: _loadMore,
+            enablePullUp: _hasMore,
+            enablePullDown: true,
+            header: const WaterDropHeader(),
+            controller: _refreshController,
+            child: ListView.builder(
+                itemBuilder: (context, index) {
+                  final item = _issues[index];
+                  return IssueListItem(
+                      issue: item,
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return IssueDetailPage(
+                              fullName: "${item.repository?.fullName}",
+                              number: "${item.number}");
+                        }));
+                      });
+                },
+                itemCount: _issues.length),
+          )),
         ],
       ),
     );
@@ -152,28 +139,28 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
       ActionChip(
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
-          label: const Text("State"),
+          label: Text(S.of(context).state),
           onPressed: () {
             _createStateBottomSheet(context);
           }),
       ActionChip(
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
-          label: const Text("Sort"),
+          label: Text(S.of(context).sort),
           onPressed: () {
             _createSortBottomSheet(context);
           }),
       ActionChip(
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
-          label: const Text("SortDirection"),
+          label: Text(S.of(context).order),
           onPressed: () {
             _createSortDirectionBottomSheet(context);
           }),
       ActionChip(
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
-          label: const Text("Filter"),
+          label: Text(S.of(context).filter),
           onPressed: () {
             _createFilter(context);
           }),
@@ -181,12 +168,17 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
   }
 
   void _createFilter(BuildContext context) {
+    final filterMap = {
+      S.of(context).all: "all",
+      S.of(context).myCreated: "created",
+      S.of(context).assigned: "assigned"
+    };
     showModalBottomSheet(
         shape: bottomSheetShape,
         context: context,
         builder: (context) {
           return HeaderContentBottomSheet(
-              title: 'Filter',
+              title: S.of(context).filter,
               body: ListView(
                 children: filterMap.entries.map((e) {
                   return MyRadioListTile<String>(
@@ -208,12 +200,16 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
   }
 
   void _createSortDirectionBottomSheet(BuildContext context) {
+    final directionMap = {
+      S.of(context).ascending: "asc",
+      S.of(context).descending: "desc"
+    };
     showModalBottomSheet(
         shape: bottomSheetShape,
         context: context,
         builder: (context) {
           return HeaderContentBottomSheet(
-              title: 'SortDirection',
+              title: S.of(context).order,
               body: ListView(
                 children: directionMap.entries.map((e) {
                   return MyRadioListTile<String>(
@@ -235,12 +231,16 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
   }
 
   void _createSortBottomSheet(BuildContext context) {
+    final sortMap = {
+      S.of(context).creationTime: "created",
+      S.of(context).updateTime: "updated"
+    };
     showModalBottomSheet(
         shape: bottomSheetShape,
         context: context,
         builder: (context) {
           return HeaderContentBottomSheet(
-              title: 'Sort',
+              title: S.of(context).sort,
               body: ListView(
                 children: sortMap.entries.map((e) {
                   return MyRadioListTile<String>(
@@ -262,12 +262,19 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
   }
 
   void _createStateBottomSheet(BuildContext context) {
+    final stateMap = {
+      S.of(context).all: "all",
+      S.of(context).open: "open",
+      S.of(context).progressing: "progressing",
+      S.of(context).closed: "closed",
+      S.of(context).rejected: "rejected",
+    };
     showModalBottomSheet(
         shape: bottomSheetShape,
         context: context,
         builder: (context) {
           return HeaderContentBottomSheet(
-              title: 'State',
+              title: S.of(context).state,
               body: ListView(
                 children: stateMap.entries.map((e) {
                   return MyRadioListTile<String>(

@@ -96,20 +96,11 @@ final globalThemes = [
       ThemeData(primarySwatch: Colors.green, backgroundColor: Colors.white),
       "Green"),
   GlobalTheme(
-      ThemeData(primarySwatch: Colors.amber, backgroundColor: Colors.white),
-      "Amber"),
-  GlobalTheme(
       ThemeData(primarySwatch: Colors.brown, backgroundColor: Colors.white),
       "Brown"),
   GlobalTheme(
       ThemeData(primarySwatch: Colors.blueGrey, backgroundColor: Colors.white),
       "BlueGrey"),
-  GlobalTheme(
-      ThemeData(
-        backgroundColor: Colors.white,
-        primaryColor: Colors.purple,
-      ),
-      "Purple"),
   GlobalTheme(
       ThemeData(primarySwatch: Colors.cyan, backgroundColor: Colors.white),
       "Cyan"),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/widget/login_button.dart';
 import 'package:flutter_gitee/utils/global_context.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
@@ -77,7 +78,7 @@ class _SplashState extends BaseState<Splash> {
                         SizedBox(
                           width: 200,
                           child: LoginButton(
-                              text: "Password Login",
+                              text: S.of(context).passwordLogin,
                               onPressed: () {
                                 Navigator.pushNamed(context, "login_page")
                                     .then((value) {

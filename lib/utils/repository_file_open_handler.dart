@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/ui/network_image_viewer_page.dart';
 import 'package:flutter_gitee/main/base/ui/network_markdown_reader_page.dart';
@@ -101,7 +102,7 @@ class RepositoryFileOpenHandler {
         context: context,
         builder: (context) {
           return HeaderContentBottomSheet(
-              title: "Open",
+              title: S.of(context).open,
               body: GridView(
                 gridDelegate: delegate,
                 children: [
@@ -112,7 +113,7 @@ class RepositoryFileOpenHandler {
                             context, fullName, blob.path, blob.sha);
                       },
                       icon: const Icon(FontAwesomeIcons.file),
-                      text: const Text("Text")),
+                      text: Text(S.of(context).text)),
                   VerticalTextIconButton(
                       onTap: () async {
                         Navigator.pop(context);
@@ -120,13 +121,13 @@ class RepositoryFileOpenHandler {
                             context, fullName, blob.path, blob.sha);
                       },
                       icon: const Icon(FontAwesomeIcons.markdown),
-                      text: const Text("Markdown")),
+                      text: Text(S.of(context).markdown)),
                   VerticalTextIconButton(
                       onTap: () {
                         _openWithImageViewer(context, fullName, blob);
                       },
                       icon: const Icon(FontAwesomeIcons.image),
-                      text: const Text("Image")),
+                      text: Text(S.of(context).image)),
                 ],
               ),
               contentScrollable: false);

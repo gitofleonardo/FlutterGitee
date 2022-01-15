@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/ui/tap_to_retry_widget.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:photo_view/photo_view.dart';
@@ -38,7 +39,7 @@ class _NetworkImageViewerPageState extends BaseState<NetworkImageViewerPage> {
                     onTap: () {
                       setState(() {});
                     },
-                    message: "Tap To Retry");
+                    message: S.of(context).tapToRetry);
               }
               final dat = res.data!;
               return PhotoView(imageProvider: MemoryImage(dat));

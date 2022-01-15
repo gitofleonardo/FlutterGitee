@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_gitee/widget/web_view_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,14 +20,14 @@ class _AboutPageState extends BaseState<AboutPage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("About"),
+        title: Text(S.of(context).about),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             ListTile(
               leading: const Icon(FontAwesomeIcons.infoCircle),
-              title: const Text("Terms of Use"),
+              title: Text(S.of(context).termsOfUse),
               onTap: () {
                 //launch();
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -36,7 +37,7 @@ class _AboutPageState extends BaseState<AboutPage> {
             ),
             ListTile(
               leading: const Icon(FontAwesomeIcons.git),
-              title: const Text("About Gitee"),
+              title: Text(S.of(context).aboutGitee),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return WebViewPage(url: _aboutGiteeUrl);
@@ -45,7 +46,7 @@ class _AboutPageState extends BaseState<AboutPage> {
             ),
             ListTile(
               leading: const Icon(FontAwesomeIcons.github),
-              title: const Text("About This Project"),
+              title: Text(S.of(context).aboutProject),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return WebViewPage(url: _projectUrl);
@@ -54,7 +55,7 @@ class _AboutPageState extends BaseState<AboutPage> {
             ),
             ListTile(
               leading: const Icon(FontAwesomeIcons.searchLocation),
-              title: const Text("Open This Project"),
+              title: Text(S.of(context).openProject),
               onTap: () {
                 Navigator.pushNamed(context, "repository_detail_page",
                     arguments: "giteeofleo/FlutterGitee");
