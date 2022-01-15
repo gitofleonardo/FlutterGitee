@@ -15,8 +15,7 @@ class IssueSearchPage extends StatefulWidget {
   _IssueSearchPageState createState() => _IssueSearchPageState();
 }
 
-class _IssueSearchPageState extends BaseState<IssueSearchPage>
-    with AutomaticKeepAliveClientMixin {
+class _IssueSearchPageState extends BaseState<IssueSearchPage> {
   var _searchText = "";
   final _refreshController = RefreshController();
   final _resultItems = <IssueResultEntity>[];

@@ -9,7 +9,8 @@ import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/global_share_data_widget.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-abstract class BaseState<T extends StatefulWidget> extends State<T> {
+abstract class BaseState<T extends StatefulWidget> extends State<T>
+    with AutomaticKeepAliveClientMixin {
   late final StreamSubscription _themeSubscription;
   late final StreamSubscription _languageSubscription;
   late final StreamSubscription _userStateSubscription;
@@ -22,6 +23,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
   }
 
   set theme(GlobalTheme t) {
+    globalEventBus.fire(ThemeEvent(t));
     setCurrentTheme(t);
     setState(() {
       _currentTheme = t;
@@ -63,13 +65,16 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
 
   @override
   Widget build(BuildContext context) {
-    if (super is AutomaticKeepAliveClientMixin) {
-      (super as AutomaticKeepAliveClientMixin).build(context);
-    }
+    super.build(context);
     return GlobalShareDataWidget(
-      widget: Builder(builder: (context) {
-        return AnimatedTheme(data: _currentTheme.theme, child: create(context));
-      }),
+      widget: AnimatedTheme(
+        data: _currentTheme.theme,
+        child: Builder(
+          builder: (context) {
+            return create(context);
+          },
+        ),
+      ),
       language: _currentLanguage,
       theme: _currentTheme,
     );
@@ -86,13 +91,15 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
       setState(() {
         _currentTheme = event.theme;
       });
+      debugPrint("Theme change: ${this}");
     });
     _languageSubscription = globalEventBus.on<LanguageEvent>().listen((event) {
       setState(() {
         _currentLanguage = event.lang;
       });
     });
-    _userStateSubscription = globalEventBus.on<UserStateEvent>().listen((event) {
+    _userStateSubscription =
+        globalEventBus.on<UserStateEvent>().listen((event) {
       _routeToLogin(showToast: true);
     });
   }
@@ -101,6 +108,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
     if (globalTheme != null) {
       _currentTheme = globalTheme!;
     } else {
+      _currentTheme = defaultTheme;
       getCurrentTheme().then((value) {
         globalTheme = value;
         setState(() {
@@ -114,6 +122,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
     if (globalLanguage != null) {
       _currentLanguage = globalLanguage!;
     } else {
+      _currentLanguage = defaultLanguage;
       getCurrentLanguage().then((value) {
         globalLanguage = value;
         setState(() {
@@ -130,4 +139,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
     _languageSubscription.cancel();
     _userStateSubscription.cancel();
   }
+
+  @override
+  bool get wantKeepAlive => false;
 }

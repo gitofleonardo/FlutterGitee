@@ -14,8 +14,7 @@ class RepoSearchPage extends StatefulWidget {
   _RepoSearchPageState createState() => _RepoSearchPageState();
 }
 
-class _RepoSearchPageState extends BaseState<RepoSearchPage>
-    with AutomaticKeepAliveClientMixin {
+class _RepoSearchPageState extends BaseState<RepoSearchPage> {
   var _searchText = "";
   final _refreshController = RefreshController();
   final _resultItems = <RepositoryEntity>[];

@@ -69,88 +69,58 @@ class GlobalTheme {
   GlobalTheme(this.theme, this.name);
 }
 
-const lightThemeBackgroundColor = Colors.white;
+final defaultTheme = GlobalTheme(
+    ThemeData(brightness: Brightness.light, backgroundColor: Colors.white),
+    "Light");
+
+const defaultLanguage = "zh";
 
 final darkTheme = GlobalTheme(
     ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color(0xff262626),
-        backgroundColor: const Color(0xff2b2b2b)),
+        brightness: Brightness.dark, backgroundColor: const Color(0xff2b2b2b)),
     "Dark");
 
 final globalThemes = [
   GlobalTheme(
-      ThemeData(
-          primarySwatch: Colors.red,
-          scaffoldBackgroundColor: lightThemeBackgroundColor,
-          backgroundColor: Colors.white),
+      ThemeData(primarySwatch: Colors.red, backgroundColor: Colors.white),
       "Default"),
   GlobalTheme(
-      ThemeData(
-          primarySwatch: Colors.teal,
-          scaffoldBackgroundColor: lightThemeBackgroundColor,
-          backgroundColor: Colors.white),
+      ThemeData(primarySwatch: Colors.teal, backgroundColor: Colors.white),
       "Teal"),
   GlobalTheme(
       ThemeData(
-          primarySwatch: Colors.pink,
-          scaffoldBackgroundColor: lightThemeBackgroundColor),
+        primarySwatch: Colors.pink,
+      ),
       "Pink"),
   GlobalTheme(
-      ThemeData(
-          primarySwatch: Colors.green,
-          scaffoldBackgroundColor: lightThemeBackgroundColor,
-          backgroundColor: Colors.white),
+      ThemeData(primarySwatch: Colors.green, backgroundColor: Colors.white),
       "Green"),
   GlobalTheme(
-      ThemeData(
-          primarySwatch: Colors.amber,
-          scaffoldBackgroundColor: lightThemeBackgroundColor,
-          backgroundColor: Colors.white),
+      ThemeData(primarySwatch: Colors.amber, backgroundColor: Colors.white),
       "Amber"),
   GlobalTheme(
-      ThemeData(
-          primarySwatch: Colors.brown,
-          scaffoldBackgroundColor: lightThemeBackgroundColor,
-          backgroundColor: Colors.white),
+      ThemeData(primarySwatch: Colors.brown, backgroundColor: Colors.white),
       "Brown"),
   GlobalTheme(
-      ThemeData(
-          primarySwatch: Colors.blueGrey,
-          scaffoldBackgroundColor: lightThemeBackgroundColor,
-          backgroundColor: Colors.white),
+      ThemeData(primarySwatch: Colors.blueGrey, backgroundColor: Colors.white),
       "BlueGrey"),
   GlobalTheme(
       ThemeData(
-        scaffoldBackgroundColor: lightThemeBackgroundColor,
         backgroundColor: Colors.white,
         primaryColor: Colors.purple,
       ),
       "Purple"),
   GlobalTheme(
-      ThemeData(
-          primarySwatch: Colors.cyan,
-          scaffoldBackgroundColor: lightThemeBackgroundColor,
-          backgroundColor: Colors.white),
+      ThemeData(primarySwatch: Colors.cyan, backgroundColor: Colors.white),
       "Cyan"),
   GlobalTheme(
       ThemeData(
-          primarySwatch: Colors.deepOrange,
-          scaffoldBackgroundColor: lightThemeBackgroundColor,
-          backgroundColor: Colors.white),
+          primarySwatch: Colors.deepOrange, backgroundColor: Colors.white),
       "DeepOrange"),
-  GlobalTheme(
-      ThemeData(
-          brightness: Brightness.light,
-          scaffoldBackgroundColor: lightThemeBackgroundColor,
-          backgroundColor: Colors.white),
-      "Light"),
+  defaultTheme,
   darkTheme
 ];
 
-final globalLanguages = [
-  "zh",
-  "en"
-];
+final globalLanguages = ["zh", "en"];
 
 const giteeBaseUrl = "https://gitee.com/";

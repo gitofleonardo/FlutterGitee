@@ -13,8 +13,7 @@ class EventsPage extends StatefulWidget {
   State<StatefulWidget> createState() => _EventsPageState();
 }
 
-class _EventsPageState extends BaseState<EventsPage>
-    with AutomaticKeepAliveClientMixin {
+class _EventsPageState extends BaseState<EventsPage> {
   final _refreshController = RefreshController();
   var _hasMore = false;
   final _events = <EventResultEntity>[];
@@ -85,9 +84,8 @@ class _EventsPageState extends BaseState<EventsPage>
   @override
   Widget create(BuildContext context) {
     super.build(context);
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      child: SmartRefresher(
+    return Scaffold(
+      body: SmartRefresher(
         onRefresh: _refreshEvents,
         onLoading: _fetchMoreEvent,
         controller: _refreshController,

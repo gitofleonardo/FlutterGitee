@@ -19,70 +19,67 @@ class _UnsupportedEventListItemState extends State<UnsupportedEventListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-        child: InkWell(
-          onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            child: Column(
+    return InkWell(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        child: Column(
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, "user_profile_page",
-                            arguments: "${widget.event.actor?.login}");
-                      },
-                      child: SizedBox(
-                        width: 42,
-                        height: 42,
-                        child: ClipOval(
-                          child: Image.network(
-                              widget.event.actor?.avatarUrl.toString() ?? ""),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.event.actor?.login ?? "",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          formatDate(widget.event.createdAt.toString()),
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
-                    setState(() {
-                      _expanded = !_expanded;
-                      debugPrint("Expanded: $_expanded");
-                    });
+                    Navigator.pushNamed(context, "user_profile_page",
+                        arguments: "${widget.event.actor?.login}");
                   },
-                  child: Text(
-                    widget.event.toJson().toString(),
-                    maxLines: _expanded ? null : 1,
-                    //overflow: TextOverflow.ellipsis,
+                  child: SizedBox(
+                    width: 42,
+                    height: 42,
+                    child: ClipOval(
+                      child: Image.network(
+                          widget.event.actor?.avatarUrl.toString() ?? ""),
+                    ),
                   ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.event.actor?.login ?? "",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      formatDate(widget.event.createdAt.toString()),
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    )
+                  ],
                 )
               ],
             ),
-          ),
-        ));
+            const SizedBox(height: 10),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _expanded = !_expanded;
+                  debugPrint("Expanded: $_expanded");
+                });
+              },
+              child: Text(
+                widget.event.toJson().toString(),
+                maxLines: _expanded ? null : 1,
+                //overflow: TextOverflow.ellipsis,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -92,91 +89,88 @@ class FollowEventListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-        child: InkWell(
-          onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            child: Column(
+    return InkWell(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        child: Column(
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, "user_profile_page",
-                            arguments: "${event.actor?.login}");
-                      },
-                      child: SizedBox(
-                        width: 42,
-                        height: 42,
-                        child: ClipOval(
-                          child: Image.network(
-                              event.actor?.avatarUrl.toString() ?? ""),
-                        ),
-                      ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, "user_profile_page",
+                        arguments: "${event.actor?.login}");
+                  },
+                  child: SizedBox(
+                    width: 42,
+                    height: 42,
+                    child: ClipOval(
+                      child: Image.network(
+                          event.actor?.avatarUrl.toString() ?? ""),
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          event.actor?.login ?? "",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          formatDate(event.createdAt.toString()),
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
-                        )
-                      ],
-                    )
-                  ],
+                  ),
                 ),
-                const SizedBox(height: 10),
-                Row(
+                const SizedBox(
+                  width: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.favorite,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 20,
+                    Text(
+                      event.actor?.login ?? "",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(width: 10),
-                    const Text("Follow"),
-                    const SizedBox(width: 10),
-                    SizedBox(
-                      width: 16,
-                      height: 16,
-                      child: ClipOval(
-                        child: Image.network(
-                            event.payload?.target?.avatarUrl?.toString() ?? ""),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, "user_profile_page",
-                            arguments: "${event.payload?.target?.login}");
-                      },
-                      child: Text(
-                        event.payload?.target?.login.toString() ?? "",
-                        style: const TextStyle(
-                            color: Colors.grey, fontWeight: FontWeight.bold),
-                      ),
+                    const SizedBox(height: 5),
+                    Text(
+                      formatDate(event.createdAt.toString()),
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
                     )
                   ],
                 )
               ],
             ),
-          ),
-        ));
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Icon(
+                  Icons.favorite,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                const Text("Follow"),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: ClipOval(
+                    child: Image.network(
+                        event.payload?.target?.avatarUrl?.toString() ?? ""),
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, "user_profile_page",
+                        arguments: "${event.payload?.target?.login}");
+                  },
+                  child: Text(
+                    event.payload?.target?.login.toString() ?? "",
+                    style: const TextStyle(
+                        color: Colors.grey, fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -186,86 +180,83 @@ class StarEventListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-        child: InkWell(
-          onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            child: Column(
+    return InkWell(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        child: Column(
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          // Navigator.pushNamed(context, "user_profile_page",
-                          //     arguments: "${event.actor?.login}");
-                        },
-                        child: SizedBox(
-                          width: 42,
-                          height: 42,
-                          child: ClipOval(
-                            child: Image.network(
-                                event.actor?.avatarUrl.toString() ?? ""),
-                          ),
-                        )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${event.actor?.login}",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          formatDate(event.createdAt.toString()),
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Flex(
-                  direction: Axis.horizontal,
-                  children: [
-                    Icon(
-                      Icons.star,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 10),
-                    const Text("Star"),
-                    const SizedBox(width: 10),
-                    Expanded(
-                        child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, "repository_detail_page",
-                            arguments: "${event.repo?.fullName}");
-                      },
-                      child: Text(
-                        "${event.repo?.fullName}",
-                        style: const TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
+                GestureDetector(
+                    onTap: () {
+                      // Navigator.pushNamed(context, "user_profile_page",
+                      //     arguments: "${event.actor?.login}");
+                    },
+                    child: SizedBox(
+                      width: 42,
+                      height: 42,
+                      child: ClipOval(
+                        child: Image.network(
+                            event.actor?.avatarUrl.toString() ?? ""),
                       ),
-                    ))
+                    )),
+                const SizedBox(
+                  width: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${event.actor?.login}",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      formatDate(event.createdAt.toString()),
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    )
                   ],
                 )
               ],
             ),
-          ),
-        ));
+            const SizedBox(height: 10),
+            Flex(
+              direction: Axis.horizontal,
+              children: [
+                Icon(
+                  Icons.star,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                const Text("Star"),
+                const SizedBox(width: 10),
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, "repository_detail_page",
+                        arguments: "${event.repo?.fullName}");
+                  },
+                  child: Text(
+                    "${event.repo?.fullName}",
+                    style: const TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                  ),
+                ))
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -275,135 +266,132 @@ class PushEventListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-        child: InkWell(
-          onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            child: Column(
+    return InkWell(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        child: Column(
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 42,
-                      height: 42,
-                      child: ClipOval(
-                        child: Image.network(
-                            event.actor?.avatarUrl.toString() ?? ""),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          event.actor?.login ?? "Unknown",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          formatDate(event.createdAt.toString()),
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Flex(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  direction: Axis.horizontal,
-                  children: [
-                    Icon(
-                      Icons.backup_rounded,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 10),
-                    const Text("Push to"),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, "repository_detail_page",
-                              arguments: "${event.repo?.fullName}");
-                        },
-                        child: Text(
-                          event.repo?.fullName ?? "Unknown",
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    )
-                  ],
+                SizedBox(
+                  width: 42,
+                  height: 42,
+                  child: ClipOval(
+                    child:
+                        Image.network(event.actor?.avatarUrl.toString() ?? ""),
+                  ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  width: 20,
                 ),
-                LayoutBuilder(builder: (context, constraints) {
-                  final commits = <Widget>[];
-                  final originData = event.payload?.commits ?? [];
-                  for (final commit in originData) {
-                    int ch = commit.author?.name?.codeUnits[0] ?? 0x0041;
-                    commits.add(ConstrainedBox(
-                      constraints: BoxConstraints(
-                          maxWidth: constraints.constrainWidth()),
-                      child: Flex(
-                        direction: Axis.horizontal,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: Theme.of(context).colorScheme.primary),
-                            child: SizedBox(
-                              child: Text(
-                                String.fromCharCode(ch),
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 12),
-                                textAlign: TextAlign.center,
-                              ),
-                              width: 12,
-                              height: 12,
-                            ),
-                            constraints: const BoxConstraints.tightFor(
-                                width: 18, height: 18),
-                            alignment: Alignment.center,
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                              child: Padding(
-                            child: Text(
-                              commit.message?.trim() ?? "Unknown",
-                              style: const TextStyle(
-                                  fontSize: 12, color: Colors.grey),
-                            ),
-                            padding: const EdgeInsets.only(top: 3),
-                          )),
-                        ],
-                      ),
-                    ));
-                    commits.add(const SizedBox(height: 5));
-                  }
-                  return Column(
-                    children: commits,
-                  );
-                })
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      event.actor?.login ?? "Unknown",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      formatDate(event.createdAt.toString()),
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    )
+                  ],
+                )
               ],
             ),
-          ),
-        ));
+            const SizedBox(height: 10),
+            Flex(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              direction: Axis.horizontal,
+              children: [
+                Icon(
+                  Icons.backup_rounded,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                const Text("Push to"),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, "repository_detail_page",
+                          arguments: "${event.repo?.fullName}");
+                    },
+                    child: Text(
+                      event.repo?.fullName ?? "Unknown",
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            LayoutBuilder(builder: (context, constraints) {
+              final commits = <Widget>[];
+              final originData = event.payload?.commits ?? [];
+              for (final commit in originData) {
+                int ch = commit.author?.name?.codeUnits[0] ?? 0x0041;
+                commits.add(ConstrainedBox(
+                  constraints:
+                      BoxConstraints(maxWidth: constraints.constrainWidth()),
+                  child: Flex(
+                    direction: Axis.horizontal,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Theme.of(context).colorScheme.primary),
+                        child: SizedBox(
+                          child: Text(
+                            String.fromCharCode(ch),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 12),
+                            textAlign: TextAlign.center,
+                          ),
+                          width: 12,
+                          height: 12,
+                        ),
+                        constraints: const BoxConstraints.tightFor(
+                            width: 18, height: 18),
+                        alignment: Alignment.center,
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                          child: Padding(
+                        child: Text(
+                          commit.message?.trim() ?? "Unknown",
+                          style:
+                              const TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                        padding: const EdgeInsets.only(top: 3),
+                      )),
+                    ],
+                  ),
+                ));
+                commits.add(const SizedBox(height: 5));
+              }
+              return Column(
+                children: commits,
+              );
+            })
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -413,82 +401,79 @@ class CreateEventListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-        child: InkWell(
-          onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            child: Column(
+    return InkWell(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        child: Column(
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 42,
-                      height: 42,
-                      child: ClipOval(
-                        child: Image.network(
-                            event.actor?.avatarUrl.toString() ?? ""),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          event.actor?.login ?? "",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          formatDate(event.createdAt.toString()),
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
-                        )
-                      ],
-                    )
-                  ],
+                SizedBox(
+                  width: 42,
+                  height: 42,
+                  child: ClipOval(
+                    child:
+                        Image.network(event.actor?.avatarUrl.toString() ?? ""),
+                  ),
                 ),
-                const SizedBox(height: 10),
-                Flex(
-                  direction: Axis.horizontal,
+                const SizedBox(
+                  width: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.create,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 20,
+                    Text(
+                      event.actor?.login ?? "",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(width: 10),
-                    const Text("Create"),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, "repository_detail_page",
-                              arguments: "${event.repo?.fullName}");
-                        },
-                        child: Text(
-                          event.repo?.fullName ?? "Unknown",
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ),
+                    const SizedBox(height: 5),
+                    Text(
+                      formatDate(event.createdAt.toString()),
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
                     )
                   ],
                 )
               ],
             ),
-          ),
-        ));
+            const SizedBox(height: 10),
+            Flex(
+              direction: Axis.horizontal,
+              children: [
+                Icon(
+                  Icons.create,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                const Text("Create"),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, "repository_detail_page",
+                          arguments: "${event.repo?.fullName}");
+                    },
+                    child: Text(
+                      event.repo?.fullName ?? "Unknown",
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -498,96 +483,93 @@ class CreateIssueListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-        child: InkWell(
-          onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            child: Column(
+    return InkWell(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        child: Column(
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 42,
-                      height: 42,
-                      child: ClipOval(
-                        child: Image.network(
-                            event.actor?.avatarUrl.toString() ?? ""),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          event.actor?.login ?? "",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          formatDate(event.createdAt.toString()),
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Flex(
-                  direction: Axis.horizontal,
-                  children: [
-                    Icon(
-                      Icons.create,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 10),
-                    const Text("Create Issue"),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return IssueDetailPage(
-                                fullName: "${event.repo?.fullName}",
-                                number: "${event.payload?.number}");
-                          }));
-                        },
-                        child: Text(
-                          "#${event.payload?.number}",
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ),
-                    )
-                  ],
+                SizedBox(
+                  width: 42,
+                  height: 42,
+                  child: ClipOval(
+                    child:
+                        Image.network(event.actor?.avatarUrl.toString() ?? ""),
+                  ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  width: 20,
                 ),
-                ConstrainedBox(
-                  constraints: const BoxConstraints(minWidth: double.infinity),
-                  child: Text(
-                    "${event.payload?.title}",
-                    style: const TextStyle(color: Colors.grey, fontSize: 12),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      event.actor?.login ?? "",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      formatDate(event.createdAt.toString()),
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    )
+                  ],
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
+            Flex(
+              direction: Axis.horizontal,
+              children: [
+                Icon(
+                  Icons.create,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                const Text("Create Issue"),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return IssueDetailPage(
+                            fullName: "${event.repo?.fullName}",
+                            number: "${event.payload?.number}");
+                      }));
+                    },
+                    child: Text(
+                      "#${event.payload?.number}",
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                   ),
                 )
               ],
             ),
-          ),
-        ));
+            const SizedBox(
+              height: 10,
+            ),
+            ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: double.infinity),
+              child: Text(
+                "${event.payload?.title}",
+                style: const TextStyle(color: Colors.grey, fontSize: 12),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -597,95 +579,92 @@ class IssueCommentListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-        child: InkWell(
-          onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            child: Column(
+    return InkWell(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        child: Column(
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 42,
-                      height: 42,
-                      child: ClipOval(
-                        child: Image.network(
-                            event.actor?.avatarUrl.toString() ?? ""),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          event.actor?.login ?? "",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          formatDate(event.createdAt.toString()),
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Flex(
-                  direction: Axis.horizontal,
-                  children: [
-                    Icon(
-                      Icons.message,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 10),
-                    const Text("Comment On Issue"),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return IssueDetailPage(
-                                fullName: "${event.repo?.fullName}",
-                                number: "${event.payload?.issue?.number}");
-                          }));
-                        },
-                        child: Text(
-                          "#${event.payload?.issue?.number}",
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: 42,
+                  height: 42,
+                  child: ClipOval(
+                    child:
+                        Image.network(event.actor?.avatarUrl.toString() ?? ""),
+                  ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  width: 20,
                 ),
-                ConstrainedBox(
-                  constraints: const BoxConstraints(minWidth: double.infinity),
-                  child: Text(
-                    "${event.payload?.comment?.body}",
-                    style: const TextStyle(color: Colors.grey, fontSize: 12),
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      event.actor?.login ?? "",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      formatDate(event.createdAt.toString()),
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    )
+                  ],
                 )
               ],
             ),
-          ),
-        ));
+            const SizedBox(height: 10),
+            Flex(
+              direction: Axis.horizontal,
+              children: [
+                Icon(
+                  Icons.message,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                const Text("Comment On Issue"),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return IssueDetailPage(
+                            fullName: "${event.repo?.fullName}",
+                            number: "${event.payload?.issue?.number}");
+                      }));
+                    },
+                    child: Text(
+                      "#${event.payload?.issue?.number}",
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: double.infinity),
+              child: Text(
+                "${event.payload?.comment?.body}",
+                style: const TextStyle(color: Colors.grey, fontSize: 12),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

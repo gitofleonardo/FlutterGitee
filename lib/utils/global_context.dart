@@ -18,6 +18,5 @@ String? globalRefreshToken;
 /// User's personal profile
 UserProfileEntity? globalProfile;
 
-
 /// Eventbus for notifying global events, e.g theme change, language change, route to login
-final globalEventBus = EventBus();
+final globalEventBus = EventBus(sync: true);

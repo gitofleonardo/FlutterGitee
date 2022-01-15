@@ -14,8 +14,7 @@ class UserSearchPage extends StatefulWidget {
   _UserSearchPageState createState() => _UserSearchPageState();
 }
 
-class _UserSearchPageState extends BaseState<UserSearchPage>
-    with AutomaticKeepAliveClientMixin {
+class _UserSearchPageState extends BaseState<UserSearchPage> {
   var _searchText = "";
   final _refreshController = RefreshController();
   final _resultItems = <UserProfileEntity>[];

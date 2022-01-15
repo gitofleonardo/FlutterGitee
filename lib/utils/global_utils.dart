@@ -13,6 +13,8 @@ import 'package:flutter_gitee/utils/global_context.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'global_events.dart';
+
 Future<String?> getLocalToken() async {
   final prefs = await SharedPreferences.getInstance();
   return prefs.getString(tokenName);
@@ -126,6 +128,7 @@ Future<BaseResult<T>> postRequest<T>(String url, RequestType method,
   if (result.state == BaseStatus.unauthorized) {
     final status = await _refreshToken();
     if (status == BaseStatus.unauthorized) {
+      globalEventBus.fire(UserStateEvent(UserState.tokenExpired));
       return result;
     } else if (status == BaseStatus.success) {
       result = await _postRequest<T>(url, method, params, data);
@@ -209,6 +212,7 @@ Future<BaseStatus> _refreshToken() async {
   } on DioError catch (e) {
     debugPrint(e.response.toString());
     debugPrint(e.toString());
+    resp = e.response;
 
     if (resp == null) {
       return BaseStatus.networkFailure;
