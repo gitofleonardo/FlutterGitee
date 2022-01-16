@@ -8,7 +8,6 @@ import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/repo_commit_file_page.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RepoCommitDetailPage extends StatefulWidget {
   final String fullName;
@@ -41,7 +40,7 @@ class _RepoCommitDetailPageState extends BaseState<RepoCommitDetailPage> {
           _showInfoBottomSheet(context);
         },
         child: const Icon(
-          FontAwesomeIcons.info,
+          Icons.menu,
           color: Colors.white,
         ),
       ),

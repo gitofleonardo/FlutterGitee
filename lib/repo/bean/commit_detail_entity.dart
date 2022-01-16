@@ -104,6 +104,7 @@ class CommitDetailFiles {
   String? sha;
   String? filename;
   String? status;
+  @JSONField(name: "patch")
   String? xPatch;
 
   CommitDetailFiles();

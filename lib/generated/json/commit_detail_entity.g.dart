@@ -159,7 +159,7 @@ CommitDetailFiles $CommitDetailFilesFromJson(Map<String, dynamic> json) {
   if (status != null) {
     commitDetailFiles.status = status;
   }
-  final String? xPatch = jsonConvert.convert<String>(json['xPatch']);
+  final String? xPatch = jsonConvert.convert<String>(json['patch']);
   if (xPatch != null) {
     commitDetailFiles.xPatch = xPatch;
   }
@@ -171,6 +171,6 @@ Map<String, dynamic> $CommitDetailFilesToJson(CommitDetailFiles entity) {
   data['sha'] = entity.sha;
   data['filename'] = entity.filename;
   data['status'] = entity.status;
-  data['xPatch'] = entity.xPatch;
+  data['patch'] = entity.xPatch;
   return data;
 }

@@ -23,10 +23,6 @@ class _SearchPageState extends BaseState<SearchPage>
     const UserSearchPage(),
     const IssueSearchPage()
   ];
-  late final List<Tab> _tabs;
-  late final List<Tab> _repoFilterTabs;
-  late final List<Tab> _userFilterTabs;
-  late final List<Tab> _issueFilterTabs;
 
   late final TabController _tabController;
   final _searchController = TextEditingController();
@@ -59,7 +55,7 @@ class _SearchPageState extends BaseState<SearchPage>
 
   @override
   Widget create(BuildContext context) {
-    _tabs = [
+    final List<Tab> tabs = [
       Tab(
         text: S.of(context).repository,
         icon: const Icon(Icons.book),
@@ -73,36 +69,6 @@ class _SearchPageState extends BaseState<SearchPage>
         icon: const Icon(Icons.question_answer),
       )
     ];
-    _repoFilterTabs = [
-      Tab(text: S.of(context).language),
-      Tab(
-        text: S.of(context).sort,
-      ),
-      Tab(
-        text: S.of(context).order,
-      ),
-      Tab(
-        text: S.of(context).fork,
-      )
-    ];
-    _userFilterTabs = [
-      Tab(text: S.of(context).sort),
-      Tab(text: S.of(context).order)
-    ];
-    _issueFilterTabs = [
-      Tab(
-        text: S.of(context).language,
-      ),
-      Tab(
-        text: S.of(context).state,
-      ),
-      Tab(
-        text: S.of(context).sort,
-      ),
-      Tab(
-        text: S.of(context).order,
-      )
-    ];
     return InheritedSearchWidget(
       repoFilter: RepositoryFilter.from(_repoFilter),
       issueFilter: IssueFilter.from(_issueFilter),
@@ -112,7 +78,7 @@ class _SearchPageState extends BaseState<SearchPage>
         appBar: AppBar(
           bottom: TabBar(
             controller: _tabController,
-            tabs: _tabs,
+            tabs: tabs,
           ),
           title: TextField(
             onSubmitted: (value) {
@@ -207,6 +173,20 @@ class _SearchPageState extends BaseState<SearchPage>
 
   /// Here below is all the about issue filter selection bottom sheet
   void _showIssueFilterSelection(BuildContext context) {
+    List<Tab> issueFilterTabs = [
+      Tab(
+        text: S.of(context).language,
+      ),
+      Tab(
+        text: S.of(context).state,
+      ),
+      Tab(
+        text: S.of(context).sort,
+      ),
+      Tab(
+        text: S.of(context).order,
+      )
+    ];
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -223,7 +203,7 @@ class _SearchPageState extends BaseState<SearchPage>
                   children: [
                     TabBar(
                       labelColor: Colors.grey,
-                      tabs: _issueFilterTabs,
+                      tabs: issueFilterTabs,
                       controller: _issueFilterTabController,
                     ),
                     Expanded(
@@ -369,6 +349,10 @@ class _SearchPageState extends BaseState<SearchPage>
 
   /// Here below is all about the user filter selection bottom sheet
   void _showUserFilterSelection(BuildContext context) {
+    List<Tab> userFilterTabs = [
+      Tab(text: S.of(context).sort),
+      Tab(text: S.of(context).order)
+    ];
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -385,7 +369,7 @@ class _SearchPageState extends BaseState<SearchPage>
                   children: [
                     TabBar(
                       labelColor: Colors.grey,
-                      tabs: _userFilterTabs,
+                      tabs: userFilterTabs,
                       controller: _userFilterTabController,
                     ),
                     Expanded(
@@ -585,6 +569,18 @@ class _SearchPageState extends BaseState<SearchPage>
   }
 
   void _showRepoFilterSelection(BuildContext context) {
+    List<Tab> repoFilterTabs = [
+      Tab(text: S.of(context).language),
+      Tab(
+        text: S.of(context).sort,
+      ),
+      Tab(
+        text: S.of(context).order,
+      ),
+      Tab(
+        text: S.of(context).fork,
+      )
+    ];
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -601,7 +597,7 @@ class _SearchPageState extends BaseState<SearchPage>
                   children: [
                     TabBar(
                       labelColor: Colors.grey,
-                      tabs: _repoFilterTabs,
+                      tabs: repoFilterTabs,
                       controller: _repoFilterTabController,
                     ),
                     Expanded(

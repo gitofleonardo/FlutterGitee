@@ -77,31 +77,29 @@ class _NetworkSourceCodeReaderPageState
                 itemBuilder: (context, index) {
                   final line = index + 1;
                   final indexLen = "$line".length;
-                  return Flex(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      direction: Axis.horizontal,
-                      children: [
-                        const SizedBox(width: 10),
-                        Text("${'0' * (maxLen - indexLen)}$line"),
-                        const SizedBox(width: 5),
-                        Expanded(
-                            child: Material(
-                          child: InkWell(
-                            onTap: () {},
-                            onLongPress: () {
-                              Clipboard.setData(
-                                  ClipboardData(text: _data[index].text));
-                              Fluttertoast.showToast(msg: S.of(context).copied);
-                            },
+                  return InkWell(
+                    onTap: () {},
+                    onLongPress: () {
+                      Clipboard.setData(ClipboardData(text: _data[index].text));
+                      Fluttertoast.showToast(msg: S.of(context).copied);
+                    },
+                    child: Flex(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        direction: Axis.horizontal,
+                        children: [
+                          const SizedBox(width: 10),
+                          Text("${'0' * (maxLen - indexLen)}$line"),
+                          const SizedBox(width: 5),
+                          Expanded(
                             child: HighlightView(
                               _data[index].text,
                               language: widget.language,
                               theme: isDarkTheme ? darkTheme : githubTheme,
                               padding: const EdgeInsets.symmetric(vertical: 2),
                             ),
-                          ),
-                        ))
-                      ]);
+                          )
+                        ]),
+                  );
                 },
                 itemCount: _data.length,
               );

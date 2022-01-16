@@ -18,15 +18,11 @@ class RepoCommitFilePage extends StatelessWidget {
       } else {
         color = Colors.transparent;
       }
-      return DecoratedBox(
+      return Container(
         decoration: BoxDecoration(color: color),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minWidth: double.infinity),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 2),
-            child: Text(e),
-          ),
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 2),
+        constraints: const BoxConstraints(minWidth: double.infinity),
+        child: Text(e),
       );
     }).toList();
     final _delegate = SliverChildListDelegate(children);
