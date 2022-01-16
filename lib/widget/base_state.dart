@@ -12,7 +12,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 abstract class BaseState<T extends StatefulWidget> extends State<T>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   late final StreamSubscription _themeSubscription;
   late final StreamSubscription _languageSubscription;
   late final StreamSubscription _userStateSubscription;

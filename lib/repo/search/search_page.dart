@@ -16,8 +16,7 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
-class _SearchPageState extends BaseState<SearchPage>
-    with TickerProviderStateMixin {
+class _SearchPageState extends BaseState<SearchPage> {
   final _tabPages = [
     const RepoSearchPage(),
     const UserSearchPage(),

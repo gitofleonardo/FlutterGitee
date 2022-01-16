@@ -7,7 +7,6 @@ import 'package:flutter_gitee/repo/ui/issue_comments_page.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 enum _PageState { loading, done, fail }
 
@@ -29,6 +28,7 @@ class _IssueDetailPageState extends BaseState<IssueDetailPage> {
   var _pageState = _PageState.loading;
   var _currentIndex = 0;
   final _pageController = PageController();
+  late final TabController _tabController;
 
   void _getIssueDetails() {
     getRepoIssueDetails(widget.fullName, widget.number).then((value) {
@@ -47,6 +47,7 @@ class _IssueDetailPageState extends BaseState<IssueDetailPage> {
   void initState() {
     super.initState();
     _getIssueDetails();
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -54,42 +55,33 @@ class _IssueDetailPageState extends BaseState<IssueDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).issueDetails),
+        bottom: TabBar(
+          tabs: _createTabs(),
+          controller: _tabController,
+        ),
       ),
-      body: PageView(
+      body: TabBarView(
         children: [
           _createIssuePage(),
-          IssueCommentsPage(fullName: widget.fullName, number: widget.number)
+          IssueCommentsPage(fullName: widget.fullName, number: widget.number),
         ],
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+        controller: _tabController,
       ),
-      bottomNavigationBar: _createBottomNavigation(),
     );
   }
 
-  Widget _createBottomNavigation() {
-    return BottomNavigationBar(
-      items: [
-        BottomNavigationBarItem(
-            icon: const Icon(FontAwesomeIcons.dotCircle),
-            label: S.of(context).details),
-        BottomNavigationBarItem(
-            icon: const Icon(Icons.message), label: S.of(context).comment)
-      ],
-      currentIndex: _currentIndex,
-      onTap: (index) {
-        setState(() {
-          _currentIndex = index;
-          _pageController.animateToPage(_currentIndex,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.decelerate);
-        });
-      },
-    );
+  List<Widget> _createTabs() {
+    return [
+      Tab(
+          text: S.of(context).details,
+          icon: const Icon(
+            Icons.details,
+          )),
+      Tab(
+        text: S.of(context).comment,
+        icon: const Icon(Icons.message),
+      ),
+    ];
   }
 
   Widget _createIssueHeader() {
