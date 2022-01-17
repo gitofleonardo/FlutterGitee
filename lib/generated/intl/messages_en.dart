@@ -49,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmUnfollow":
             MessageLookupByLibrary.simpleMessage("Confirm to unfollow"),
         "copied": MessageLookupByLibrary.simpleMessage("Copied"),
+        "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copyAll": MessageLookupByLibrary.simpleMessage("Copy All"),
         "created": MessageLookupByLibrary.simpleMessage("Created"),
         "createdIssue": MessageLookupByLibrary.simpleMessage("Created Issue"),
@@ -101,6 +102,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "openInBrowser":
             MessageLookupByLibrary.simpleMessage("Open In Browser"),
         "openProject": MessageLookupByLibrary.simpleMessage("Open Project"),
+        "options": MessageLookupByLibrary.simpleMessage("Options"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "owner": MessageLookupByLibrary.simpleMessage("Owner"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),

@@ -13,7 +13,7 @@
   "watchedRepository": "已订阅仓库",
   "issues": "仓库Issues",
   "about": "关于",
-  "logout": "退出登陆",
+  "logout": "退出登录",
   "confirmLogout": "确认退出",
   "yes": "是",
   "no": "否",
@@ -125,5 +125,7 @@
   "empty": "空",
   "company": "公司",
   "blog": "博客",
-  "follow": "关注"
+  "follow": "关注",
+  "options": "选项",
+  "copy": "复制"
 }

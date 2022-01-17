@@ -28,7 +28,7 @@ class _IssueSearchPageState extends BaseState<IssueSearchPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final st = InheritedSearchWidget.of(context)?.searchText ?? "";
-    if (st.isNotEmpty) {
+    if (st.isNotEmpty && st != _searchText) {
       setState(() {
         _searchText = st;
       });

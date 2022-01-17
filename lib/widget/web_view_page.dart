@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gitee/generated/l10n.dart';
+import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 typedef TargetUrlProcessor = dynamic Function(String);
@@ -73,11 +75,10 @@ class _WebViewState extends BaseState<WebViewPage> {
           title: Text(_titleText),
           actions: [
             IconButton(
-                tooltip: S.of(context).openInBrowser,
                 onPressed: () {
-                  launch(widget.url);
+                  _openOptionDialog(context, widget.url);
                 },
-                icon: const Icon(FontAwesomeIcons.solidCompass))
+                icon: const Icon(Icons.menu))
           ],
         ),
         body: Container(
@@ -105,5 +106,36 @@ class _WebViewState extends BaseState<WebViewPage> {
         ),
       ),
     );
+  }
+
+  void _openOptionDialog(BuildContext context, String url) {
+    showModalBottomSheet(
+        shape: bottomSheetShape,
+        context: context,
+        builder: (context) {
+          return HeaderContentBottomSheet(
+              title: S.of(context).options,
+              body: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.open_in_browser),
+                    title: Text(S.of(context).openInBrowser),
+                    onTap: () {
+                      Navigator.pop(context);
+                      launch(url);
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.copy),
+                    title: Text(S.of(context).copy),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Clipboard.setData(ClipboardData(text: url));
+                      Fluttertoast.showToast(msg: S.of(context).copied);
+                    },
+                  ),
+                ],
+              ));
+        });
   }
 }

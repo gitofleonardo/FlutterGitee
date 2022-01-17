@@ -125,5 +125,7 @@
   "empty": "Empty",
   "company": "Company",
   "blog": "Blog",
-  "follow": "Follow"
+  "follow": "Follow",
+  "options": "Options",
+  "copy": "Copy"
 }
