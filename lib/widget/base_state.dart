@@ -54,6 +54,10 @@ abstract class BaseState<T extends StatefulWidget> extends State<T>
   }
 
   void _routeToLogin({bool showToast = true}) {
+    // already clear local auth
+    if (globalToken == null) {
+      return;
+    }
     if (showToast) {
       Fluttertoast.showToast(msg: S.of(context).tokenExpired);
     }
