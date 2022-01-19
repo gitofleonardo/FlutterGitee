@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/main/base/widget/my_radio_list_tile.dart';
+import 'package:flutter_gitee/main/start/start_page.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
 import 'package:flutter_gitee/repo/widget/repo_list_item.dart';
@@ -44,6 +46,7 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
   final _currentRepos = <RepositoryEntity>[];
   var _sortBy = SortBy.created;
   var _sortDirection = SortDirection.desc;
+  final ScrollController _scrollController = ScrollController();
 
   void _refreshPage() {
     _currentPage = 1;
@@ -81,6 +84,13 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _refreshController.requestRefresh();
+    });
+    _scrollController.addListener(() {
+      final showFab = _scrollController.position.userScrollDirection != ScrollDirection.reverse;
+      final fabShown = StartPage.of(context)?.fabExtended??false;
+      if (showFab != fabShown) {
+        StartPage.of(context)?.fabExtended = showFab;
+      }
     });
   }
 
@@ -235,6 +245,7 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
             enablePullUp: _hasMore,
             header: const WaterDropHeader(),
             child: ListView.builder(
+              controller: _scrollController,
               itemCount: _currentRepos.length,
               itemBuilder: (context, index) {
                 final item = _currentRepos[index];

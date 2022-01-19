@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
+import 'package:flutter_gitee/main/start/start_page.dart';
 import 'package:flutter_gitee/main/widget/event_list_item.dart';
 import 'package:flutter_gitee/user/bean/event_result_entity.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
@@ -18,6 +21,7 @@ class _EventsPageState extends BaseState<EventsPage> {
   var _hasMore = false;
   final _events = <EventResultEntity>[];
   final _pageSize = 10;
+  final _scrollController = ScrollController();
 
   void _refreshEvents() {
     getUserEvent(limit: _pageSize).then((value) {
@@ -71,6 +75,13 @@ class _EventsPageState extends BaseState<EventsPage> {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _refreshController.requestRefresh();
     });
+    _scrollController.addListener(() {
+      final showFab = _scrollController.position.userScrollDirection != ScrollDirection.reverse;
+      final fabShown = StartPage.of(context)?.fabExtended??false;
+      if (showFab != fabShown) {
+        StartPage.of(context)?.fabExtended = showFab;
+      }
+    });
   }
 
   @override
@@ -93,6 +104,7 @@ class _EventsPageState extends BaseState<EventsPage> {
         enablePullUp: _hasMore,
         header: const WaterDropHeader(),
         child: ListView.builder(
+          controller: _scrollController,
           itemCount: _events.length,
           itemBuilder: (context, index) {
             final event = _events[index];

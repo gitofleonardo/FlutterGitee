@@ -15,16 +15,38 @@ class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
 
   @override
-  _StartPageState createState() => _StartPageState();
+  StartPageState createState() => StartPageState();
+
+  static StartPageState? of(BuildContext context) {
+    return context.findAncestorStateOfType<StartPageState>();
+  }
 }
 
-class _StartPageState extends BaseState<StartPage> {
+class StartPageState extends BaseState<StartPage> {
   var _userProfile = UserProfileEntity();
   Widget _currentPage = const EventsPage();
-  late String _currentTitle;
+  String _currentTitle = "";
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _repoMenuExpanded = true;
   var _isExtended = true;
+
+  bool get fabExtended {
+    return _isExtended;
+  }
+
+  set fabExtended(bool extended) {
+    setState(() {
+      if (_isExtended != extended) {
+        _isExtended = extended;
+      }
+    });
+  }
+
+  set title(String title) {
+    setState(() {
+      _currentTitle = title;
+    });
+  }
 
   void _refreshProfile() {
     getMyUserProfile().then((value) {
@@ -44,15 +66,18 @@ class _StartPageState extends BaseState<StartPage> {
 
   @override
   Widget create(BuildContext context) {
-    _currentTitle = S.of(context).events;
+    if (_currentTitle.isEmpty) {
+      // set as default title
+      _currentTitle = S.of(context).events;
+    }
     return Scaffold(
       key: _scaffoldKey,
+      body: _currentPage,
       appBar: AppBar(
         title: Text(_currentTitle),
         centerTitle: true,
         elevation: 0,
       ),
-      body: _currentPage,
       drawer: _createDrawer(),
       floatingActionButton: _createFab(),
     );
@@ -61,15 +86,26 @@ class _StartPageState extends BaseState<StartPage> {
   Widget _createFab() {
     return Builder(builder: (context) {
       return FloatingActionButton.extended(
-        isExtended: _isExtended,
+        extendedIconLabelSpacing: 12,
         backgroundColor: Theme.of(context).colorScheme.primary,
         onPressed: () {
           Navigator.pushNamed(context, "search_page");
         },
-        label: Text(S.of(context).search),
-        icon: const Icon(
-          Icons.search,
-          color: Colors.white,
+        label: AnimatedSize(
+          alignment: Alignment.centerLeft,
+          duration: const Duration(milliseconds: 250),
+          child: _isExtended ? Row(
+            children: [
+              const Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              Text(S.of(context).search),
+            ],
+          ) : const Icon(
+            Icons.search,
+            color: Colors.white,
+          ),
         ),
       );
     });
