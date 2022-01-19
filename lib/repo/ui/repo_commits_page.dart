@@ -88,7 +88,6 @@ class _RepoCommitsPageState extends BaseState<RepoCommitsPage> {
         title: Text("${S.of(context).commit}-${widget.branch}"),
       ),
       body: SmartRefresher(
-        header: const WaterDropHeader(),
         onLoading: _loadMore,
         onRefresh: _refresh,
         enablePullDown: true,

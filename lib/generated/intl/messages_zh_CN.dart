@@ -85,6 +85,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "markdown": MessageLookupByLibrary.simpleMessage("Markdown"),
         "member": MessageLookupByLibrary.simpleMessage("成员"),
         "merged": MessageLookupByLibrary.simpleMessage("已合并"),
+        "messages": MessageLookupByLibrary.simpleMessage("消息"),
+        "more": MessageLookupByLibrary.simpleMessage("更多"),
         "myCreated": MessageLookupByLibrary.simpleMessage("我创建的"),
         "myIssues": MessageLookupByLibrary.simpleMessage("我的Issue"),
         "myRepository": MessageLookupByLibrary.simpleMessage("我的仓库"),

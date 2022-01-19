@@ -80,7 +80,6 @@ class _FollowerPageState extends BaseState<FollowerPage> {
         title: Text(S.of(context).followers),
       ),
       body: SmartRefresher(
-        header: const WaterDropHeader(),
         onRefresh: _refreshFollowers,
         onLoading: _fetchFollowers,
         enablePullUp: _hasMore,

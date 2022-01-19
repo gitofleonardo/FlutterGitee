@@ -88,7 +88,6 @@ class _RepoReleasesPageState extends BaseState<RepoReleasesPage> {
         onLoading: _loadMore,
         onRefresh: _refresh,
         enablePullUp: _hasMore,
-        header: const WaterDropHeader(),
         child: ListView.builder(
           itemBuilder: (context, index) {
             final item = _releases[index];

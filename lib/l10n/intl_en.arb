@@ -128,5 +128,7 @@
   "follow": "Follow",
   "options": "Options",
   "copy": "Copy",
-  "search": "Search"
+  "search": "Search",
+  "messages": "Messages",
+  "more": "More"
 }

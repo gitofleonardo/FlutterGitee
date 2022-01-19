@@ -131,7 +131,6 @@ class _RepositoryTreeViewerState extends BaseState<RepositoryTreeViewer> {
             controller: _refreshController,
             enablePullDown: true,
             enablePullUp: false,
-            header: const WaterDropHeader(),
             child: ListView.builder(
                 itemBuilder: (context, index) {
                   final item = _currentTreeNodes[index];

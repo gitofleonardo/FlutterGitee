@@ -2,26 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
-import 'package:flutter_gitee/main/start/start_page.dart';
+import 'package:flutter_gitee/main/start/home/home_widget.dart';
 import 'package:flutter_gitee/main/widget/event_list_item.dart';
 import 'package:flutter_gitee/user/bean/event_result_entity.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class EventsPage extends StatefulWidget {
+class EventsPage extends StatefulWidget implements HomeWidget {
   const EventsPage({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _EventsPageState();
+  State<StatefulWidget> createState() => EventsPageState();
+
+  @override
+  Widget getIcon() {
+    return const Icon(Icons.event);
+  }
+
+  @override
+  String getText(BuildContext context) {
+    return S.of(context).events;
+  }
 }
 
-class _EventsPageState extends BaseState<EventsPage> {
+class EventsPageState extends BaseState<EventsPage> {
   final _refreshController = RefreshController();
   var _hasMore = false;
   final _events = <EventResultEntity>[];
   final _pageSize = 10;
   final _scrollController = ScrollController();
+  var _isExtended = true;
 
   void _refreshEvents() {
     getUserEvent(limit: _pageSize).then((value) {
@@ -76,10 +87,13 @@ class _EventsPageState extends BaseState<EventsPage> {
       _refreshController.requestRefresh();
     });
     _scrollController.addListener(() {
-      final showFab = _scrollController.position.userScrollDirection != ScrollDirection.reverse;
-      final fabShown = StartPage.of(context)?.fabExtended??false;
+      final showFab = _scrollController.position.userScrollDirection !=
+          ScrollDirection.reverse;
+      final fabShown = _isExtended;
       if (showFab != fabShown) {
-        StartPage.of(context)?.fabExtended = showFab;
+        setState(() {
+          _isExtended = showFab;
+        });
       }
     });
   }
@@ -96,13 +110,13 @@ class _EventsPageState extends BaseState<EventsPage> {
   Widget create(BuildContext context) {
     super.build(context);
     return Scaffold(
+      floatingActionButton: _createFab(),
       body: SmartRefresher(
         onRefresh: _refreshEvents,
         onLoading: _fetchMoreEvent,
         controller: _refreshController,
         enablePullDown: true,
         enablePullUp: _hasMore,
-        header: const WaterDropHeader(),
         child: ListView.builder(
           controller: _scrollController,
           itemCount: _events.length,
@@ -128,6 +142,35 @@ class _EventsPageState extends BaseState<EventsPage> {
         ),
       ),
     );
+  }
+
+  Widget _createFab() {
+    return Builder(builder: (context) {
+      return FloatingActionButton.extended(
+        extendedIconLabelSpacing: 12,
+        onPressed: () {
+          Navigator.pushNamed(context, "search_page");
+        },
+        label: AnimatedSize(
+          alignment: Alignment.centerLeft,
+          duration: const Duration(milliseconds: 250),
+          child: _isExtended
+              ? Row(
+                  children: [
+                    const Icon(
+                      Icons.search,
+                    ),
+                    Text(
+                      S.of(context).search,
+                    ),
+                  ],
+                )
+              : const Icon(
+                  Icons.search,
+                ),
+        ),
+      );
+    });
   }
 
   @override

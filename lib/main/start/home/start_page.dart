@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/ui/view_picture_page.dart';
-import 'package:flutter_gitee/main/events_page.dart';
-import 'package:flutter_gitee/main/widget/theme_select_dialog.dart';
+import 'package:flutter_gitee/main/start/home/event/events_page.dart';
+import 'package:flutter_gitee/main/start/home/home_widget.dart';
+import 'package:flutter_gitee/main/start/home/message/message_page.dart';
+import 'package:flutter_gitee/main/start/home/repository/repository_related_page.dart';
 import 'package:flutter_gitee/repo/ui/my_repository_page.dart';
 import 'package:flutter_gitee/repo/ui/repository_page.dart';
 import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'more/more_page.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -25,26 +30,21 @@ class StartPage extends StatefulWidget {
 class StartPageState extends BaseState<StartPage> {
   var _userProfile = UserProfileEntity();
   Widget _currentPage = const EventsPage();
-  String _currentTitle = "";
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _repoMenuExpanded = true;
-  var _isExtended = true;
+  final _pageController = PageController();
+  var _currentPageIndex = 0;
+  final List<StatefulWidget> _homePages = const [
+    EventsPage(),
+    MessagePage(),
+    RepositoryRelatedPage(),
+    MorePage()
+  ];
+  Widget _appbarContent = const SizedBox.shrink();
 
-  bool get fabExtended {
-    return _isExtended;
-  }
-
-  set fabExtended(bool extended) {
+  set appbarContent(Widget widget) {
     setState(() {
-      if (_isExtended != extended) {
-        _isExtended = extended;
-      }
-    });
-  }
-
-  set title(String title) {
-    setState(() {
-      _currentTitle = title;
+      _appbarContent = widget;
     });
   }
 
@@ -66,50 +66,68 @@ class StartPageState extends BaseState<StartPage> {
 
   @override
   Widget create(BuildContext context) {
-    if (_currentTitle.isEmpty) {
-      // set as default title
-      _currentTitle = S.of(context).events;
-    }
     return Scaffold(
       key: _scaffoldKey,
-      body: _currentPage,
-      appBar: AppBar(
-        title: Text(_currentTitle),
-        centerTitle: true,
-        elevation: 0,
+      body: PageView(
+        children: _homePages,
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _currentPageIndex = index;
+          });
+        },
       ),
-      drawer: _createDrawer(),
-      floatingActionButton: _createFab(),
+      bottomNavigationBar: _createBottomNav(),
+      appBar: AppBar(
+        backgroundColor: theme.theme.colorScheme.primary.withAlpha(100),
+      ),
     );
   }
 
-  Widget _createFab() {
-    return Builder(builder: (context) {
-      return FloatingActionButton.extended(
-        extendedIconLabelSpacing: 12,
-        onPressed: () {
-          Navigator.pushNamed(context, "search_page");
-        },
-        label: AnimatedSize(
-          alignment: Alignment.centerLeft,
-          duration: const Duration(milliseconds: 250),
-          child: _isExtended
-              ? Row(
-                  children: [
-                    const Icon(
-                      Icons.search,
-                    ),
-                    Text(
-                      S.of(context).search,
-                    ),
-                  ],
-                )
-              : const Icon(
-                  Icons.search,
-                ),
-        ),
-      );
-    });
+  Widget _createBottomNav() {
+    return BottomNavigationBar(
+      backgroundColor: theme.theme.colorScheme.background,
+      selectedIconTheme: IconThemeData(
+        color: theme.theme.colorScheme.primary.withAlpha(200),
+      ),
+      unselectedIconTheme: IconThemeData(
+        color: theme.theme.colorScheme.primary.withAlpha(50),
+      ),
+      selectedLabelStyle: TextStyle(
+        color: theme.theme.colorScheme.primary.withAlpha(200),
+      ),
+      unselectedLabelStyle: TextStyle(
+        color: theme.theme.colorScheme.primary.withAlpha(50),
+      ),
+      selectedFontSize: 12,
+      type: BottomNavigationBarType.fixed,
+      showUnselectedLabels: true,
+      items: _homePages.map((e) {
+        final page = e as HomeWidget;
+        return BottomNavigationBarItem(
+            icon: AnimatedContainer(
+              decoration: BoxDecoration(
+                  color: (_homePages[_currentPageIndex] == e)
+                      ? theme.theme.colorScheme.primary.withAlpha(50)
+                      : Colors.transparent,
+                  borderRadius: const BorderRadius.all(Radius.circular(100)),
+                  shape: BoxShape.rectangle),
+              duration: const Duration(milliseconds: 250),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+              child: page.getIcon(),
+            ),
+            label: page.getText(context));
+      }).toList(),
+      currentIndex: _currentPageIndex,
+      onTap: (index) {
+        setState(() {
+          _currentPageIndex = index;
+        });
+        _pageController.animateToPage(index,
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.decelerate);
+      },
+    );
   }
 
   Widget _createDrawerHeader() {
@@ -190,9 +208,7 @@ class StartPageState extends BaseState<StartPage> {
                   Expanded(
                     flex: 1,
                     child: IconButton(
-                      onPressed: () {
-                        _selectTheme(context);
-                      },
+                      onPressed: () {},
                       icon: Icon(Icons.palette,
                           color: theme.theme.colorScheme.onPrimary),
                     ),
@@ -271,7 +287,6 @@ class StartPageState extends BaseState<StartPage> {
                 onTap: () {
                   Navigator.pop(context);
                   setState(() {
-                    _currentTitle = S.of(context).events;
                     _currentPage = const EventsPage();
                   });
                 },
@@ -301,7 +316,6 @@ class StartPageState extends BaseState<StartPage> {
                     onTap: () {
                       Navigator.pop(context);
                       setState(() {
-                        _currentTitle = S.of(context).myRepository;
                         _currentPage = const MyRepositoryPage();
                       });
                     },
@@ -323,7 +337,6 @@ class StartPageState extends BaseState<StartPage> {
                     onTap: () {
                       Navigator.pop(context);
                       setState(() {
-                        _currentTitle = S.of(context).starredRepository;
                         _currentPage =
                             const RepositoryPage(type: RepositoryType.star);
                       });
@@ -348,7 +361,6 @@ class StartPageState extends BaseState<StartPage> {
                     onTap: () {
                       Navigator.pop(context);
                       setState(() {
-                        _currentTitle = S.of(context).watchedRepository;
                         _currentPage =
                             const RepositoryPage(type: RepositoryType.watch);
                       });
@@ -392,11 +404,7 @@ class StartPageState extends BaseState<StartPage> {
                 Navigator.pushNamed(context, "about_page");
               },
             ),
-            TextButton(
-                onPressed: () {
-                  _showLogoutDialog(context);
-                },
-                child: Text(S.of(context).logout)),
+            TextButton(onPressed: () {}, child: Text(S.of(context).logout)),
           ],
         ),
       );
@@ -417,44 +425,6 @@ class StartPageState extends BaseState<StartPage> {
     );
   }
 
-  void _selectTheme(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Builder(builder: (context) {
-            return ThemeSelectDialog(
-                context: context,
-                onSelect: (t) {
-                  setState(() {
-                    theme = t;
-                  });
-                  Navigator.pop(context);
-                });
-          });
-        });
-  }
-
-  void _showLogoutDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(S.of(context).confirmLogout),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(S.of(context).no)),
-              TextButton(
-                onPressed: () {
-                  logout();
-                  Navigator.pop(context);
-                },
-                child: Text(S.of(context).yes),
-              )
-            ],
-          );
-        });
-  }
+  @override
+  bool get wantKeepAlive => true;
 }

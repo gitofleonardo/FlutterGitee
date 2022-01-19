@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/about_page.dart';
 import 'package:flutter_gitee/main/base/ui/view_picture_page.dart';
 import 'package:flutter_gitee/main/language_selection_page.dart';
-import 'package:flutter_gitee/main/start/start_page.dart';
+import 'package:flutter_gitee/main/start/home/start_page.dart';
 import 'package:flutter_gitee/repo/search/search_page.dart';
 import 'package:flutter_gitee/repo/ui/my_issue_page.dart';
 import 'package:flutter_gitee/repo/ui/repo_collaborator_page.dart';

@@ -91,6 +91,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "markdown": MessageLookupByLibrary.simpleMessage("Markdown"),
         "member": MessageLookupByLibrary.simpleMessage("Member"),
         "merged": MessageLookupByLibrary.simpleMessage("Merged"),
+        "messages": MessageLookupByLibrary.simpleMessage("Messages"),
+        "more": MessageLookupByLibrary.simpleMessage("More"),
         "myCreated": MessageLookupByLibrary.simpleMessage("Created"),
         "myIssues": MessageLookupByLibrary.simpleMessage("My Issues"),
         "myRepository": MessageLookupByLibrary.simpleMessage("My Repository"),

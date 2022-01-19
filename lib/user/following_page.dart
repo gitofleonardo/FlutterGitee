@@ -91,7 +91,6 @@ class _FollowingPageState extends BaseState<FollowingPage> {
         title: Text(S.of(context).followings),
       ),
       body: SmartRefresher(
-        header: const WaterDropHeader(),
         onRefresh: _refreshFollowings,
         onLoading: _fetchFollowings,
         enablePullUp: _hasMore,

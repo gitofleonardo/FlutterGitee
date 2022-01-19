@@ -142,7 +142,6 @@ class _IssueCommentsPageState extends BaseState<IssueCommentsPage> {
   Widget create(BuildContext context) {
     return Scaffold(
       body: SmartRefresher(
-        header: const WaterDropHeader(),
         enablePullUp: _hasMore,
         enablePullDown: true,
         controller: _refreshCommentController,

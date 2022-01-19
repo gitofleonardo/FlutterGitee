@@ -86,7 +86,6 @@ class _RepoForksPageState extends BaseState<RepoForksPage> {
         onLoading: _loadMore,
         enablePullUp: _hasMore,
         enablePullDown: true,
-        header: const WaterDropHeader(),
         controller: _refreshController,
         child: ListView.builder(
             itemBuilder: (context, index) {
