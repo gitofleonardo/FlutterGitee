@@ -95,7 +95,7 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
         children: [
           Container(
             decoration:
-                BoxDecoration(color: Theme.of(context).colorScheme.primary),
+                BoxDecoration(color: Theme.of(context).colorScheme.background),
             constraints: const BoxConstraints(minWidth: double.infinity),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -140,34 +140,50 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
   List<Widget> _createFilterChips(BuildContext context) {
     return [
       ActionChip(
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           pressElevation: 0,
-          avatar: const Icon(Icons.arrow_drop_down),
-          label: Text(S.of(context).state),
+          avatar: Icon(Icons.arrow_drop_down,
+              color: theme.theme.colorScheme.onPrimary),
+          label: Text(
+            S.of(context).state,
+            style: TextStyle(color: theme.theme.colorScheme.onPrimary),
+          ),
           onPressed: () {
             _createStateBottomSheet(context);
           }),
       ActionChip(
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           pressElevation: 0,
-          avatar: const Icon(Icons.arrow_drop_down),
-          label: Text(S.of(context).sort),
+          avatar: Icon(Icons.arrow_drop_down,
+              color: theme.theme.colorScheme.onPrimary),
+          label: Text(
+            S.of(context).sort,
+            style: TextStyle(color: theme.theme.colorScheme.onPrimary),
+          ),
           onPressed: () {
             _createSortBottomSheet(context);
           }),
       ActionChip(
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           pressElevation: 0,
-          avatar: const Icon(Icons.arrow_drop_down),
-          label: Text(S.of(context).order),
+          avatar: Icon(Icons.arrow_drop_down,
+              color: theme.theme.colorScheme.onPrimary),
+          label: Text(
+            S.of(context).order,
+            style: TextStyle(color: theme.theme.colorScheme.onPrimary),
+          ),
           onPressed: () {
             _createSortDirectionBottomSheet(context);
           }),
       ActionChip(
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           pressElevation: 0,
-          avatar: const Icon(Icons.arrow_drop_down),
-          label: Text(S.of(context).filter),
+          avatar: Icon(Icons.arrow_drop_down,
+              color: theme.theme.colorScheme.onPrimary),
+          label: Text(
+            S.of(context).filter,
+            style: TextStyle(color: theme.theme.colorScheme.onPrimary),
+          ),
           onPressed: () {
             _createFilter(context);
           }),

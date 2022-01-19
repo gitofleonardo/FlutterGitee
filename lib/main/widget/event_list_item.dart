@@ -22,7 +22,6 @@ class _UnsupportedEventListItemState extends State<UnsupportedEventListItem> {
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
-      elevation: 5,
       margin: const EdgeInsets.only(top: 10, left: 10, bottom: 10),
       child: InkWell(
         onTap: () {},
@@ -102,7 +101,6 @@ class FollowEventListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
-      elevation: 5,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
         onTap: () {},
@@ -208,7 +206,6 @@ class StarEventListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
-      elevation: 5,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
         onTap: () {},
@@ -462,7 +459,6 @@ class CreateEventListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
-      elevation: 5,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
         onTap: () {},
@@ -558,7 +554,6 @@ class CreateIssueListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
-      elevation: 5,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
         onTap: () {},
@@ -673,7 +668,6 @@ class IssueCommentListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
-      elevation: 5,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
         onTap: () {},

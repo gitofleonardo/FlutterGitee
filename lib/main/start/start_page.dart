@@ -263,16 +263,27 @@ class StartPageState extends BaseState<StartPage> {
       return SingleChildScrollView(
         child: Column(
           children: [
-            ListTile(
-              leading: Icon(Icons.event, color: themePrimary),
-              title: Text(S.of(context).events),
-              onTap: () {
-                Navigator.pop(context);
-                setState(() {
-                  _currentTitle = S.of(context).events;
-                  _currentPage = const EventsPage();
-                });
-              },
+            Padding(
+              padding: const EdgeInsets.only(left: 10, top: 5, bottom: 5),
+              child: ListTile(
+                leading: Icon(Icons.event, color: themePrimary),
+                title: Text(S.of(context).events),
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    _currentTitle = S.of(context).events;
+                    _currentPage = const EventsPage();
+                  });
+                },
+                style: ListTileStyle.drawer,
+                shape: const RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.horizontal(left: Radius.circular(100)),
+                ),
+                selected: _currentPage is EventsPage,
+                selectedTileColor:
+                    theme.theme.colorScheme.primary.withAlpha(50),
+              ),
             ),
             ExpansionTile(
               initiallyExpanded: _repoMenuExpanded,
@@ -282,40 +293,77 @@ class StartPageState extends BaseState<StartPage> {
                 _repoMenuExpanded = expanded;
               },
               children: [
-                ListTile(
-                  leading: Icon(Icons.book, color: themePrimary),
-                  title: Text(S.of(context).myRepository),
-                  onTap: () {
-                    Navigator.pop(context);
-                    setState(() {
-                      _currentTitle = S.of(context).myRepository;
-                      _currentPage = const MyRepositoryPage();
-                    });
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 5, bottom: 5),
+                  child: ListTile(
+                    leading: Icon(Icons.book, color: themePrimary),
+                    title: Text(S.of(context).myRepository),
+                    onTap: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _currentTitle = S.of(context).myRepository;
+                        _currentPage = const MyRepositoryPage();
+                      });
+                    },
+                    style: ListTileStyle.drawer,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.horizontal(left: Radius.circular(100)),
+                    ),
+                    selected: _currentPage is MyRepositoryPage,
+                    selectedTileColor:
+                        theme.theme.colorScheme.primary.withAlpha(50),
+                  ),
                 ),
-                ListTile(
-                  leading: Icon(Icons.star, color: themePrimary),
-                  title: Text(S.of(context).starredRepository),
-                  onTap: () {
-                    Navigator.pop(context);
-                    setState(() {
-                      _currentTitle = S.of(context).starredRepository;
-                      _currentPage =
-                          const RepositoryPage(type: RepositoryType.star);
-                    });
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 5, bottom: 5),
+                  child: ListTile(
+                    leading: Icon(Icons.star, color: themePrimary),
+                    title: Text(S.of(context).starredRepository),
+                    onTap: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _currentTitle = S.of(context).starredRepository;
+                        _currentPage =
+                            const RepositoryPage(type: RepositoryType.star);
+                      });
+                    },
+                    style: ListTileStyle.drawer,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.horizontal(left: Radius.circular(100)),
+                    ),
+                    selected: _currentPage is RepositoryPage &&
+                        ((_currentPage) as RepositoryPage).type ==
+                            RepositoryType.star,
+                    selectedTileColor:
+                        theme.theme.colorScheme.primary.withAlpha(50),
+                  ),
                 ),
-                ListTile(
-                  leading: Icon(Icons.remove_red_eye, color: themePrimary),
-                  title: Text(S.of(context).watchedRepository),
-                  onTap: () {
-                    Navigator.pop(context);
-                    setState(() {
-                      _currentTitle = S.of(context).watchedRepository;
-                      _currentPage =
-                          const RepositoryPage(type: RepositoryType.watch);
-                    });
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 5, bottom: 5),
+                  child: ListTile(
+                    leading: Icon(Icons.remove_red_eye, color: themePrimary),
+                    title: Text(S.of(context).watchedRepository),
+                    onTap: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _currentTitle = S.of(context).watchedRepository;
+                        _currentPage =
+                            const RepositoryPage(type: RepositoryType.watch);
+                      });
+                    },
+                    style: ListTileStyle.drawer,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.horizontal(left: Radius.circular(100)),
+                    ),
+                    selected: _currentPage is RepositoryPage &&
+                        ((_currentPage) as RepositoryPage).type ==
+                            RepositoryType.watch,
+                    selectedTileColor:
+                        theme.theme.colorScheme.primary.withAlpha(50),
+                  ),
                 )
               ],
             ),

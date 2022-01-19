@@ -203,20 +203,26 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
         runSpacing: 5,
         children: [
           ActionChip(
-              backgroundColor: Theme.of(context).colorScheme.onPrimary,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               pressElevation: 0,
-              label: Text(S.of(context).sort),
+              label: Text(
+                S.of(context).sort,
+                style: TextStyle(color: theme.theme.colorScheme.onPrimary),
+              ),
               avatar: Icon(Icons.keyboard_arrow_down,
-                  color: Theme.of(context).colorScheme.secondary),
+                  color: Theme.of(context).colorScheme.onPrimary),
               onPressed: () {
                 _showBottomSheetDialog(_createSortBottomSheet());
               }),
           ActionChip(
-              backgroundColor: Theme.of(context).colorScheme.onPrimary,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               pressElevation: 0,
-              label: Text(S.of(context).order),
+              label: Text(
+                S.of(context).order,
+                style: TextStyle(color: theme.theme.colorScheme.onPrimary),
+              ),
               avatar: Icon(Icons.keyboard_arrow_down,
-                  color: Theme.of(context).colorScheme.secondary),
+                  color: Theme.of(context).colorScheme.onPrimary),
               onPressed: () {
                 _showBottomSheetDialog(_createSortDirectionBottomSheet());
               })
@@ -232,7 +238,7 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
       children: [
         Container(
           decoration:
-              BoxDecoration(color: Theme.of(context).colorScheme.primary),
+              BoxDecoration(color: Theme.of(context).colorScheme.background),
           constraints: const BoxConstraints(minWidth: double.infinity),
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: SingleChildScrollView(

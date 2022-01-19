@@ -249,29 +249,38 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
         runSpacing: 5,
         children: [
           ActionChip(
-              backgroundColor: theme.theme.colorScheme.onPrimary,
+              backgroundColor: theme.theme.colorScheme.primary,
               pressElevation: 0,
-              label: Text(S.of(context).sort),
+              label: Text(
+                S.of(context).sort,
+                style: TextStyle(color: theme.theme.colorScheme.onPrimary),
+              ),
               avatar: Icon(Icons.keyboard_arrow_down,
-                  color: theme.theme.colorScheme.secondary),
+                  color: theme.theme.colorScheme.onPrimary),
               onPressed: () {
                 _showBottomSheetDialog(_createSortBottomSheet());
               }),
           ActionChip(
-              backgroundColor: theme.theme.colorScheme.onPrimary,
+              backgroundColor: theme.theme.colorScheme.primary,
               pressElevation: 0,
-              label: Text(S.of(context).order),
+              label: Text(
+                S.of(context).order,
+                style: TextStyle(color: theme.theme.colorScheme.onPrimary),
+              ),
               avatar: Icon(Icons.keyboard_arrow_down,
-                  color: theme.theme.colorScheme.secondary),
+                  color: theme.theme.colorScheme.onPrimary),
               onPressed: () {
                 _showBottomSheetDialog(_createSortDirectionBottomSheet());
               }),
           ActionChip(
-              backgroundColor: theme.theme.colorScheme.onPrimary,
+              backgroundColor: theme.theme.colorScheme.primary,
               pressElevation: 0,
-              label: Text(S.of(context).repositoryType),
+              label: Text(
+                S.of(context).repositoryType,
+                style: TextStyle(color: theme.theme.colorScheme.onPrimary),
+              ),
               avatar: Icon(Icons.keyboard_arrow_down,
-                  color: theme.theme.colorScheme.secondary),
+                  color: theme.theme.colorScheme.onPrimary),
               onPressed: () {
                 _showBottomSheetDialog(_createRepoTypeBottomSheet());
               }),
@@ -288,7 +297,7 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
         Container(
           constraints: const BoxConstraints(minWidth: double.infinity),
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          color: theme.theme.colorScheme.primary,
+          color: theme.theme.colorScheme.background,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: _createFilterChipSets(),
