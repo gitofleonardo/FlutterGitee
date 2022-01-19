@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/bean/issue_result_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
+import 'package:flutter_gitee/repo/search/search_page.dart';
 import 'package:flutter_gitee/repo/ui/issue_detail_page.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
 import 'package:flutter_gitee/repo/widget/issue_list_item.dart';
@@ -23,6 +25,16 @@ class _IssueSearchPageState extends BaseState<IssueSearchPage> {
   final _pageSize = 20;
   var _currentPage = 1;
   var _filter = IssueFilter();
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      final showFab = _scrollController.position.userScrollDirection != ScrollDirection.reverse;
+      SearchPage.of(context)?.toggleFloatingActionButton(!showFab);
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -99,11 +111,11 @@ class _IssueSearchPageState extends BaseState<IssueSearchPage> {
     return SmartRefresher(
       enablePullUp: _hasMore,
       enablePullDown: _searchText.isNotEmpty,
-      header: const WaterDropHeader(),
       controller: _refreshController,
       onRefresh: _refresh,
       onLoading: _loadMore,
       child: ListView.builder(
+        controller: _scrollController,
         itemCount: _resultItems.length,
         itemBuilder: (context, index) {
           final item = _resultItems[index];

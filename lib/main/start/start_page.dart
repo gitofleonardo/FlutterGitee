@@ -24,6 +24,7 @@ class _StartPageState extends BaseState<StartPage> {
   late String _currentTitle;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _repoMenuExpanded = true;
+  var _isExtended = true;
 
   void _refreshProfile() {
     getMyUserProfile().then((value) {
@@ -59,12 +60,14 @@ class _StartPageState extends BaseState<StartPage> {
 
   Widget _createFab() {
     return Builder(builder: (context) {
-      return FloatingActionButton(
+      return FloatingActionButton.extended(
+        isExtended: _isExtended,
         backgroundColor: Theme.of(context).colorScheme.primary,
         onPressed: () {
           Navigator.pushNamed(context, "search_page");
         },
-        child: const Icon(
+        label: Text(S.of(context).search),
+        icon: const Icon(
           Icons.search,
           color: Colors.white,
         ),

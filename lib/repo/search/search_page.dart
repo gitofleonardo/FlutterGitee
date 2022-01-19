@@ -13,10 +13,14 @@ class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  SearchPageState createState() => SearchPageState();
+
+  static SearchPageState? of(BuildContext context) {
+    return context.findAncestorStateOfType<SearchPageState>();
+  }
 }
 
-class _SearchPageState extends BaseState<SearchPage> {
+class SearchPageState extends BaseState<SearchPage> {
   final _tabPages = [
     const RepoSearchPage(),
     const UserSearchPage(),
@@ -33,11 +37,17 @@ class _SearchPageState extends BaseState<SearchPage> {
   late TabController _repoFilterTabController;
   late TabController _userFilterTabController;
   late TabController _issueFilterTabController;
+  var _isFilterFabHide = false;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      if (_isFilterFabHide) {
+        toggleFloatingActionButton(false);
+      }
+    });
     _repoFilterTabController = TabController(length: 4, vsync: this);
     _userFilterTabController = TabController(length: 2, vsync: this);
     _issueFilterTabController = TabController(length: 4, vsync: this);
@@ -115,7 +125,7 @@ class _SearchPageState extends BaseState<SearchPage> {
         ),
         floatingActionButton: Builder(
           builder: (context) {
-            return FloatingActionButton(
+            return AnimatedScale(scale: _isFilterFabHide? 0.0 : 1.0, duration: const Duration(milliseconds: 250),child: FloatingActionButton(
               backgroundColor: Theme.of(context).colorScheme.primary,
               onPressed: () {
                 _createFilterSelection(context);
@@ -124,11 +134,23 @@ class _SearchPageState extends BaseState<SearchPage> {
                 Icons.menu,
                 color: Colors.white,
               ),
-            );
+            ),);
           },
         ),
       ),
     );
+  }
+
+  void toggleFloatingActionButton(bool hide) {
+    setState(() {
+      if (hide != _isFilterFabHide) {
+        _isFilterFabHide = hide;
+      }
+    });
+  }
+
+  bool isShowFloatingActionButton() {
+    return !_isFilterFabHide;
   }
 
   void _createFilterSelection(BuildContext context) {

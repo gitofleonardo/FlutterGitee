@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
+import 'package:flutter_gitee/repo/search/search_page.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
 import 'package:flutter_gitee/repo/widget/user_list_item.dart';
 import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
@@ -22,6 +24,16 @@ class _UserSearchPageState extends BaseState<UserSearchPage> {
   final _pageSize = 20;
   var _currentPage = 1;
   var _filter = UserFilter();
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      final showFab = _scrollController.position.userScrollDirection != ScrollDirection.reverse;
+      SearchPage.of(context)?.toggleFloatingActionButton(!showFab);
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -96,13 +108,14 @@ class _UserSearchPageState extends BaseState<UserSearchPage> {
   Widget create(BuildContext context) {
     super.build(context);
     return SmartRefresher(
+      primary: false,
       enablePullUp: _hasMore,
       enablePullDown: _searchText.isNotEmpty,
-      header: const WaterDropHeader(),
       controller: _refreshController,
       onRefresh: _refresh,
       onLoading: _loadMore,
       child: ListView.builder(
+        controller: _scrollController,
         itemCount: _resultItems.length,
         itemBuilder: (context, index) {
           return UserListItem(

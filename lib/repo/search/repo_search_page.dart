@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_gitee/repo/attrs/filter_attrs.dart';
 import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/repo/model/repository_model.dart';
+import 'package:flutter_gitee/repo/search/search_page.dart';
 import 'package:flutter_gitee/repo/widget/inherited_search_widget.dart';
 import 'package:flutter_gitee/repo/widget/repo_list_item.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
@@ -22,6 +24,19 @@ class _RepoSearchPageState extends BaseState<RepoSearchPage> {
   final _pageSize = 20;
   var _currentPage = 1;
   var _filter = RepositoryFilter();
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      final showFab = _scrollController.position.userScrollDirection != ScrollDirection.reverse;
+      final fabShown = SearchPage.of(context)?.isShowFloatingActionButton()??false;
+      if (showFab != fabShown) {
+        SearchPage.of(context)?.toggleFloatingActionButton(!showFab);
+      }
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -98,11 +113,11 @@ class _RepoSearchPageState extends BaseState<RepoSearchPage> {
     return SmartRefresher(
       enablePullUp: _hasMore,
       enablePullDown: _searchText.isNotEmpty,
-      header: const WaterDropHeader(),
       controller: _refreshController,
       onRefresh: _refresh,
       onLoading: _loadMore,
       child: ListView.builder(
+        controller: _scrollController,
         itemCount: _resultItems.length,
         itemBuilder: (context, index) {
           return RepoListItem(

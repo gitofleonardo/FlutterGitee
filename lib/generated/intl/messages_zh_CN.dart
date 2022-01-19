@@ -120,6 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "repositoryFilter": MessageLookupByLibrary.simpleMessage("仓库过滤"),
         "repositoryType": MessageLookupByLibrary.simpleMessage("仓库类型"),
         "saySomething": MessageLookupByLibrary.simpleMessage("说点什么"),
+        "search": MessageLookupByLibrary.simpleMessage("搜索"),
         "searchPageTips":
             MessageLookupByLibrary.simpleMessage("搜索仓库、用户或者Issue"),
         "searchTextEmpty": MessageLookupByLibrary.simpleMessage("搜索文本为空"),

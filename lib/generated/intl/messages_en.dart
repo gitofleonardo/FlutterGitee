@@ -135,6 +135,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "repositoryType":
             MessageLookupByLibrary.simpleMessage("Repository Type"),
         "saySomething": MessageLookupByLibrary.simpleMessage("Say something"),
+        "search": MessageLookupByLibrary.simpleMessage("Search"),
         "searchPageTips": MessageLookupByLibrary.simpleMessage(
             "Search repository, user or issue"),
         "searchTextEmpty":
