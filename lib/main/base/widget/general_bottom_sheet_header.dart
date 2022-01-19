@@ -27,15 +27,19 @@ class HeaderContentBottomSheet extends StatelessWidget {
                 width: 64,
                 height: 5,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5), color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5),
+                    color: Theme.of(context).colorScheme.primary),
               )),
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: Flex(direction: Axis.horizontal, children: [
               Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(5),
                 child: IconButton(
-                  icon: const Icon(Icons.close),
+                  icon: Icon(
+                    Icons.close,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   onPressed: () {
                     Navigator.pop(context);
                   },

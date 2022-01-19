@@ -90,8 +90,9 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
       _refreshController.requestRefresh();
     });
     _scrollController.addListener(() {
-      final showFab = _scrollController.position.userScrollDirection != ScrollDirection.reverse;
-      final fabShown = StartPage.of(context)?.fabExtended??false;
+      final showFab = _scrollController.position.userScrollDirection !=
+          ScrollDirection.reverse;
+      final fabShown = StartPage.of(context)?.fabExtended ?? false;
       if (showFab != fabShown) {
         StartPage.of(context)?.fabExtended = showFab;
       }
@@ -233,9 +234,7 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
   void _showBottomSheetDialog(Widget content) {
     showModalBottomSheet(
         enableDrag: true,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+        shape: bottomSheetShape,
         isScrollControlled: true,
         context: context,
         builder: (context) {
@@ -250,23 +249,29 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
         runSpacing: 5,
         children: [
           ActionChip(
+              backgroundColor: theme.theme.colorScheme.onPrimary,
               pressElevation: 0,
               label: Text(S.of(context).sort),
-              avatar: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+              avatar: Icon(Icons.keyboard_arrow_down,
+                  color: theme.theme.colorScheme.secondary),
               onPressed: () {
                 _showBottomSheetDialog(_createSortBottomSheet());
               }),
           ActionChip(
+              backgroundColor: theme.theme.colorScheme.onPrimary,
               pressElevation: 0,
               label: Text(S.of(context).order),
-              avatar: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+              avatar: Icon(Icons.keyboard_arrow_down,
+                  color: theme.theme.colorScheme.secondary),
               onPressed: () {
                 _showBottomSheetDialog(_createSortDirectionBottomSheet());
               }),
           ActionChip(
+              backgroundColor: theme.theme.colorScheme.onPrimary,
               pressElevation: 0,
               label: Text(S.of(context).repositoryType),
-              avatar: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+              avatar: Icon(Icons.keyboard_arrow_down,
+                  color: theme.theme.colorScheme.secondary),
               onPressed: () {
                 _showBottomSheetDialog(_createRepoTypeBottomSheet());
               }),
@@ -283,7 +288,7 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
         Container(
           constraints: const BoxConstraints(minWidth: double.infinity),
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          color: Theme.of(context).backgroundColor,
+          color: theme.theme.colorScheme.primary,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: _createFilterChipSets(),

@@ -87,12 +87,15 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text(S.of(context).myIssues),
       ),
       body: Flex(
         direction: Axis.vertical,
         children: [
-          ConstrainedBox(
+          Container(
+            decoration:
+                BoxDecoration(color: Theme.of(context).colorScheme.primary),
             constraints: const BoxConstraints(minWidth: double.infinity),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -137,6 +140,7 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
   List<Widget> _createFilterChips(BuildContext context) {
     return [
       ActionChip(
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
           label: Text(S.of(context).state),
@@ -144,6 +148,7 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
             _createStateBottomSheet(context);
           }),
       ActionChip(
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
           label: Text(S.of(context).sort),
@@ -151,6 +156,7 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
             _createSortBottomSheet(context);
           }),
       ActionChip(
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
           label: Text(S.of(context).order),
@@ -158,6 +164,7 @@ class _MyIssuePageState extends BaseState<MyIssuePage> {
             _createSortDirectionBottomSheet(context);
           }),
       ActionChip(
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
           label: Text(S.of(context).filter),

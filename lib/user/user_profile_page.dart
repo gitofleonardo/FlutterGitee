@@ -116,30 +116,31 @@ class _UserProfilePageState extends BaseState<UserProfilePage> {
     return Builder(
       builder: (context) {
         return Card(
+          color: Theme.of(context).colorScheme.primaryContainer,
           elevation: 5,
           child: Column(
             children: [
               ListTile(
                 leading: Icon(Icons.message_outlined,
-                    color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.onPrimaryContainer),
                 title: Text(S.of(context).bio),
                 subtitle: Text(_profile.bio ?? S.of(context).empty),
               ),
               ListTile(
                 leading: Icon(Icons.email,
-                    color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.onPrimaryContainer),
                 title: Text(S.of(context).email),
                 subtitle: Text(_profile.email ?? S.of(context).empty),
               ),
               ListTile(
                 leading: Icon(Icons.house_sharp,
-                    color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.onPrimaryContainer),
                 title: Text(S.of(context).company),
                 subtitle: Text(_profile.company ?? S.of(context).empty),
               ),
               ListTile(
                 leading: Icon(Icons.forum,
-                    color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.onPrimaryContainer),
                 title: Text(S.of(context).blog),
                 subtitle: Text(_profile.blog ?? S.of(context).empty),
               ),
@@ -154,6 +155,7 @@ class _UserProfilePageState extends BaseState<UserProfilePage> {
     return Builder(
       builder: (context) {
         return Card(
+          color: Theme.of(context).colorScheme.primaryContainer,
           elevation: 5,
           child: Padding(
             padding: const EdgeInsets.all(10),
@@ -188,7 +190,8 @@ class _UserProfilePageState extends BaseState<UserProfilePage> {
                       "${_profile.login}",
                       style: TextStyle(
                           fontSize: 24,
-                          color: Theme.of(context).colorScheme.primary,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                           fontWeight: FontWeight.bold),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -222,7 +225,8 @@ class _UserProfilePageState extends BaseState<UserProfilePage> {
                   child: Row(
                     children: [
                       Icon(Icons.person,
-                          color: Theme.of(context).colorScheme.primary),
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer),
                       const SizedBox(width: 10),
                       GestureDetector(
                         onTap: () {

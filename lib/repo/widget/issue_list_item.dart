@@ -31,7 +31,12 @@ class IssueListItem extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            Text("${issue.title}", style: const TextStyle(color: Colors.grey)),
+            Text("${issue.title}",
+                style: TextStyle(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withAlpha(100))),
             const SizedBox(height: 10),
             Wrap(
               runSpacing: 5,

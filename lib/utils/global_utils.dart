@@ -85,7 +85,7 @@ Future<GlobalTheme> getCurrentTheme() async {
   final prefs = await SharedPreferences.getInstance();
   final theme = prefs.getInt(themeName);
   if (theme == null) {
-    return globalThemes[0];
+    return defaultTheme;
   }
   return globalThemes[theme];
 }

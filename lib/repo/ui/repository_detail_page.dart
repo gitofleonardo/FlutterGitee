@@ -115,34 +115,31 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
 
   Widget _createRepoReadmeBody() {
     return Builder(builder: (context) {
-      return DecoratedBox(
-        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-        child: NotificationListener<OverscrollIndicatorNotification>(
-          onNotification: (over) {
-            over.disallowGlow();
-            return true;
-          },
-          child: Builder(builder: (context) {
-            final content = base64ToString(repo.readme?.content);
-            if (content.isEmpty) {
-              return const SizedBox(
-                width: 0,
-                height: 0,
-              );
-            }
-            return Markdown(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(10),
-              onTapLink: (text, href, title) {},
-              selectable: true,
-              data: content,
-              imageBuilder: (uri, title, alt) {
-                return repositoryMarkdownImageBuilder(
-                    uri, "${repo.fullName}", "$title", "$alt");
-              },
+      return NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (over) {
+          over.disallowGlow();
+          return true;
+        },
+        child: Builder(builder: (context) {
+          final content = base64ToString(repo.readme?.content);
+          if (content.isEmpty) {
+            return const SizedBox(
+              width: 0,
+              height: 0,
             );
-          }),
-        ),
+          }
+          return Markdown(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(10),
+            onTapLink: (text, href, title) {},
+            selectable: true,
+            data: content,
+            imageBuilder: (uri, title, alt) {
+              return repositoryMarkdownImageBuilder(
+                  uri, "${repo.fullName}", "$title", "$alt");
+            },
+          );
+        }),
       );
     });
   }
@@ -151,20 +148,17 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
     return SliverToBoxAdapter(
       child: Builder(
         builder: (context) {
-          return DecoratedBox(
-              decoration:
-                  BoxDecoration(color: Theme.of(context).backgroundColor),
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _createSimpleDescriptionHeader(),
-                    _createAttrViewPanel(),
-                  ],
-                ),
-              ));
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _createSimpleDescriptionHeader(),
+                _createAttrViewPanel(),
+              ],
+            ),
+          );
         },
       ),
     );
@@ -394,9 +388,7 @@ class _RepositoryDetailPageState extends BaseState<RepositoryDetailPage> {
         message: S.of(context).tapToRetry);
     showModalBottomSheet(
         isScrollControlled: true,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+        shape: bottomSheetShape,
         context: context,
         builder: (context) {
           return HeaderContentBottomSheet(

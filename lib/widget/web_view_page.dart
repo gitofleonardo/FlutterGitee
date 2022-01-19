@@ -84,6 +84,8 @@ class _WebViewState extends BaseState<WebViewPage> {
         body: Container(
           constraints: const BoxConstraints.expand(),
           child: InAppWebView(
+            initialOptions: options,
+            pullToRefreshController: _pullToRefreshController,
             initialUrlRequest: URLRequest(url: Uri.parse(widget.url)),
             onWebViewCreated: (controller) {
               _webViewController = controller;

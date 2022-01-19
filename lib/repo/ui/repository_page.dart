@@ -86,8 +86,9 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
       _refreshController.requestRefresh();
     });
     _scrollController.addListener(() {
-      final showFab = _scrollController.position.userScrollDirection != ScrollDirection.reverse;
-      final fabShown = StartPage.of(context)?.fabExtended??false;
+      final showFab = _scrollController.position.userScrollDirection !=
+          ScrollDirection.reverse;
+      final fabShown = StartPage.of(context)?.fabExtended ?? false;
       if (showFab != fabShown) {
         StartPage.of(context)?.fabExtended = showFab;
       }
@@ -187,9 +188,7 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
 
   void _showBottomSheetDialog(Widget content) {
     showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+        shape: bottomSheetShape,
         isScrollControlled: true,
         context: context,
         builder: (context) {
@@ -204,16 +203,20 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
         runSpacing: 5,
         children: [
           ActionChip(
+              backgroundColor: Theme.of(context).colorScheme.onPrimary,
               pressElevation: 0,
               label: Text(S.of(context).sort),
-              avatar: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+              avatar: Icon(Icons.keyboard_arrow_down,
+                  color: Theme.of(context).colorScheme.secondary),
               onPressed: () {
                 _showBottomSheetDialog(_createSortBottomSheet());
               }),
           ActionChip(
+              backgroundColor: Theme.of(context).colorScheme.onPrimary,
               pressElevation: 0,
               label: Text(S.of(context).order),
-              avatar: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+              avatar: Icon(Icons.keyboard_arrow_down,
+                  color: Theme.of(context).colorScheme.secondary),
               onPressed: () {
                 _showBottomSheetDialog(_createSortDirectionBottomSheet());
               })
@@ -228,7 +231,8 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
       direction: Axis.vertical,
       children: [
         Container(
-          color: Theme.of(context).backgroundColor,
+          decoration:
+              BoxDecoration(color: Theme.of(context).colorScheme.primary),
           constraints: const BoxConstraints(minWidth: double.infinity),
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: SingleChildScrollView(

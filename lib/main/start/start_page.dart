@@ -87,25 +87,26 @@ class StartPageState extends BaseState<StartPage> {
     return Builder(builder: (context) {
       return FloatingActionButton.extended(
         extendedIconLabelSpacing: 12,
-        backgroundColor: Theme.of(context).colorScheme.primary,
         onPressed: () {
           Navigator.pushNamed(context, "search_page");
         },
         label: AnimatedSize(
           alignment: Alignment.centerLeft,
           duration: const Duration(milliseconds: 250),
-          child: _isExtended ? Row(
-            children: [
-              const Icon(
-                Icons.search,
-                color: Colors.white,
-              ),
-              Text(S.of(context).search),
-            ],
-          ) : const Icon(
-            Icons.search,
-            color: Colors.white,
-          ),
+          child: _isExtended
+              ? Row(
+                  children: [
+                    const Icon(
+                      Icons.search,
+                    ),
+                    Text(
+                      S.of(context).search,
+                    ),
+                  ],
+                )
+              : const Icon(
+                  Icons.search,
+                ),
         ),
       );
     });
@@ -114,7 +115,7 @@ class StartPageState extends BaseState<StartPage> {
   Widget _createDrawerHeader() {
     return LayoutBuilder(builder: (context, constraints) {
       return DrawerHeader(
-        decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+        decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
         margin: EdgeInsets.zero,
         child: Flex(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -137,10 +138,8 @@ class StartPageState extends BaseState<StartPage> {
                           //     arguments: _userProfile.avatarUrl ?? "");
                           Navigator.push(context, PageRouteBuilder(
                               pageBuilder: (context, anim, secondaryAnim) {
-                            return FadeTransition(
-                                opacity: anim,
-                                child: ViewPicturePage(
-                                    url: "${_userProfile.avatarUrl}"));
+                            return ViewPicturePage(
+                                url: "${_userProfile.avatarUrl}");
                           }));
                         },
                         child: Builder(
@@ -174,29 +173,30 @@ class StartPageState extends BaseState<StartPage> {
                           children: [
                             Text(
                               _userProfile.name ?? "null",
-                              style: const TextStyle(
-                                  color: Colors.white,
+                              style: TextStyle(
+                                  color: theme.theme.colorScheme.onPrimary,
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(_userProfile.login ?? "",
-                                style: const TextStyle(
-                                    color: Colors.white70, fontSize: 18),
+                                style: TextStyle(
+                                    color: theme.theme.colorScheme.onPrimary,
+                                    fontSize: 18),
                                 overflow: TextOverflow.ellipsis)
                           ],
                         ),
                       )),
                   Expanded(
-                      flex: 1,
-                      child: IconButton(
-                          onPressed: () {
-                            _selectTheme(context);
-                          },
-                          icon: const Icon(
-                            Icons.palette,
-                            color: Colors.white,
-                          )))
+                    flex: 1,
+                    child: IconButton(
+                      onPressed: () {
+                        _selectTheme(context);
+                      },
+                      icon: Icon(Icons.palette,
+                          color: theme.theme.colorScheme.onPrimary),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -204,38 +204,49 @@ class StartPageState extends BaseState<StartPage> {
               padding: const EdgeInsets.only(top: 10),
               child: Row(
                 children: [
-                  const Icon(Icons.person, color: Colors.white),
+                  Icon(Icons.person, color: theme.theme.colorScheme.onPrimary),
                   const SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, "follower_page",
                           arguments: _userProfile.login);
                     },
-                    child: Text.rich(TextSpan(children: [
-                      TextSpan(
-                          text: "${_userProfile.followers ?? 0}",
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(
-                          text: " ${S.of(context).followers}",
-                          style: const TextStyle(fontWeight: FontWeight.normal))
-                    ], style: const TextStyle(color: Colors.white))),
+                    child: Text.rich(TextSpan(
+                        children: [
+                          TextSpan(
+                              text: "${_userProfile.followers ?? 0}",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(
+                              text: " ${S.of(context).followers}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.normal))
+                        ],
+                        style: TextStyle(
+                            color: theme.theme.colorScheme.onPrimary))),
                   ),
-                  const Text(" · ",
+                  Text(" · ",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.white)),
+                          fontWeight: FontWeight.bold,
+                          color: theme.theme.colorScheme.onPrimary)),
                   GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, "following_page",
                           arguments: _userProfile.login);
                     },
-                    child: Text.rich(TextSpan(children: [
-                      TextSpan(
-                          text: "${_userProfile.following ?? 0}",
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(
-                          text: "  ${S.of(context).followings}",
-                          style: const TextStyle(fontWeight: FontWeight.normal))
-                    ], style: const TextStyle(color: Colors.white))),
+                    child: Text.rich(TextSpan(
+                        children: [
+                          TextSpan(
+                              text: "${_userProfile.following ?? 0}",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(
+                              text: "  ${S.of(context).followings}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.normal))
+                        ],
+                        style: TextStyle(
+                            color: theme.theme.colorScheme.onPrimary))),
                   )
                 ],
               ),
@@ -248,7 +259,7 @@ class StartPageState extends BaseState<StartPage> {
 
   Widget _createDrawerMenus() {
     return LayoutBuilder(builder: (context, constraints) {
-      final themePrimary = Theme.of(context).primaryColor;
+      final themePrimary = Theme.of(context).colorScheme.secondary;
       return SingleChildScrollView(
         child: Column(
           children: [

@@ -57,8 +57,12 @@ class IssueCommentListItem extends StatelessWidget {
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     )),
                     Text(formatDate("${issue.createdAt}"),
-                        style:
-                            const TextStyle(color: Colors.grey, fontSize: 12)),
+                        style: TextStyle(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onBackground
+                                .withAlpha(100),
+                            fontSize: 12)),
                   ],
                 ),
                 const SizedBox(height: 5),

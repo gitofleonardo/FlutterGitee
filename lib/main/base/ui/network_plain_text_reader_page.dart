@@ -45,7 +45,6 @@ class _NetworkPlainTextReaderPageState
           )
         ],
       ),
-      backgroundColor: Theme.of(context).backgroundColor,
       body: FutureBuilder<BaseResult<String>>(
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {

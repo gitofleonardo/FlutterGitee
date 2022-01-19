@@ -13,6 +13,7 @@ class RepoListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primary = Theme.of(context).colorScheme.primary;
+    final grey = Theme.of(context).colorScheme.onBackground.withAlpha(100);
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -31,7 +32,7 @@ class RepoListItem extends StatelessWidget {
                 DecoratedBox(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.grey)),
+                      border: Border.all(color: grey)),
                   child: Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
@@ -39,8 +40,7 @@ class RepoListItem extends StatelessWidget {
                         repo.public ?? false
                             ? S.of(context).public
                             : S.of(context).private,
-                        style:
-                            const TextStyle(color: Colors.grey, fontSize: 10)),
+                        style: TextStyle(color: grey, fontSize: 10)),
                   ),
                 )
               ],
@@ -56,7 +56,7 @@ class RepoListItem extends StatelessWidget {
                   }
                   return Text(
                     desc,
-                    style: const TextStyle(color: Colors.grey),
+                    style: TextStyle(color: grey),
                   );
                 },
               ),

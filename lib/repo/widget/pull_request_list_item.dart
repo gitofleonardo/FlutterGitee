@@ -12,40 +12,37 @@ class PullRequestListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-        child: InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flex(
+              direction: Axis.horizontal,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Flex(
-                  direction: Axis.horizontal,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    _createPullTagsByState("${pull.state}"),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(child: Text("${pull.base?.repo?.fullName}")),
-                    Text(formatDate(pull.updatedAt ?? ''))
-                  ],
+                _createPullTagsByState("${pull.state}"),
+                const SizedBox(
+                  width: 10,
                 ),
-                const SizedBox(height: 10),
-                Text("${pull.title}",
-                    style: const TextStyle(color: Colors.grey)),
-                const SizedBox(height: 10),
-                Wrap(
-                  runSpacing: 5,
-                  spacing: 10,
-                  children: _createIssueTags(),
-                ),
+                Expanded(child: Text("${pull.base?.repo?.fullName}")),
+                Text(formatDate(pull.updatedAt ?? ''))
               ],
             ),
-          ),
-        ));
+            const SizedBox(height: 10),
+            Text("${pull.title}", style: const TextStyle(color: Colors.grey)),
+            const SizedBox(height: 10),
+            Wrap(
+              runSpacing: 5,
+              spacing: 10,
+              children: _createIssueTags(),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   List<Widget> _createIssueTags() {

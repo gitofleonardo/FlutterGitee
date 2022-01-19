@@ -35,13 +35,11 @@ class _RepoCommitDetailPageState extends BaseState<RepoCommitDetailPage> {
         title: Text(S.of(context).commit),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.primary,
         onPressed: () {
           _showInfoBottomSheet(context);
         },
         child: const Icon(
           Icons.menu,
-          color: Colors.white,
         ),
       ),
       body: FutureBuilder<BaseResult<CommitDetailEntity>>(
@@ -126,12 +124,19 @@ class _CommitFilenameSliverHeaderDelegate
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return DecoratedBox(
-      decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
+      decoration:
+          BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer),
       child: ConstrainedBox(
         constraints: const BoxConstraints.expand(),
         child: Stack(
           alignment: Alignment.center,
-          children: [Text(name)],
+          children: [
+            Text(
+              name,
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer),
+            )
+          ],
         ),
       ),
     );

@@ -33,7 +33,6 @@ class _NetworkMarkdownReaderPageState
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      backgroundColor: Theme.of(context).backgroundColor,
       body: FutureBuilder<BaseResult<String>>(
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {

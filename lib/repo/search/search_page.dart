@@ -102,18 +102,20 @@ class SearchPageState extends BaseState<SearchPage> {
             focusNode: _focusNode,
             controller: _searchController,
             maxLines: 1,
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(color: theme.theme.colorScheme.onPrimary),
             decoration: InputDecoration(
-                enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white)),
-                focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white)),
-                hintStyle: const TextStyle(color: Colors.white),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: theme.theme.colorScheme.onPrimary)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: theme.theme.colorScheme.onPrimary)),
+                hintStyle: TextStyle(color: theme.theme.colorScheme.onPrimary),
                 hintText: S.of(context).searchPageTips,
                 suffixIcon: IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.search,
-                    color: Colors.white,
+                    color: theme.theme.colorScheme.onPrimary,
                   ),
                   onPressed: _onSearch,
                 )),
@@ -125,16 +127,18 @@ class SearchPageState extends BaseState<SearchPage> {
         ),
         floatingActionButton: Builder(
           builder: (context) {
-            return AnimatedScale(scale: _isFilterFabHide? 0.0 : 1.0, duration: const Duration(milliseconds: 250),child: FloatingActionButton(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              onPressed: () {
-                _createFilterSelection(context);
-              },
-              child: const Icon(
-                Icons.menu,
-                color: Colors.white,
+            return AnimatedScale(
+              scale: _isFilterFabHide ? 0.0 : 1.0,
+              duration: const Duration(milliseconds: 250),
+              child: FloatingActionButton(
+                onPressed: () {
+                  _createFilterSelection(context);
+                },
+                child: const Icon(
+                  Icons.menu,
+                ),
               ),
-            ),);
+            );
           },
         ),
       ),
@@ -209,9 +213,7 @@ class SearchPageState extends BaseState<SearchPage> {
       )
     ];
     showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+        shape: bottomSheetShape,
         context: context,
         isScrollControlled: true,
         builder: (context) {
@@ -223,7 +225,7 @@ class SearchPageState extends BaseState<SearchPage> {
                   direction: Axis.vertical,
                   children: [
                     TabBar(
-                      labelColor: Colors.grey,
+                      labelColor: Theme.of(context).colorScheme.onBackground,
                       tabs: issueFilterTabs,
                       controller: _issueFilterTabController,
                     ),
@@ -375,9 +377,7 @@ class SearchPageState extends BaseState<SearchPage> {
       Tab(text: S.of(context).order)
     ];
     showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+        shape: bottomSheetShape,
         context: context,
         isScrollControlled: true,
         builder: (context) {
@@ -389,7 +389,7 @@ class SearchPageState extends BaseState<SearchPage> {
                   direction: Axis.vertical,
                   children: [
                     TabBar(
-                      labelColor: Colors.grey,
+                      labelColor: Theme.of(context).colorScheme.onBackground,
                       tabs: userFilterTabs,
                       controller: _userFilterTabController,
                     ),
@@ -603,9 +603,7 @@ class SearchPageState extends BaseState<SearchPage> {
       )
     ];
     showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+        shape: bottomSheetShape,
         context: context,
         isScrollControlled: true,
         builder: (context) {
@@ -617,7 +615,7 @@ class SearchPageState extends BaseState<SearchPage> {
                   direction: Axis.vertical,
                   children: [
                     TabBar(
-                      labelColor: Colors.grey,
+                      labelColor: Theme.of(context).colorScheme.onBackground,
                       tabs: repoFilterTabs,
                       controller: _repoFilterTabController,
                     ),

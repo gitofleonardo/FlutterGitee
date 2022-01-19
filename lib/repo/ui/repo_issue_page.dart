@@ -90,12 +90,15 @@ class _RepoIssuePageState extends BaseState<RepoIssuePage> {
   Widget create(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text(S.of(context).issues),
       ),
       body: Flex(
         direction: Axis.vertical,
         children: [
-          ConstrainedBox(
+          Container(
+            decoration:
+                BoxDecoration(color: Theme.of(context).colorScheme.primary),
             constraints: const BoxConstraints(minWidth: double.infinity),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -146,6 +149,7 @@ class _RepoIssuePageState extends BaseState<RepoIssuePage> {
   List<Widget> _createFilterChips(BuildContext context) {
     return [
       ActionChip(
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
           label: Text(S.of(context).state),
@@ -153,6 +157,7 @@ class _RepoIssuePageState extends BaseState<RepoIssuePage> {
             _createStateBottomSheet(context);
           }),
       ActionChip(
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
           label: Text(S.of(context).sort),
@@ -160,6 +165,7 @@ class _RepoIssuePageState extends BaseState<RepoIssuePage> {
             _createSortBottomSheet(context);
           }),
       ActionChip(
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
           pressElevation: 0,
           avatar: const Icon(Icons.arrow_drop_down),
           label: Text(S.of(context).order),

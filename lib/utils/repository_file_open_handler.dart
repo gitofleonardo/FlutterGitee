@@ -96,9 +96,7 @@ class RepositoryFileOpenHandler {
     const delegate =
         SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4);
     showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+        shape: bottomSheetShape,
         context: context,
         builder: (context) {
           return HeaderContentBottomSheet(

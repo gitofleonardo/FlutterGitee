@@ -72,7 +72,31 @@ class GlobalTheme {
 }
 
 final defaultTheme = GlobalTheme(
-    ThemeData(brightness: Brightness.light, backgroundColor: Colors.white),
+    ThemeData(
+      brightness: Brightness.light,
+      backgroundColor: Colors.white,
+      scaffoldBackgroundColor: const Color(0xFFfdfbff),
+      colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: Color(0xff175db2),
+          onPrimary: Color(0xFFffffff),
+          secondary: Color(0xFF565f71),
+          onSecondary: Color(0xFFffffff),
+          error: Color(0xFFba1b1b),
+          onError: Color(0xFFffffff),
+          background: Color(0xFFfdfbff),
+          onBackground: Color(0xFF1a1b1f),
+          surface: Color(0xFFfdfbff),
+          onSurface: Color(0xFF1a1b1f),
+          tertiary: Color(0xFF6f5574),
+          onTertiary: Color(0xFFffffff),
+          primaryContainer: Color(0xFFd6e3ff),
+          onPrimaryContainer: Color(0xFF001b3f),
+          secondaryContainer: Color(0xFFdae3f9),
+          onSecondaryContainer: Color(0xFF131c2b),
+          tertiaryContainer: Color(0xFFf9d8fd),
+          onTertiaryContainer: Color(0xFF28132e)),
+    ),
     "Light");
 
 const defaultLanguage = "zh";

@@ -60,7 +60,6 @@ class _LoginPageState extends BaseState<LoginPage> {
         title: Text(S.of(context).loginToGitee),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.primary,
         onPressed: () {
           if (!_isLoggingIn &&
               (_formStateKey.currentState as FormState).validate()) {
@@ -112,10 +111,11 @@ class _LoginPageState extends BaseState<LoginPage> {
         child: LayoutBuilder(
           builder: (ctx, constraint) {
             if (!_isLoggingIn) {
-              return const Icon(Icons.login, color: Colors.white);
+              return Icon(Icons.login,
+                  color: Theme.of(context).colorScheme.onPrimary);
             }
-            return const CircularProgressIndicator(
-              color: Colors.white,
+            return CircularProgressIndicator(
+              color: Theme.of(context).colorScheme.onPrimary,
             );
           },
         ),

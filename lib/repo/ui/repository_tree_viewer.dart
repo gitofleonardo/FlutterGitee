@@ -136,23 +136,19 @@ class _RepositoryTreeViewerState extends BaseState<RepositoryTreeViewer> {
                 itemBuilder: (context, index) {
                   final item = _currentTreeNodes[index];
                   final isDir = item.type == "tree";
-                  return DecoratedBox(
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).backgroundColor),
-                    child: ListTile(
-                      leading: _createFileIcon(isDir),
-                      title: Text("${item.path}"),
-                      onTap: () {
-                        if (isDir) {
-                          _nextTree("${item.sha}", "${item.path}");
-                        } else {
-                          RepositoryFileOpenHandler.getInstance().open(
-                              context,
-                              widget.treeInfo.fullName,
-                              RepositoryBlob.fromTree(item));
-                        }
-                      },
-                    ),
+                  return ListTile(
+                    leading: _createFileIcon(isDir),
+                    title: Text("${item.path}"),
+                    onTap: () {
+                      if (isDir) {
+                        _nextTree("${item.sha}", "${item.path}");
+                      } else {
+                        RepositoryFileOpenHandler.getInstance().open(
+                            context,
+                            widget.treeInfo.fullName,
+                            RepositoryBlob.fromTree(item));
+                      }
+                    },
                   );
                 },
                 itemCount: _currentTreeNodes.length),
@@ -167,21 +163,22 @@ class _RepositoryTreeViewerState extends BaseState<RepositoryTreeViewer> {
   Widget _createFileIcon(bool isDir) {
     return isDir
         ? Container(
-            decoration:
-                const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: theme.theme.colorScheme.primary),
             padding: const EdgeInsets.all(10),
-            child: const Icon(
+            child: Icon(
               FontAwesomeIcons.folder,
-              color: Colors.white,
+              color: theme.theme.colorScheme.onPrimary,
               size: 18,
             ))
         : Container(
-            decoration: const BoxDecoration(
-                shape: BoxShape.circle, color: Colors.green),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: theme.theme.colorScheme.secondary),
             padding: const EdgeInsets.all(10),
-            child: const Icon(
+            child: Icon(
               FontAwesomeIcons.file,
-              color: Colors.white,
+              color: theme.theme.colorScheme.onSecondary,
               size: 18,
             ));
   }

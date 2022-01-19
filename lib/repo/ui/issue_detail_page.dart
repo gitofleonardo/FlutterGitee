@@ -110,8 +110,9 @@ class _IssueDetailPageState extends BaseState<IssueDetailPage> {
               const SizedBox(
                 width: 10,
               ),
-              Text("${_issue.user?.login}",
-                  style: const TextStyle(color: Colors.grey)),
+              Text(
+                "${_issue.user?.login}",
+              ),
               const SizedBox(
                 width: 10,
               ),

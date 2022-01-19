@@ -162,11 +162,10 @@ class _IssueCommentsPageState extends BaseState<IssueCommentsPage> {
         duration: const Duration(milliseconds: 250),
         scale: _showFab ? 1.0 : 0.0,
         child: FloatingActionButton(
-          backgroundColor: Theme.of(context).colorScheme.primary,
           onPressed: () {
             _showCommentBottomSheet(context);
           },
-          child: const Icon(Icons.message, color: Colors.white),
+          child: const Icon(Icons.message),
         ),
       ),
     );

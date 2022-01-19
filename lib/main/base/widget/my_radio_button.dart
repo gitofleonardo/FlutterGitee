@@ -15,7 +15,8 @@ class MyRadioButton<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       if (!_selected) {
-        return const Icon(Icons.check, color: Colors.grey);
+        return Icon(Icons.check,
+            color: Theme.of(context).colorScheme.primary.withAlpha(50));
       } else {
         return Icon(Icons.check, color: Theme.of(context).colorScheme.primary);
       }

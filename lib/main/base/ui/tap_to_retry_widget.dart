@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class TapToRetryWidget extends StatelessWidget {
+import '../../../widget/base_state.dart';
+
+class TapToRetryWidget extends StatefulWidget {
   final VoidCallback onTap;
   final String message;
   const TapToRetryWidget({Key? key, required this.onTap, required this.message})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  _State createState() => _State();
+}
+
+class _State extends BaseState<TapToRetryWidget> {
+  @override
+  Widget create(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints.expand(),
       child: Center(
@@ -16,23 +23,24 @@ class TapToRetryWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             GestureDetector(
-              onTap: onTap,
+              onTap: widget.onTap,
               child: SvgPicture.asset(
                 "assets/images/git.svg",
-                color: Colors.red,
+                color: theme.theme.colorScheme.error,
                 width: 64,
                 height: 64,
               ),
             ),
             TextButton.icon(
-                onPressed: onTap,
-                icon: const Icon(
+                onPressed: widget.onTap,
+                icon: Icon(
                   Icons.close_rounded,
-                  color: Colors.red,
+                  color: theme.theme.colorScheme.error,
                 ),
-                label: Text(message,
-                    style: const TextStyle(
-                        color: Colors.red, fontWeight: FontWeight.bold)))
+                label: Text(widget.message,
+                    style: TextStyle(
+                        color: theme.theme.colorScheme.error,
+                        fontWeight: FontWeight.bold)))
           ],
         ),
       ),

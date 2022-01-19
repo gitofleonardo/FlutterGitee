@@ -29,7 +29,6 @@ class _NetworkImageViewerPageState extends BaseState<NetworkImageViewerPage> {
       appBar: AppBar(
         title: Text(widget.title, maxLines: 1),
       ),
-      backgroundColor: Theme.of(context).backgroundColor,
       body: FutureBuilder<BaseResult<Uint8List>>(
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
