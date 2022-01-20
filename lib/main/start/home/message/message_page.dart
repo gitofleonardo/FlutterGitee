@@ -105,27 +105,16 @@ class MessagePageState extends BaseState<MessagePage> {
       appBar: AppBar(
         title: Row(
           children: [
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 250),
+            GestureDetector(
+              onTap: () {
+                _showMessageTypeDialog(context);
+              },
               child: Text(
                 _messageTypeName,
                 key: ValueKey<MessageType>(_messageType),
                 style: TextStyle(
                     color: theme.theme.colorScheme.onPrimaryContainer),
               ),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                final tween = Tween<Offset>(
-                    begin: const Offset(0, 1), end: const Offset(0, 0));
-                final pos = tween.animate(animation);
-                var offset = pos.value;
-                if (pos.status == AnimationStatus.reverse) {
-                  offset = Offset(-offset.dx, offset.dy);
-                }
-                return FractionalTranslation(
-                  translation: offset,
-                  child: child,
-                );
-              },
             ),
             IconButton(
                 onPressed: () {
