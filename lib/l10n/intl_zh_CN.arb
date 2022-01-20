@@ -130,5 +130,9 @@
   "copy": "复制",
   "search": "搜索",
   "messages": "消息",
-  "more": "更多"
+  "more": "更多",
+  "messageType": "消息类型",
+  "privateMessage": "私信",
+  "notificationMessage": "通知消息",
+  "referMessage": "提及我的消息"
 }

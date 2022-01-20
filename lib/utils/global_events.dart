@@ -1,5 +1,7 @@
 import 'package:flutter_gitee/utils/global_constant.dart';
 
+import '../user/bean/user_profile_entity.dart';
+
 /// Event that stores current theme when global theme changed.
 class ThemeEvent {
   final GlobalTheme theme;
@@ -18,7 +20,13 @@ class UserStateEvent {
   UserStateEvent(this.state);
 }
 
+/// Profile change event
+class ProfileEvent {
+  final UserProfileEntity profile;
+  ProfileEvent(this.profile);
+}
+
 enum UserState {
   /// when token expires
-  tokenExpired
+  tokenExpired,
 }

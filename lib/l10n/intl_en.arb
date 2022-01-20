@@ -130,5 +130,9 @@
   "copy": "Copy",
   "search": "Search",
   "messages": "Messages",
-  "more": "More"
+  "more": "More",
+  "messageType": "Message Type",
+  "privateMessage": "Private Message",
+  "notificationMessage": "Notification Message",
+  "referMessage": "Refer Message"
 }

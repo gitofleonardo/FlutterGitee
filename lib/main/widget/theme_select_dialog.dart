@@ -29,6 +29,7 @@ class ThemeSelectDialog extends StatelessWidget {
       ));
     }
     return AlertDialog(
+      backgroundColor: Theme.of(context).colorScheme.background,
       title: Text(S.of(context).themes),
       content: Wrap(
         spacing: 5,

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/repo/ui/issue_detail_page.dart';
@@ -31,23 +30,6 @@ class _UnsupportedEventListItemState extends State<UnsupportedEventListItem> {
             children: [
               Row(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, "user_profile_page",
-                          arguments: "${widget.event.actor?.login}");
-                    },
-                    child: SizedBox(
-                      width: 42,
-                      height: 42,
-                      child: ClipOval(
-                        child: Image.network(
-                            widget.event.actor?.avatarUrl.toString() ?? ""),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -110,23 +92,6 @@ class FollowEventListItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, "user_profile_page",
-                          arguments: "${event.actor?.login}");
-                    },
-                    child: SizedBox(
-                      width: 42,
-                      height: 42,
-                      child: ClipOval(
-                        child: Image.network(
-                            event.actor?.avatarUrl.toString() ?? ""),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -215,19 +180,6 @@ class StarEventListItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  GestureDetector(
-                      onTap: () {},
-                      child: SizedBox(
-                        width: 42,
-                        height: 42,
-                        child: ClipOval(
-                          child: Image.network(
-                              event.actor?.avatarUrl.toString() ?? ""),
-                        ),
-                      )),
-                  const SizedBox(
-                    width: 20,
-                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -306,22 +258,11 @@ class PushEventListItem extends StatelessWidget {
       child: InkWell(
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(14),
           child: Column(
             children: [
               Row(
                 children: [
-                  SizedBox(
-                    width: 42,
-                    height: 42,
-                    child: ClipOval(
-                      child: Image.network(
-                          event.actor?.avatarUrl.toString() ?? ""),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -468,17 +409,6 @@ class CreateEventListItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SizedBox(
-                    width: 42,
-                    height: 42,
-                    child: ClipOval(
-                      child: Image.network(
-                          event.actor?.avatarUrl.toString() ?? ""),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -563,17 +493,6 @@ class CreateIssueListItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SizedBox(
-                    width: 42,
-                    height: 42,
-                    child: ClipOval(
-                      child: Image.network(
-                          event.actor?.avatarUrl.toString() ?? ""),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -677,17 +596,6 @@ class IssueCommentListItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SizedBox(
-                    width: 42,
-                    height: 42,
-                    child: ClipOval(
-                      child: Image.network(
-                          event.actor?.avatarUrl.toString() ?? ""),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

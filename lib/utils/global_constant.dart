@@ -76,16 +76,16 @@ final defaultTheme = GlobalTheme(
       dialogTheme: const DialogTheme(
         backgroundColor: Color(0xFFfdfbff),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32)),
+          borderRadius: BorderRadius.all(Radius.circular(28)),
         ),
       ),
       buttonTheme: const ButtonThemeData(
           shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: BorderRadius.all(Radius.circular(28)),
       )),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(28)),
         ),
         sizeConstraints: BoxConstraints(minWidth: 64, minHeight: 64),
         extendedSizeConstraints: BoxConstraints(minHeight: 64),
@@ -93,7 +93,7 @@ final defaultTheme = GlobalTheme(
       cardTheme: const CardTheme(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(24),
+            Radius.circular(28),
           ),
         ),
         elevation: 0,
@@ -134,16 +134,16 @@ final darkTheme = GlobalTheme(
       dialogTheme: const DialogTheme(
         backgroundColor: Color(0xFFfdfbff),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32)),
+          borderRadius: BorderRadius.all(Radius.circular(28)),
         ),
       ),
       buttonTheme: const ButtonThemeData(
           shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: BorderRadius.all(Radius.circular(28)),
       )),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(28)),
         ),
         sizeConstraints: BoxConstraints(minWidth: 64, minHeight: 64),
         extendedSizeConstraints: BoxConstraints(minHeight: 64),
@@ -151,7 +151,7 @@ final darkTheme = GlobalTheme(
       cardTheme: const CardTheme(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(24),
+            Radius.circular(28),
           ),
         ),
         elevation: 0,
@@ -189,16 +189,16 @@ final greenTheme = GlobalTheme(
       dialogTheme: const DialogTheme(
         backgroundColor: Color(0xFFfdfbff),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32)),
+          borderRadius: BorderRadius.all(Radius.circular(28)),
         ),
       ),
       buttonTheme: const ButtonThemeData(
           shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: BorderRadius.all(Radius.circular(28)),
       )),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(28)),
         ),
         sizeConstraints: BoxConstraints(minWidth: 64, minHeight: 64),
         extendedSizeConstraints: BoxConstraints(minHeight: 64),
@@ -206,7 +206,7 @@ final greenTheme = GlobalTheme(
       cardTheme: const CardTheme(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(24),
+            Radius.circular(28),
           ),
         ),
         elevation: 0,
@@ -246,16 +246,16 @@ final orangeTheme = GlobalTheme(
       dialogTheme: const DialogTheme(
         backgroundColor: Color(0xFFfdfbff),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32)),
+          borderRadius: BorderRadius.all(Radius.circular(28)),
         ),
       ),
       buttonTheme: const ButtonThemeData(
           shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: BorderRadius.all(Radius.circular(28)),
       )),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(28)),
         ),
         sizeConstraints: BoxConstraints(minWidth: 64, minHeight: 64),
         extendedSizeConstraints: BoxConstraints(minHeight: 64),
@@ -263,7 +263,7 @@ final orangeTheme = GlobalTheme(
       cardTheme: const CardTheme(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(24),
+            Radius.circular(28),
           ),
         ),
         elevation: 0,

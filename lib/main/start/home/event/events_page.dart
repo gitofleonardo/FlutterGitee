@@ -1,11 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/start/home/home_widget.dart';
+import 'package:flutter_gitee/main/start/home/start_page.dart';
+import 'package:flutter_gitee/main/start/home/start_page_events.dart';
 import 'package:flutter_gitee/main/widget/event_list_item.dart';
 import 'package:flutter_gitee/user/bean/event_result_entity.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
+import 'package:flutter_gitee/utils/global_context.dart';
+import 'package:flutter_gitee/utils/global_events.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -17,7 +24,9 @@ class EventsPage extends StatefulWidget implements HomeWidget {
 
   @override
   Widget getIcon() {
-    return const Icon(Icons.event);
+    return const Icon(
+      Icons.event,
+    );
   }
 
   @override
@@ -33,6 +42,9 @@ class EventsPageState extends BaseState<EventsPage> {
   final _pageSize = 10;
   final _scrollController = ScrollController();
   var _isExtended = true;
+  late final StreamSubscription _profileEventSubscription;
+  late final StreamSubscription _tabReselectSubscription;
+  String _userAvatar = "";
 
   void _refreshEvents() {
     getUserEvent(limit: _pageSize).then((value) {
@@ -96,6 +108,25 @@ class EventsPageState extends BaseState<EventsPage> {
         });
       }
     });
+    _profileEventSubscription =
+        globalEventBus.on<ProfileEvent>().listen((event) {
+      setState(() {
+        _userAvatar = "${event.profile.avatarUrl}";
+      });
+    });
+    _tabReselectSubscription =
+        startPageBus.on<TabReselectEvent>().listen((event) {
+      _scrollController.animateTo(0,
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.decelerate);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _profileEventSubscription.cancel();
+    _tabReselectSubscription.cancel();
   }
 
   @override
@@ -117,30 +148,76 @@ class EventsPageState extends BaseState<EventsPage> {
         controller: _refreshController,
         enablePullDown: true,
         enablePullUp: _hasMore,
-        child: ListView.builder(
+        child: CustomScrollView(
           controller: _scrollController,
-          itemCount: _events.length,
-          itemBuilder: (context, index) {
-            final event = _events[index];
-            switch (event.type) {
-              case "FollowEvent":
-                return FollowEventListItem(event: event);
-              case "StarEvent":
-                return StarEventListItem(event: event);
-              case "PushEvent":
-                return PushEventListItem(event: event);
-              case "CreateEvent":
-                return CreateEventListItem(event: event);
-              case "IssueEvent":
-                return CreateIssueListItem(event: event);
-              case "IssueCommentEvent":
-                return IssueCommentListItem(event: event);
-              default:
-                return UnsupportedEventListItem(event: event);
-            }
-          },
+          slivers: [
+            _createAppbar(),
+            _createEventBody(),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _createEventBody() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          final event = _events[index];
+          switch (event.type) {
+            case "FollowEvent":
+              return FollowEventListItem(event: event);
+            case "StarEvent":
+              return StarEventListItem(event: event);
+            case "PushEvent":
+              return PushEventListItem(event: event);
+            case "CreateEvent":
+              return CreateEventListItem(event: event);
+            case "IssueEvent":
+              return CreateIssueListItem(event: event);
+            case "IssueCommentEvent":
+              return IssueCommentListItem(event: event);
+            default:
+              return UnsupportedEventListItem(event: event);
+          }
+        },
+        childCount: _events.length,
+      ),
+    );
+  }
+
+  Widget _createAppbar() {
+    return SliverAppBar(
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        title: Text(
+          S.of(context).events,
+          style: TextStyle(color: theme.theme.colorScheme.onPrimaryContainer),
+        ),
+        collapseMode: CollapseMode.pin,
+      ),
+      leading: UnconstrainedBox(
+        child: IconButton(
+          onPressed: () {
+            StartPage.of(context)?.jumpTo(3);
+          },
+          icon: ClipOval(
+            child: _userAvatar.isNotEmpty
+                ? Image.network(
+                    _userAvatar,
+                    width: 36,
+                    height: 36,
+                  )
+                : const Icon(Icons.person),
+          ),
+        ),
+      ),
+      expandedHeight: 100,
+      backgroundColor: theme.theme.colorScheme.primaryContainer,
+      floating: true,
+      systemOverlayStyle:
+          const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+      stretch: true,
     );
   }
 

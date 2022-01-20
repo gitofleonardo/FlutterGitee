@@ -91,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "markdown": MessageLookupByLibrary.simpleMessage("Markdown"),
         "member": MessageLookupByLibrary.simpleMessage("Member"),
         "merged": MessageLookupByLibrary.simpleMessage("Merged"),
+        "messageType": MessageLookupByLibrary.simpleMessage("Message Type"),
         "messages": MessageLookupByLibrary.simpleMessage("Messages"),
         "more": MessageLookupByLibrary.simpleMessage("More"),
         "myCreated": MessageLookupByLibrary.simpleMessage("Created"),
@@ -99,6 +100,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "networkError": MessageLookupByLibrary.simpleMessage("Network Error"),
         "no": MessageLookupByLibrary.simpleMessage("NO"),
         "notesCount": MessageLookupByLibrary.simpleMessage("Notes Count"),
+        "notificationMessage":
+            MessageLookupByLibrary.simpleMessage("Notification Message"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
         "open": MessageLookupByLibrary.simpleMessage("Open"),
         "openInBrowser":
@@ -112,12 +115,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "personal": MessageLookupByLibrary.simpleMessage("Personal"),
         "popularity": MessageLookupByLibrary.simpleMessage("Popularity"),
         "private": MessageLookupByLibrary.simpleMessage("Private"),
+        "privateMessage":
+            MessageLookupByLibrary.simpleMessage("Private Message"),
         "progressing": MessageLookupByLibrary.simpleMessage("Progressing"),
         "public": MessageLookupByLibrary.simpleMessage("Public"),
         "pullRequest": MessageLookupByLibrary.simpleMessage("Pull Request"),
         "pushTo": MessageLookupByLibrary.simpleMessage("Push To"),
         "pwdCannotBeEmpty":
             MessageLookupByLibrary.simpleMessage("Password cannot be empty"),
+        "referMessage": MessageLookupByLibrary.simpleMessage("Refer Message"),
         "rejected": MessageLookupByLibrary.simpleMessage("Rejected"),
         "releases": MessageLookupByLibrary.simpleMessage("Releases"),
         "repoAllDesc": MessageLookupByLibrary.simpleMessage("All repositories"),
