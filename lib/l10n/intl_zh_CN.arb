@@ -134,5 +134,6 @@
   "messageType": "消息类型",
   "privateMessage": "私信",
   "notificationMessage": "通知消息",
-  "referMessage": "提及我的消息"
+  "referMessage": "提及我的消息",
+  "onlyGetUnreadMessages": "只获取未读消息"
 }

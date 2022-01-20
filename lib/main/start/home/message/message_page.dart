@@ -1,8 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/start/home/home_widget.dart';
+import 'package:flutter_gitee/main/start/home/message/bean/notification_message_entity.dart';
 import 'package:flutter_gitee/main/start/home/message/bean/user_message_entity.dart';
+import 'package:flutter_gitee/main/start/home/message/message_item.dart';
 import 'package:flutter_gitee/main/start/home/message/model.dart';
+import 'package:flutter_gitee/main/start/home/start_page.dart';
+import 'package:flutter_gitee/main/start/home/start_page_events.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -28,12 +34,15 @@ class MessagePage extends StatefulWidget implements HomeWidget {
 
 class MessagePageState extends BaseState<MessagePage> {
   final _refreshController = RefreshController();
+  final _scrollController = ScrollController();
   var _hasMore = false;
   var _messageType = MessageType.message;
   final _pageSize = 20;
   var _currentPage = 1;
   final _userMessages = <UserMessageList>[];
-  bool? _unread = null;
+  final _notificationMessages = <NotificationMessageList>[];
+  bool _unread = false;
+  late final StreamSubscription _tabSubscription;
 
   String get _messageTypeName {
     switch (_messageType) {
@@ -47,6 +56,22 @@ class MessagePageState extends BaseState<MessagePage> {
   }
 
   void _refresh() {
+    if (_messageType == MessageType.message) {
+      _refreshMessage();
+    } else {
+      _refreshNotification();
+    }
+  }
+
+  void _loadMore() {
+    if (_messageType == MessageType.message) {
+      _loadMoreMessage();
+    } else {
+      _loadMoreNotification();
+    }
+  }
+
+  void _refreshMessage() {
     setState(() {
       _hasMore = false;
     });
@@ -71,7 +96,7 @@ class MessagePageState extends BaseState<MessagePage> {
     });
   }
 
-  void _loadMore() {
+  void _loadMoreMessage() {
     getUserMessages(_unread, _currentPage, _pageSize).then((value) {
       if (value.success) {
         _refreshController.loadComplete();
@@ -91,82 +116,223 @@ class MessagePageState extends BaseState<MessagePage> {
     });
   }
 
+  void _refreshNotification() {
+    setState(() {
+      _hasMore = false;
+    });
+    _currentPage = 1;
+    getNotificationMessages(_unread, _currentPage, _pageSize, _messageType)
+        .then((value) {
+      if (value.success) {
+        _refreshController.refreshCompleted();
+        final data = value.data?.list ?? [];
+        setState(() {
+          if (data.length >= _pageSize) {
+            _hasMore = true;
+          } else {
+            _hasMore = false;
+          }
+          _notificationMessages.clear();
+          _notificationMessages.addAll(data);
+          ++_currentPage;
+        });
+      } else {
+        _refreshController.refreshFailed();
+      }
+    });
+  }
+
+  void _loadMoreNotification() {
+    getNotificationMessages(_unread, _currentPage, _pageSize, _messageType)
+        .then((value) {
+      if (value.success) {
+        _refreshController.loadComplete();
+        final data = value.data?.list ?? [];
+        setState(() {
+          if (data.length >= _pageSize) {
+            _hasMore = true;
+          } else {
+            _hasMore = false;
+          }
+          _notificationMessages.addAll(data);
+          ++_currentPage;
+        });
+      } else {
+        _refreshController.loadFailed();
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _refreshController.requestRefresh();
     });
+    _tabSubscription = startPageBus.on<TabReselectEvent>().listen((event) {
+      if (event.pageIndex == 1) {
+        _scrollController.animateTo(
+          0,
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.decelerate,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabSubscription.cancel();
   }
 
   @override
   Widget create(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                _showMessageTypeDialog(context);
-              },
-              child: Text(
-                _messageTypeName,
-                key: ValueKey<MessageType>(_messageType),
-                style: TextStyle(
-                    color: theme.theme.colorScheme.onPrimaryContainer),
-              ),
-            ),
-            IconButton(
-                onPressed: () {
-                  _showMessageTypeDialog(context);
-                },
-                icon: Icon(
-                  Icons.arrow_drop_down,
-                  color: theme.theme.colorScheme.onPrimaryContainer,
-                ))
-          ],
-        ),
-        backgroundColor: theme.theme.colorScheme.primaryContainer,
-        actions: [
-          IconButton(
-            onPressed: () {
-              _showFilterDialog(context);
-            },
-            icon: Icon(
-              Icons.filter_list,
-              color: theme.theme.colorScheme.onPrimaryContainer,
-            ),
-          )
-        ],
-      ),
+      appBar: _createAppBar(),
       body: SmartRefresher(
         controller: _refreshController,
         enablePullDown: true,
         enablePullUp: _hasMore,
         onLoading: _loadMore,
         onRefresh: _refresh,
-        child: ListView.builder(
-            itemBuilder: (context, index) {
-              final item = _userMessages[index];
-              return ListTile(
-                dense: true,
-                leading: ClipOval(
-                  child: Image.network(
-                    "${item.sender?.avatarUrl}",
-                    width: 32,
-                    height: 32,
-                  ),
-                ),
-                title: Text("${item.sender?.login}"),
-                subtitle: Text("${item.content}"),
-              );
-            },
-            itemCount: _userMessages.length),
+        child: _createListView(),
       ),
     );
   }
 
-  void _showFilterDialog(BuildContext context) {}
+  Widget _createListView() {
+    if (_messageType == MessageType.message) {
+      return ListView.builder(
+          controller: _scrollController,
+          itemBuilder: (context, index) {
+            final item = _userMessages[index];
+            return MessageItem(
+              onTap: () {
+                _showMessageDetailDialog(context, "${item.content}");
+              },
+              onLongPress: () {},
+              name: "${item.sender?.login}",
+              avatar: "${item.sender?.avatarUrl}",
+              time: item.updatedAt!,
+              content: "${item.content}",
+            );
+          },
+          itemCount: _userMessages.length);
+    }
+    return ListView.builder(
+        controller: _scrollController,
+        itemBuilder: (context, index) {
+          final item = _notificationMessages[index];
+          return MessageItem(
+            onTap: () {
+              _showMessageDetailDialog(context, "${item.content}");
+            },
+            onLongPress: () {},
+            name: "${item.actor?.login}",
+            avatar: "${item.actor?.avatarUrl}",
+            time: item.updatedAt!,
+            content: "${item.content}",
+          );
+        },
+        itemCount: _notificationMessages.length);
+  }
+
+  void _showMessageDetailDialog(BuildContext context, String content) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(S.of(context).details),
+            content: SingleChildScrollView(
+              child: SelectableText(content),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(S.of(context).ok),
+              )
+            ],
+          );
+        });
+  }
+
+  AppBar _createAppBar() {
+    return AppBar(
+      title: Row(
+        children: [
+          GestureDetector(
+            onTap: () {
+              _showMessageTypeDialog(context);
+            },
+            child: Text(
+              _messageTypeName,
+              key: ValueKey<MessageType>(_messageType),
+              style:
+                  TextStyle(color: theme.theme.colorScheme.onPrimaryContainer),
+            ),
+          ),
+          IconButton(
+              onPressed: () {
+                _showMessageTypeDialog(context);
+              },
+              icon: Icon(
+                Icons.arrow_drop_down,
+                color: theme.theme.colorScheme.onPrimaryContainer,
+              ))
+        ],
+      ),
+      backgroundColor: theme.theme.colorScheme.primaryContainer,
+      actions: [
+        IconButton(
+          onPressed: () {
+            _showFilterDialog(context);
+          },
+          icon: Icon(
+            Icons.filter_list,
+            color: theme.theme.colorScheme.onPrimaryContainer,
+          ),
+        )
+      ],
+    );
+  }
+
+  void _showFilterDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(S.of(context).options),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CheckboxListTile(
+                    value: _unread,
+                    onChanged: (value) {
+                      setState(() {
+                        _unread = value ?? false;
+                      });
+                      _refreshController.requestRefresh();
+                      Navigator.pop(context);
+                    },
+                    title: Text(S.of(context).onlyGetUnreadMessages),
+                  )
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(S.of(context).cancel))
+            ],
+          );
+        });
+  }
 
   void _showMessageTypeDialog(BuildContext context) {
     showDialog(
@@ -191,6 +357,9 @@ class MessagePageState extends BaseState<MessagePage> {
                   _messageType = MessageType.notification;
                   _refreshController.requestRefresh();
                   Navigator.pop(context);
+                  setState(() {
+                    _notificationMessages.clear();
+                  });
                 },
               ),
               ListTile(
@@ -199,6 +368,9 @@ class MessagePageState extends BaseState<MessagePage> {
                   _messageType = MessageType.refer;
                   _refreshController.requestRefresh();
                   Navigator.pop(context);
+                  setState(() {
+                    _notificationMessages.clear();
+                  });
                 },
               ),
             ],

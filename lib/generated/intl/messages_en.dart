@@ -103,6 +103,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationMessage":
             MessageLookupByLibrary.simpleMessage("Notification Message"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "onlyGetUnreadMessages":
+            MessageLookupByLibrary.simpleMessage("Only Unread Messages"),
         "open": MessageLookupByLibrary.simpleMessage("Open"),
         "openInBrowser":
             MessageLookupByLibrary.simpleMessage("Open In Browser"),

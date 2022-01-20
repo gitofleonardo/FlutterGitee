@@ -1,4 +1,6 @@
+import 'package:flutter_gitee/main/start/home/message/bean/notification_message_entity.dart';
 import 'package:flutter_gitee/main/start/home/message/bean/user_message_entity.dart';
+import 'package:flutter_gitee/main/start/home/message/message_page.dart';
 import 'package:flutter_gitee/utils/global_context.dart';
 import 'package:flutter_gitee/utils/global_utils.dart';
 
@@ -16,4 +18,28 @@ Future<BaseResult<UserMessageEntity>> getUserMessages(
   }
   return postRequest<UserMessageEntity>(
       "api/v5/notifications/messages", RequestType.get, params);
+}
+
+Future<BaseResult<NotificationMessageEntity>> getNotificationMessages(
+    bool? unread, int page, int perPage, MessageType type) {
+  final params = {
+    "access_token": globalToken,
+    "page": page,
+    "per_page": perPage
+  };
+  if (unread != null) {
+    params["unread"] = unread;
+  }
+  switch (type) {
+    case MessageType.notification:
+      params["type"] = "event";
+      break;
+    case MessageType.message:
+      break;
+    case MessageType.refer:
+      params["type"] = "referer";
+      break;
+  }
+  return postRequest<NotificationMessageEntity>(
+      "api/v5/notifications/threads", RequestType.get, params);
 }

@@ -96,6 +96,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notesCount": MessageLookupByLibrary.simpleMessage("笔记计数"),
         "notificationMessage": MessageLookupByLibrary.simpleMessage("通知消息"),
         "ok": MessageLookupByLibrary.simpleMessage("好的"),
+        "onlyGetUnreadMessages":
+            MessageLookupByLibrary.simpleMessage("只获取未读消息"),
         "open": MessageLookupByLibrary.simpleMessage("打开"),
         "openInBrowser": MessageLookupByLibrary.simpleMessage("在浏览器中打开"),
         "openProject": MessageLookupByLibrary.simpleMessage("打开本项目"),

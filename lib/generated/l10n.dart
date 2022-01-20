@@ -1409,6 +1409,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Only Unread Messages`
+  String get onlyGetUnreadMessages {
+    return Intl.message(
+      'Only Unread Messages',
+      name: 'onlyGetUnreadMessages',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
