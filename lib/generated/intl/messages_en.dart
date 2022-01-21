@@ -63,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterPwdHint":
             MessageLookupByLibrary.simpleMessage("Enter your password"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
+        "eventMessage": MessageLookupByLibrary.simpleMessage("Event Message"),
         "events": MessageLookupByLibrary.simpleMessage("Events"),
         "failSendingComment":
             MessageLookupByLibrary.simpleMessage("Fail sending comment"),
@@ -100,8 +101,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "networkError": MessageLookupByLibrary.simpleMessage("Network Error"),
         "no": MessageLookupByLibrary.simpleMessage("NO"),
         "notesCount": MessageLookupByLibrary.simpleMessage("Notes Count"),
-        "notificationMessage":
-            MessageLookupByLibrary.simpleMessage("Notification Message"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
         "onlyGetUnreadMessages":
             MessageLookupByLibrary.simpleMessage("Only Unread Messages"),
@@ -128,6 +127,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "referMessage": MessageLookupByLibrary.simpleMessage("Refer Message"),
         "rejected": MessageLookupByLibrary.simpleMessage("Rejected"),
         "releases": MessageLookupByLibrary.simpleMessage("Releases"),
+        "reply": MessageLookupByLibrary.simpleMessage("Reply"),
+        "replyTo": MessageLookupByLibrary.simpleMessage("Reply to"),
         "repoAllDesc": MessageLookupByLibrary.simpleMessage("All repositories"),
         "repoMemberDesc": MessageLookupByLibrary.simpleMessage(
             "You are the member of the repositories"),

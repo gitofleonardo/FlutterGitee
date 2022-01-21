@@ -8,6 +8,7 @@ class MessageItem extends StatelessWidget {
   final String avatar;
   final String time;
   final String content;
+  final bool unread;
 
   const MessageItem(
       {Key? key,
@@ -16,7 +17,8 @@ class MessageItem extends StatelessWidget {
       required this.name,
       required this.avatar,
       required this.time,
-      required this.content})
+      required this.content,
+      required this.unread})
       : super(key: key);
 
   @override
@@ -72,10 +74,31 @@ class MessageItem extends StatelessWidget {
                 const SizedBox(height: 5),
                 ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: double.infinity),
-                  child: Text(
-                    content,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
+                  child: Flex(
+                    direction: Axis.horizontal,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          content,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      AnimatedScale(
+                        scale: unread ? 1.0 : 0.0,
+                        duration: const Duration(milliseconds: 250),
+                        child: ClipOval(
+                          child: Container(
+                            constraints: const BoxConstraints.tightFor(
+                                width: 8, height: 8),
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 )
               ],

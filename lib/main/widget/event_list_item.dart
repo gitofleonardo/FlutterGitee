@@ -20,7 +20,7 @@ class _UnsupportedEventListItemState extends State<UnsupportedEventListItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).colorScheme.primaryContainer,
+      color: Theme.of(context).colorScheme.secondaryContainer,
       margin: const EdgeInsets.only(top: 10, left: 10, bottom: 10),
       child: InkWell(
         onTap: () {},
@@ -82,7 +82,7 @@ class FollowEventListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).colorScheme.primaryContainer,
+      color: Theme.of(context).colorScheme.secondaryContainer,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
         onTap: () {},
@@ -170,7 +170,7 @@ class StarEventListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).colorScheme.primaryContainer,
+      color: Theme.of(context).colorScheme.secondaryContainer,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
         onTap: () {},
@@ -253,7 +253,7 @@ class PushEventListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).colorScheme.primaryContainer,
+      color: Theme.of(context).colorScheme.secondaryContainer,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
         onTap: () {},
@@ -399,7 +399,7 @@ class CreateEventListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).colorScheme.primaryContainer,
+      color: Theme.of(context).colorScheme.secondaryContainer,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
         onTap: () {},
@@ -483,7 +483,7 @@ class CreateIssueListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).colorScheme.primaryContainer,
+      color: Theme.of(context).colorScheme.secondaryContainer,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
         onTap: () {},
@@ -586,7 +586,7 @@ class IssueCommentListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).colorScheme.primaryContainer,
+      color: Theme.of(context).colorScheme.secondaryContainer,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
         onTap: () {},

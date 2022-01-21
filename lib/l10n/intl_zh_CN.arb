@@ -133,7 +133,9 @@
   "more": "更多",
   "messageType": "消息类型",
   "privateMessage": "私信",
-  "notificationMessage": "通知消息",
+  "eventMessage": "事件消息",
   "referMessage": "提及我的消息",
-  "onlyGetUnreadMessages": "只获取未读消息"
+  "onlyGetUnreadMessages": "只获取未读消息",
+  "reply": "回复",
+  "replyTo": "回复给"
 }

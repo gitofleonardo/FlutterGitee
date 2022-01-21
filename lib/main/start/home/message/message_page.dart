@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/generated/l10n.dart';
+import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/main/start/home/home_widget.dart';
 import 'package:flutter_gitee/main/start/home/message/bean/notification_message_entity.dart';
 import 'package:flutter_gitee/main/start/home/message/bean/user_message_entity.dart';
@@ -13,7 +14,7 @@ import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-enum MessageType { notification, message, refer }
+enum MessageType { event, message, refer }
 
 class MessagePage extends StatefulWidget implements HomeWidget {
   const MessagePage({Key? key}) : super(key: key);
@@ -46,8 +47,8 @@ class MessagePageState extends BaseState<MessagePage> {
 
   String get _messageTypeName {
     switch (_messageType) {
-      case MessageType.notification:
-        return S.of(context).notificationMessage;
+      case MessageType.event:
+        return S.of(context).eventMessage;
       case MessageType.message:
         return S.of(context).privateMessage;
       case MessageType.refer:
@@ -69,6 +70,10 @@ class MessagePageState extends BaseState<MessagePage> {
     } else {
       _loadMoreNotification();
     }
+  }
+
+  void _markAsRead(String messageId) {
+    markMessageAsRead(messageId).then((value) {});
   }
 
   void _refreshMessage() {
@@ -204,59 +209,125 @@ class MessagePageState extends BaseState<MessagePage> {
   Widget _createListView() {
     if (_messageType == MessageType.message) {
       return ListView.builder(
-          controller: _scrollController,
-          itemBuilder: (context, index) {
-            final item = _userMessages[index];
-            return MessageItem(
-              onTap: () {
-                _showMessageDetailDialog(context, "${item.content}");
-              },
-              onLongPress: () {},
-              name: "${item.sender?.login}",
-              avatar: "${item.sender?.avatarUrl}",
-              time: item.updatedAt!,
-              content: "${item.content}",
-            );
-          },
-          itemCount: _userMessages.length);
-    }
-    return ListView.builder(
         controller: _scrollController,
         itemBuilder: (context, index) {
-          final item = _notificationMessages[index];
+          final item = _userMessages[index];
           return MessageItem(
             onTap: () {
-              _showMessageDetailDialog(context, "${item.content}");
+              _showMessageDetailDialog(context, "${item.content}", _messageType,
+                  senderUsername: item.sender?.login);
+              if (item.unread ?? false) {
+                _markAsRead("${item.id}");
+                setState(() {
+                  item.unread = false;
+                });
+              }
             },
             onLongPress: () {},
-            name: "${item.actor?.login}",
-            avatar: "${item.actor?.avatarUrl}",
+            name: "${item.sender?.login}",
+            avatar: "${item.sender?.avatarUrl}",
             time: item.updatedAt!,
             content: "${item.content}",
+            unread: item.unread ?? false,
           );
         },
-        itemCount: _notificationMessages.length);
+        itemCount: _userMessages.length,
+      );
+    }
+    return ListView.builder(
+      controller: _scrollController,
+      itemBuilder: (context, index) {
+        final item = _notificationMessages[index];
+        return MessageItem(
+          onTap: () {
+            _showMessageDetailDialog(context, "${item.content}", _messageType);
+            if (item.unread ?? false) {
+              _markAsRead("${item.id}");
+              setState(() {
+                item.unread = false;
+              });
+            }
+          },
+          onLongPress: () {},
+          name: "${item.actor?.login}",
+          avatar: "${item.actor?.avatarUrl}",
+          time: item.updatedAt!,
+          content: "${item.content}",
+          unread: item.unread ?? false,
+        );
+      },
+      itemCount: _notificationMessages.length,
+    );
   }
 
-  void _showMessageDetailDialog(BuildContext context, String content) {
+  void _showMessageDetailDialog(
+      BuildContext context, String content, MessageType type,
+      {String? senderUsername}) {
+    final actions = [
+      TextButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: Text(S.of(context).ok),
+      )
+    ];
+    if (type == MessageType.message) {
+      actions.add(
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+            _showReplyBottomSheet(context, "$senderUsername");
+          },
+          child: Text(S.of(context).reply),
+        ),
+      );
+    }
     showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(S.of(context).details),
-            content: SingleChildScrollView(
-              child: SelectableText(content),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(S.of(context).ok),
-              )
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: theme.theme.colorScheme.background,
+          title: Text(S.of(context).details),
+          content: SingleChildScrollView(
+            child: SelectableText(content),
+          ),
+          actions: actions,
+        );
+      },
+    );
+  }
+
+  void _showReplyBottomSheet(BuildContext context, String username) {
+    final controller = TextEditingController();
+    showModalBottomSheet(
+      isScrollControlled: true,
+      isDismissible: false,
+      shape: bottomSheetShape,
+      context: context,
+      builder: (context) {
+        return HeaderContentBottomSheet(
+          title: S.of(context).reply,
+          body: Flex(
+            direction: Axis.horizontal,
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    hintText: "${S.of(context).replyTo} $username",
+                    hintMaxLines: 1,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              TextButton(onPressed: () {}, child: Text(S.of(context).reply))
             ],
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   AppBar _createAppBar() {
@@ -304,6 +375,7 @@ class MessagePageState extends BaseState<MessagePage> {
         context: context,
         builder: (context) {
           return AlertDialog(
+            backgroundColor: theme.theme.colorScheme.background,
             title: Text(S.of(context).options),
             content: SingleChildScrollView(
               child: Column(
@@ -339,6 +411,7 @@ class MessagePageState extends BaseState<MessagePage> {
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: theme.theme.colorScheme.background,
           title: Text(S.of(context).messageType),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -352,9 +425,9 @@ class MessagePageState extends BaseState<MessagePage> {
                 },
               ),
               ListTile(
-                title: Text(S.of(context).notificationMessage),
+                title: Text(S.of(context).eventMessage),
                 onTap: () {
-                  _messageType = MessageType.notification;
+                  _messageType = MessageType.event;
                   _refreshController.requestRefresh();
                   Navigator.pop(context);
                   setState(() {

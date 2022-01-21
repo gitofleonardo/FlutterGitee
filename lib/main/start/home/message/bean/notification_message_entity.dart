@@ -31,9 +31,6 @@ class NotificationMessageList {
   bool? mute;
   @JSONField(name: "updated_at")
   String? updatedAt;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
   NotificationMessageListActor? actor;
   NotificationMessageListRepository? repository;
   NotificationMessageListSubject? subject;
@@ -59,29 +56,6 @@ class NotificationMessageListActor {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   NotificationMessageListActor();
 
@@ -114,10 +88,6 @@ class NotificationMessageListRepository {
   bool? public;
   bool? internal;
   bool? fork;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  @JSONField(name: "ssh_url")
-  String? sshUrl;
 
   NotificationMessageListRepository();
 
@@ -140,8 +110,6 @@ class NotificationMessageListRepositoryNamespace {
   String? type;
   String? name;
   String? path;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
 
   NotificationMessageListRepositoryNamespace();
 
@@ -165,29 +133,6 @@ class NotificationMessageListRepositoryOwner {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   NotificationMessageListRepositoryOwner();
 
@@ -211,29 +156,6 @@ class NotificationMessageListRepositoryAssigner {
   String? name;
   @JSONField(name: "avatar_url")
   String? avatarUrl;
-  String? url;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
-  String? remark;
-  @JSONField(name: "followers_url")
-  String? followersUrl;
-  @JSONField(name: "following_url")
-  String? followingUrl;
-  @JSONField(name: "gists_url")
-  String? gistsUrl;
-  @JSONField(name: "starred_url")
-  String? starredUrl;
-  @JSONField(name: "subscriptions_url")
-  String? subscriptionsUrl;
-  @JSONField(name: "organizations_url")
-  String? organizationsUrl;
-  @JSONField(name: "repos_url")
-  String? reposUrl;
-  @JSONField(name: "events_url")
-  String? eventsUrl;
-  @JSONField(name: "received_events_url")
-  String? receivedEventsUrl;
-  String? type;
 
   NotificationMessageListRepositoryAssigner();
 
@@ -274,8 +196,6 @@ class NotificationMessageListSubject {
 @JsonSerializable()
 class NotificationMessageListNamespaces {
   String? name;
-  @JSONField(name: "html_url")
-  String? htmlUrl;
   String? type;
 
   NotificationMessageListNamespaces();

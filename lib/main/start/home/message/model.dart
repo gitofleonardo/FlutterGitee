@@ -31,7 +31,7 @@ Future<BaseResult<NotificationMessageEntity>> getNotificationMessages(
     params["unread"] = unread;
   }
   switch (type) {
-    case MessageType.notification:
+    case MessageType.event:
       params["type"] = "event";
       break;
     case MessageType.message:
@@ -42,4 +42,9 @@ Future<BaseResult<NotificationMessageEntity>> getNotificationMessages(
   }
   return postRequest<NotificationMessageEntity>(
       "api/v5/notifications/threads", RequestType.get, params);
+}
+
+Future<BaseResult<String>> markMessageAsRead(String messageId) {
+  return postRequest("/api/v5/notifications/messages/$messageId",
+      RequestType.patch, {"access_token": globalToken});
 }

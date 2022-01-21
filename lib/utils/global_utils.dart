@@ -120,7 +120,7 @@ Dio getDioInstance() {
   return Dio(options);
 }
 
-enum RequestType { post, get, delete, put }
+enum RequestType { post, get, delete, put, patch }
 
 Future<BaseResult<T>> postRequest<T>(String url, RequestType method,
     [Map<String, dynamic>? params, dynamic data]) async {
@@ -163,6 +163,10 @@ Future<BaseResult<T>> _postRequest<T>(String url, RequestType method,
         break;
       case RequestType.put:
         response = await instance.put<String>(url,
+            queryParameters: params, data: data);
+        break;
+      case RequestType.patch:
+        response = await instance.patch<String>(url,
             queryParameters: params, data: data);
         break;
     }

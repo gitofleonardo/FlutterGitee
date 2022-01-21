@@ -133,7 +133,9 @@
   "more": "More",
   "messageType": "Message Type",
   "privateMessage": "Private Message",
-  "notificationMessage": "Notification Message",
+  "eventMessage": "Event Message",
   "referMessage": "Refer Message",
-  "onlyGetUnreadMessages": "Only Unread Messages"
+  "onlyGetUnreadMessages": "Only Unread Messages",
+  "reply": "Reply",
+  "replyTo": "Reply to"
 }

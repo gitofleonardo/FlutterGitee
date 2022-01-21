@@ -1390,11 +1390,11 @@ class S {
     );
   }
 
-  /// `Notification Message`
-  String get notificationMessage {
+  /// `Event Message`
+  String get eventMessage {
     return Intl.message(
-      'Notification Message',
-      name: 'notificationMessage',
+      'Event Message',
+      name: 'eventMessage',
       desc: '',
       args: [],
     );
@@ -1415,6 +1415,26 @@ class S {
     return Intl.message(
       'Only Unread Messages',
       name: 'onlyGetUnreadMessages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reply`
+  String get reply {
+    return Intl.message(
+      'Reply',
+      name: 'reply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reply to`
+  String get replyTo {
+    return Intl.message(
+      'Reply to',
+      name: 'replyTo',
       desc: '',
       args: [],
     );
