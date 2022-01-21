@@ -112,9 +112,12 @@ Future<Language> getCurrentLanguage() async {
   if (lang == null) {
     return globalLanguages[0];
   }
-  return globalLanguages.takeWhile((value) {
-    return value.lang == lang;
-  }).toList()[0];
+  for (var l in globalLanguages) {
+    if (l.lang == lang) {
+      return l;
+    }
+  }
+  return globalLanguages[0];
 }
 
 Dio getDioInstance() {
