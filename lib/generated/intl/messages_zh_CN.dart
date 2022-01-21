@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "created": MessageLookupByLibrary.simpleMessage("已创建"),
         "createdIssue": MessageLookupByLibrary.simpleMessage("创建了Issue"),
         "creationTime": MessageLookupByLibrary.simpleMessage("创建时间"),
+        "currentLanguage": MessageLookupByLibrary.simpleMessage("当前语言"),
         "descending": MessageLookupByLibrary.simpleMessage("降序"),
         "details": MessageLookupByLibrary.simpleMessage("详情"),
         "downloadSourceCode": MessageLookupByLibrary.simpleMessage("下载源码"),

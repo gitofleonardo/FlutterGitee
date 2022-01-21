@@ -141,5 +141,6 @@
   "markAllRead": "Mark All As Read",
   "items": "Items",
   "selected": "Selected",
-  "finished": "Finished"
+  "finished": "Finished",
+  "currentLanguage": "Current Language"
 }

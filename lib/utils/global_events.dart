@@ -10,7 +10,7 @@ class ThemeEvent {
 
 /// Event that stores current language when global language changed.
 class LanguageEvent {
-  final String lang;
+  final Language lang;
   LanguageEvent(this.lang);
 }
 

@@ -6,7 +6,7 @@ import 'package:flutter_gitee/utils/global_constant.dart';
 GlobalTheme? globalTheme;
 
 /// Current language
-String? globalLanguage;
+Language? globalLanguage;
 
 /// User's access_token
 String? globalToken;

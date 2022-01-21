@@ -25,7 +25,7 @@ class _LanguageSelectionPageState extends BaseState<LanguageSelectionPage> {
       body: ListView.builder(
         itemBuilder: (context, index) {
           final lang = langs[index];
-          return MyRadioListTile<String>(
+          return MyRadioListTile<Language>(
             myTitle: Text(lang.name),
             onChanged: (value) {
               setState(() {
@@ -34,7 +34,7 @@ class _LanguageSelectionPageState extends BaseState<LanguageSelectionPage> {
               language = value;
             },
             groupValue: _currentLang,
-            value: lang.lang,
+            value: lang,
           );
         },
         itemCount: langs.length,

@@ -127,7 +127,7 @@ final defaultTheme = GlobalTheme(
     ),
     "Light");
 
-const defaultLanguage = "zh";
+final defaultLanguage = globalLanguages[0];
 
 final darkTheme = GlobalTheme(
     ThemeData(

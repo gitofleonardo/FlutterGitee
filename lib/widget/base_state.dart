@@ -18,7 +18,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T>
   late final StreamSubscription _userStateSubscription;
 
   late GlobalTheme _currentTheme;
-  late String _currentLanguage;
+  late Language _currentLanguage;
 
   GlobalTheme get theme {
     return _currentTheme;
@@ -32,15 +32,15 @@ abstract class BaseState<T extends StatefulWidget> extends State<T>
     });
   }
 
-  String get language {
+  Language get language {
     return _currentLanguage;
   }
 
-  set language(String lang) {
-    if (lang == "default") {
+  set language(Language lang) {
+    if (lang.lang == "default") {
       Intl.defaultLocale = Localizations.localeOf(context).languageCode;
     } else {
-      Intl.defaultLocale = lang;
+      Intl.defaultLocale = lang.lang;
     }
     setCurrentLanguage(lang);
     globalEventBus.fire(LanguageEvent(lang));
@@ -87,7 +87,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T>
           },
         ),
       ),
-      language: _currentLanguage,
+      language: _currentLanguage.lang,
       theme: _currentTheme,
     );
   }

@@ -1,19 +1,15 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/start/home/event/events_page.dart';
 import 'package:flutter_gitee/main/start/home/home_widget.dart';
 import 'package:flutter_gitee/main/start/home/message/message_page.dart';
 import 'package:flutter_gitee/main/start/home/repository/repository_related_page.dart';
 import 'package:flutter_gitee/main/start/home/start_page_events.dart';
-import 'package:flutter_gitee/repo/ui/my_repository_page.dart';
-import 'package:flutter_gitee/repo/ui/repository_page.dart';
 import 'package:flutter_gitee/user/model/user_model.dart';
 import 'package:flutter_gitee/utils/global_context.dart';
 import 'package:flutter_gitee/utils/global_events.dart';
 import 'package:flutter_gitee/widget/base_state.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'more/more_page.dart';
 
@@ -31,9 +27,7 @@ class StartPage extends StatefulWidget {
 }
 
 class StartPageState extends BaseState<StartPage> {
-  Widget _currentPage = const EventsPage();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  var _repoMenuExpanded = true;
   final _pageController = PageController();
   var _currentPageIndex = 0;
   final List<StatefulWidget> _homePages = const [
@@ -131,144 +125,6 @@ class StartPageState extends BaseState<StartPage> {
         );
       },
     );
-  }
-
-  Widget _createDrawerMenus() {
-    return LayoutBuilder(builder: (context, constraints) {
-      final themePrimary = Theme.of(context).colorScheme.secondary;
-      return SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10, top: 5, bottom: 5),
-              child: ListTile(
-                leading: Icon(Icons.event, color: themePrimary),
-                title: Text(S.of(context).events),
-                onTap: () {
-                  Navigator.pop(context);
-                  setState(() {
-                    _currentPage = const EventsPage();
-                  });
-                },
-                style: ListTileStyle.drawer,
-                shape: const RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.horizontal(left: Radius.circular(100)),
-                ),
-                selected: _currentPage is EventsPage,
-                selectedTileColor:
-                    theme.theme.colorScheme.primary.withAlpha(50),
-              ),
-            ),
-            ExpansionTile(
-              initiallyExpanded: _repoMenuExpanded,
-              leading: const Icon(Icons.book),
-              title: Text(S.of(context).repository),
-              onExpansionChanged: (expanded) {
-                _repoMenuExpanded = expanded;
-              },
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 5, bottom: 5),
-                  child: ListTile(
-                    leading: Icon(Icons.book, color: themePrimary),
-                    title: Text(S.of(context).myRepository),
-                    onTap: () {
-                      Navigator.pop(context);
-                      setState(() {
-                        _currentPage = const MyRepositoryPage();
-                      });
-                    },
-                    style: ListTileStyle.drawer,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.horizontal(left: Radius.circular(100)),
-                    ),
-                    selected: _currentPage is MyRepositoryPage,
-                    selectedTileColor:
-                        theme.theme.colorScheme.primary.withAlpha(50),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 5, bottom: 5),
-                  child: ListTile(
-                    leading: Icon(Icons.star, color: themePrimary),
-                    title: Text(S.of(context).starredRepository),
-                    onTap: () {
-                      Navigator.pop(context);
-                      setState(() {
-                        _currentPage =
-                            const RepositoryPage(type: RepositoryType.star);
-                      });
-                    },
-                    style: ListTileStyle.drawer,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.horizontal(left: Radius.circular(100)),
-                    ),
-                    selected: _currentPage is RepositoryPage &&
-                        ((_currentPage) as RepositoryPage).type ==
-                            RepositoryType.star,
-                    selectedTileColor:
-                        theme.theme.colorScheme.primary.withAlpha(50),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 5, bottom: 5),
-                  child: ListTile(
-                    leading: Icon(Icons.remove_red_eye, color: themePrimary),
-                    title: Text(S.of(context).watchedRepository),
-                    onTap: () {
-                      Navigator.pop(context);
-                      setState(() {
-                        _currentPage =
-                            const RepositoryPage(type: RepositoryType.watch);
-                      });
-                    },
-                    style: ListTileStyle.drawer,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.horizontal(left: Radius.circular(100)),
-                    ),
-                    selected: _currentPage is RepositoryPage &&
-                        ((_currentPage) as RepositoryPage).type ==
-                            RepositoryType.watch,
-                    selectedTileColor:
-                        theme.theme.colorScheme.primary.withAlpha(50),
-                  ),
-                )
-              ],
-            ),
-            ListTile(
-              leading:
-                  Icon(FontAwesomeIcons.questionCircle, color: themePrimary),
-              title: Text(S.of(context).issues),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, "my_issue_page");
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.language, color: themePrimary),
-              title: Text(S.of(context).language),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, "language_page");
-              },
-            ),
-            ListTile(
-              leading: Icon(FontAwesomeIcons.infoCircle, color: themePrimary),
-              title: Text(S.of(context).about),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, "about_page");
-              },
-            ),
-            TextButton(onPressed: () {}, child: Text(S.of(context).logout)),
-          ],
-        ),
-      );
-    });
   }
 
   @override

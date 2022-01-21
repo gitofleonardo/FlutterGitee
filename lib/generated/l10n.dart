@@ -1479,6 +1479,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Current Language`
+  String get currentLanguage {
+    return Intl.message(
+      'Current Language',
+      name: 'currentLanguage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

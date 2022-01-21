@@ -54,6 +54,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "created": MessageLookupByLibrary.simpleMessage("Created"),
         "createdIssue": MessageLookupByLibrary.simpleMessage("Created Issue"),
         "creationTime": MessageLookupByLibrary.simpleMessage("Creation Time"),
+        "currentLanguage":
+            MessageLookupByLibrary.simpleMessage("Current Language"),
         "descending": MessageLookupByLibrary.simpleMessage("Descending"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "downloadSourceCode":

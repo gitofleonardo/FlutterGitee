@@ -100,19 +100,21 @@ ThemeData getTheme(int themeIndex) {
   return globalThemes[themeIndex].theme;
 }
 
-Future<void> setCurrentLanguage(String lang) async {
+Future<void> setCurrentLanguage(Language lang) async {
   globalLanguage = lang;
   final prefs = await SharedPreferences.getInstance();
-  prefs.setString(languageName, lang);
+  prefs.setString(languageName, lang.lang);
 }
 
-Future<String> getCurrentLanguage() async {
+Future<Language> getCurrentLanguage() async {
   final prefs = await SharedPreferences.getInstance();
   final lang = prefs.getString(languageName);
   if (lang == null) {
-    return globalLanguages[0].lang;
+    return globalLanguages[0];
   }
-  return lang;
+  return globalLanguages.takeWhile((value) {
+    return value.lang == lang;
+  }).toList()[0];
 }
 
 Dio getDioInstance() {
