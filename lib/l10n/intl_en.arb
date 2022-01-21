@@ -137,5 +137,9 @@
   "referMessage": "Refer Message",
   "onlyGetUnreadMessages": "Only Unread Messages",
   "reply": "Reply",
-  "replyTo": "Reply to"
+  "replyTo": "Reply to",
+  "markAllRead": "Mark All As Read",
+  "items": "Items",
+  "selected": "Selected",
+  "finished": "Finished"
 }

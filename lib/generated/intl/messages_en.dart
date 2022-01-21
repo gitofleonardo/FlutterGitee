@@ -68,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "failSendingComment":
             MessageLookupByLibrary.simpleMessage("Fail sending comment"),
         "filter": MessageLookupByLibrary.simpleMessage("Filter"),
+        "finished": MessageLookupByLibrary.simpleMessage("Finished"),
         "follow": MessageLookupByLibrary.simpleMessage("Follow"),
         "followed": MessageLookupByLibrary.simpleMessage("Followed"),
         "followers": MessageLookupByLibrary.simpleMessage("Followers"),
@@ -79,6 +80,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "issueDetails": MessageLookupByLibrary.simpleMessage("Issue Details"),
         "issueFilter": MessageLookupByLibrary.simpleMessage("Issue Filter"),
         "issues": MessageLookupByLibrary.simpleMessage("Issues"),
+        "items": MessageLookupByLibrary.simpleMessage("Items"),
         "joinGiteeTime":
             MessageLookupByLibrary.simpleMessage("Join Gitee Time"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
@@ -89,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginToGitee": MessageLookupByLibrary.simpleMessage("Login To Gitee"),
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "longRunning": MessageLookupByLibrary.simpleMessage("Long Running"),
+        "markAllRead": MessageLookupByLibrary.simpleMessage("Mark All As Read"),
         "markdown": MessageLookupByLibrary.simpleMessage("Markdown"),
         "member": MessageLookupByLibrary.simpleMessage("Member"),
         "merged": MessageLookupByLibrary.simpleMessage("Merged"),
@@ -152,6 +155,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchTextEmpty":
             MessageLookupByLibrary.simpleMessage("Search text is empty"),
         "selectBranch": MessageLookupByLibrary.simpleMessage("Select Branch"),
+        "selected": MessageLookupByLibrary.simpleMessage("Selected"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "sort": MessageLookupByLibrary.simpleMessage("Sort"),
         "sourceCode": MessageLookupByLibrary.simpleMessage("Source Code"),

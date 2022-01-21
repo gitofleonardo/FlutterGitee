@@ -172,7 +172,7 @@ Future<BaseResult<T>> _postRequest<T>(String url, RequestType method,
     }
     final body = response.data.toString();
     debugPrint(body);
-    if (body.trim().isEmpty) {
+    if (body.trim().isEmpty || T == String) {
       result.data = body as T?;
     } else {
       result.data = JsonConvert.fromJsonAsT(jsonDecode(body));

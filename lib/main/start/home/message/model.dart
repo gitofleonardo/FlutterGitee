@@ -45,6 +45,35 @@ Future<BaseResult<NotificationMessageEntity>> getNotificationMessages(
 }
 
 Future<BaseResult<String>> markMessageAsRead(String messageId) {
-  return postRequest("/api/v5/notifications/messages/$messageId",
+  return postRequest<String>("/api/v5/notifications/threads/$messageId",
       RequestType.patch, {"access_token": globalToken});
+}
+
+Future<BaseResult<String>> markNotificationAsRead(String messageId) {
+  return postRequest<String>("/api/v5/notifications/messages/$messageId",
+      RequestType.patch, {"access_token": globalToken});
+}
+
+Future<BaseResult<String>> markAllMessagesAsRead(
+    {List<String> ids = const []}) {
+  final params = {"access_token": globalToken};
+  if (ids.isNotEmpty) {
+    params["ids"] = ids.reduce((value, element) {
+      return "$value,$element";
+    });
+  }
+  return postRequest<String>(
+      "/api/v5/notifications/messages", RequestType.put, params);
+}
+
+Future<BaseResult<String>> markAllNotificationsAsRead(
+    {List<String> ids = const []}) {
+  final params = {"access_token": globalToken};
+  if (ids.isNotEmpty) {
+    params["ids"] = ids.reduce((value, element) {
+      return "$value,$element";
+    });
+  }
+  return postRequest<String>(
+      "/api/v5/notifications/threads", RequestType.put, params);
 }

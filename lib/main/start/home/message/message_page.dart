@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gitee/generated/l10n.dart';
-import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
 import 'package:flutter_gitee/main/start/home/home_widget.dart';
 import 'package:flutter_gitee/main/start/home/message/bean/notification_message_entity.dart';
 import 'package:flutter_gitee/main/start/home/message/bean/user_message_entity.dart';
@@ -42,8 +41,11 @@ class MessagePageState extends BaseState<MessagePage> {
   var _currentPage = 1;
   final _userMessages = <UserMessageList>[];
   final _notificationMessages = <NotificationMessageList>[];
+  final _userMessageSelectionCachePool = <UserMessageList>[];
+  final _notificationSelectionCachePool = <NotificationMessageList>[];
   bool _unread = false;
   late final StreamSubscription _tabSubscription;
+  bool _selectionMode = false;
 
   String get _messageTypeName {
     switch (_messageType) {
@@ -72,8 +74,75 @@ class MessagePageState extends BaseState<MessagePage> {
     }
   }
 
-  void _markAsRead(String messageId) {
-    markMessageAsRead(messageId).then((value) {});
+  void _markMessageAsRead(String messageId) {
+    markMessageAsRead(messageId);
+  }
+
+  void _markNotificationAsRead(String messageId) {
+    markNotificationAsRead(messageId);
+  }
+
+  void _markAllMessageAsRead(BuildContext context,
+      {List<UserMessageList> ids = const []}) {
+    _showLoadingDialog(context);
+    markAllMessagesAsRead(ids: ids.map((e) => "${e.id}").toList())
+        .then((value) {
+      Navigator.pop(context);
+      if (value.success) {
+        setState(() {
+          for (var element in ids) {
+            element.unread = false;
+          }
+        });
+        _exitSelectionMode();
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(S.of(context).finished)));
+      }
+    });
+  }
+
+  void _markAllNotificationAsRead(BuildContext context,
+      {List<NotificationMessageList> ids = const []}) {
+    _showLoadingDialog(context);
+    markAllNotificationsAsRead(ids: ids.map((e) => "${e.id}").toList())
+        .then((value) {
+      Navigator.pop(context);
+      if (value.success) {
+        setState(() {
+          for (var element in ids) {
+            element.unread = false;
+          }
+        });
+        _exitSelectionMode();
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(S.of(context).finished)));
+      }
+    });
+  }
+
+  void _showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: theme.theme.colorScheme.background,
+          content: Flex(
+            direction: Axis.horizontal,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(
+                width: 24,
+              ),
+              Expanded(
+                  child: Text(
+                S.of(context).loading,
+              ))
+            ],
+          ),
+        );
+      },
+      barrierDismissible: false,
+    );
   }
 
   void _refreshMessage() {
@@ -193,16 +262,25 @@ class MessagePageState extends BaseState<MessagePage> {
 
   @override
   Widget create(BuildContext context) {
-    return Scaffold(
-      appBar: _createAppBar(),
-      body: SmartRefresher(
-        controller: _refreshController,
-        enablePullDown: true,
-        enablePullUp: _hasMore,
-        onLoading: _loadMore,
-        onRefresh: _refresh,
-        child: _createListView(),
+    return WillPopScope(
+      child: Scaffold(
+        appBar: _selectionMode ? _createSelectionModeAppBar() : _createAppBar(),
+        body: SmartRefresher(
+          controller: _refreshController,
+          enablePullDown: !_selectionMode,
+          enablePullUp: _hasMore,
+          onLoading: _loadMore,
+          onRefresh: _refresh,
+          child: _createListView(),
+        ),
       ),
+      onWillPop: () async {
+        if (_selectionMode) {
+          _exitSelectionMode();
+          return false;
+        }
+        return true;
+      },
     );
   }
 
@@ -214,21 +292,33 @@ class MessagePageState extends BaseState<MessagePage> {
           final item = _userMessages[index];
           return MessageItem(
             onTap: () {
-              _showMessageDetailDialog(context, "${item.content}", _messageType,
-                  senderUsername: item.sender?.login);
-              if (item.unread ?? false) {
-                _markAsRead("${item.id}");
-                setState(() {
-                  item.unread = false;
-                });
+              if (_selectionMode) {
+                _toggleInSelectionPool(index, _messageType);
+              } else {
+                _showMessageDetailDialog(
+                    context, "${item.content}", _messageType,
+                    senderUsername: item.sender?.login);
+                if (item.unread ?? false) {
+                  _markMessageAsRead("${item.id}");
+                  setState(() {
+                    item.unread = false;
+                  });
+                }
               }
             },
-            onLongPress: () {},
+            onLongPress: () {
+              if (!_selectionMode) {
+                _enterSelectionMode(index, _messageType);
+              } else {
+                _toggleInSelectionPool(index, _messageType);
+              }
+            },
             name: "${item.sender?.login}",
             avatar: "${item.sender?.avatarUrl}",
             time: item.updatedAt!,
             content: "${item.content}",
             unread: item.unread ?? false,
+            selected: item.selected,
           );
         },
         itemCount: _userMessages.length,
@@ -240,24 +330,98 @@ class MessagePageState extends BaseState<MessagePage> {
         final item = _notificationMessages[index];
         return MessageItem(
           onTap: () {
-            _showMessageDetailDialog(context, "${item.content}", _messageType);
-            if (item.unread ?? false) {
-              _markAsRead("${item.id}");
-              setState(() {
-                item.unread = false;
-              });
+            if (_selectionMode) {
+              _toggleInSelectionPool(index, _messageType);
+            } else {
+              _showMessageDetailDialog(
+                  context, "${item.content}", _messageType);
+              if (item.unread ?? false) {
+                _markNotificationAsRead("${item.id}");
+                setState(() {
+                  item.unread = false;
+                });
+              }
             }
           },
-          onLongPress: () {},
+          onLongPress: () {
+            if (!_selectionMode) {
+              _enterSelectionMode(index, _messageType);
+            } else {
+              _toggleInSelectionPool(index, _messageType);
+            }
+          },
           name: "${item.actor?.login}",
           avatar: "${item.actor?.avatarUrl}",
           time: item.updatedAt!,
           content: "${item.content}",
           unread: item.unread ?? false,
+          selected: item.selected,
         );
       },
       itemCount: _notificationMessages.length,
     );
+  }
+
+  void _enterSelectionMode(int startIndex, MessageType type) {
+    if (_selectionMode) {
+      return;
+    }
+    setState(() {
+      _selectionMode = true;
+      if (type == MessageType.message) {
+        final item = _userMessages[startIndex];
+        item.selected = true;
+        _userMessageSelectionCachePool.add(item);
+      } else {
+        final item = _notificationMessages[startIndex];
+        item.selected = true;
+        _notificationSelectionCachePool.add(item);
+      }
+    });
+  }
+
+  void _toggleInSelectionPool(int index, MessageType type) {
+    if (!_selectionMode) {
+      return;
+    }
+    setState(() {
+      if (type == MessageType.message) {
+        final item = _userMessages[index];
+        if (_userMessageSelectionCachePool.contains(item)) {
+          item.selected = false;
+          _userMessageSelectionCachePool.remove(item);
+        } else {
+          item.selected = true;
+          _userMessageSelectionCachePool.add(item);
+        }
+      } else {
+        final item = _notificationMessages[index];
+        if (_notificationSelectionCachePool.contains(item)) {
+          item.selected = false;
+          _notificationSelectionCachePool.remove(item);
+        } else {
+          item.selected = true;
+          _notificationSelectionCachePool.add(item);
+        }
+      }
+    });
+  }
+
+  void _exitSelectionMode() {
+    if (!_selectionMode) {
+      return;
+    }
+    setState(() {
+      _selectionMode = false;
+      for (var element in _userMessageSelectionCachePool) {
+        element.selected = false;
+      }
+      for (var element in _notificationSelectionCachePool) {
+        element.selected = false;
+      }
+      _userMessageSelectionCachePool.clear();
+      _notificationSelectionCachePool.clear();
+    });
   }
 
   void _showMessageDetailDialog(
@@ -276,7 +440,6 @@ class MessagePageState extends BaseState<MessagePage> {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
-            _showReplyBottomSheet(context, "$senderUsername");
           },
           child: Text(S.of(context).reply),
         ),
@@ -292,39 +455,6 @@ class MessagePageState extends BaseState<MessagePage> {
             child: SelectableText(content),
           ),
           actions: actions,
-        );
-      },
-    );
-  }
-
-  void _showReplyBottomSheet(BuildContext context, String username) {
-    final controller = TextEditingController();
-    showModalBottomSheet(
-      isScrollControlled: true,
-      isDismissible: false,
-      shape: bottomSheetShape,
-      context: context,
-      builder: (context) {
-        return HeaderContentBottomSheet(
-          title: S.of(context).reply,
-          body: Flex(
-            direction: Axis.horizontal,
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: controller,
-                  decoration: InputDecoration(
-                    hintText: "${S.of(context).replyTo} $username",
-                    hintMaxLines: 1,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              TextButton(onPressed: () {}, child: Text(S.of(context).reply))
-            ],
-          ),
         );
       },
     );
@@ -365,6 +495,41 @@ class MessagePageState extends BaseState<MessagePage> {
             Icons.filter_list,
             color: theme.theme.colorScheme.onPrimaryContainer,
           ),
+        )
+      ],
+    );
+  }
+
+  AppBar _createSelectionModeAppBar() {
+    final int selectedItemCount;
+    if (_messageType == MessageType.message) {
+      selectedItemCount = _userMessageSelectionCachePool.length;
+    } else {
+      selectedItemCount = _notificationSelectionCachePool.length;
+    }
+    return AppBar(
+      title: Text(
+        "$selectedItemCount ${S.of(context).selected}",
+        style:
+            TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
+      ),
+      backgroundColor: theme.theme.colorScheme.primaryContainer,
+      actions: [
+        IconButton(
+          onPressed: () {
+            if (_messageType == MessageType.message) {
+              _markAllMessageAsRead(context,
+                  ids: _userMessageSelectionCachePool);
+            } else {
+              _markAllNotificationAsRead(context,
+                  ids: _notificationSelectionCachePool);
+            }
+          },
+          icon: Icon(
+            Icons.mark_as_unread,
+            color: theme.theme.colorScheme.onPrimaryContainer,
+          ),
+          tooltip: S.of(context).markAllRead,
         )
       ],
     );

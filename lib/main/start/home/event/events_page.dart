@@ -47,23 +47,27 @@ class EventsPageState extends BaseState<EventsPage> {
   String _userAvatar = "";
 
   void _refreshEvents() {
-    getUserEvent(limit: _pageSize).then((value) {
-      if (value.state == BaseStatus.success) {
-        _refreshController.refreshCompleted();
-        final result = value.data ?? [];
-        setState(() {
-          _events.clear();
-          if (result.isEmpty || result.length < _pageSize) {
-            _hasMore = false;
-          } else {
-            _hasMore = true;
-          }
-          _events.addAll(result);
-        });
-      } else {
-        _refreshController.refreshFailed();
-      }
-    });
+    getUserEvent(limit: _pageSize).then(
+      (value) {
+        if (value.state == BaseStatus.success) {
+          _refreshController.refreshCompleted();
+          final result = value.data ?? [];
+          setState(
+            () {
+              _events.clear();
+              if (result.isEmpty || result.length < _pageSize) {
+                _hasMore = false;
+              } else {
+                _hasMore = true;
+              }
+              _events.addAll(result);
+            },
+          );
+        } else {
+          _refreshController.refreshFailed();
+        }
+      },
+    );
   }
 
   void _fetchMoreEvent() {
@@ -74,22 +78,26 @@ class EventsPageState extends BaseState<EventsPage> {
       return;
     }
     final last = _events[_events.length - 1].id?.toInt();
-    getUserEvent(limit: _pageSize, prevID: last).then((value) {
-      if (value.state == BaseStatus.success) {
-        _refreshController.loadComplete();
-        final result = value.data ?? [];
-        setState(() {
-          if (result.isEmpty || result.length < _pageSize) {
-            _hasMore = false;
-          } else {
-            _hasMore = true;
-          }
-          _events.addAll(result);
-        });
-      } else {
-        _refreshController.loadFailed();
-      }
-    });
+    getUserEvent(limit: _pageSize, prevID: last).then(
+      (value) {
+        if (value.state == BaseStatus.success) {
+          _refreshController.loadComplete();
+          final result = value.data ?? [];
+          setState(
+            () {
+              if (result.isEmpty || result.length < _pageSize) {
+                _hasMore = false;
+              } else {
+                _hasMore = true;
+              }
+              _events.addAll(result);
+            },
+          );
+        } else {
+          _refreshController.loadFailed();
+        }
+      },
+    );
   }
 
   @override
@@ -98,28 +106,36 @@ class EventsPageState extends BaseState<EventsPage> {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _refreshController.requestRefresh();
     });
-    _scrollController.addListener(() {
-      final showFab = _scrollController.position.userScrollDirection !=
-          ScrollDirection.reverse;
-      final fabShown = _isExtended;
-      if (showFab != fabShown) {
-        setState(() {
-          _isExtended = showFab;
-        });
-      }
-    });
-    _profileEventSubscription =
-        globalEventBus.on<ProfileEvent>().listen((event) {
-      setState(() {
-        _userAvatar = "${event.profile.avatarUrl}";
-      });
-    });
-    _tabReselectSubscription =
-        startPageBus.on<TabReselectEvent>().listen((event) {
-      _scrollController.animateTo(0,
-          duration: const Duration(milliseconds: 250),
-          curve: Curves.decelerate);
-    });
+    _scrollController.addListener(
+      () {
+        final showFab = _scrollController.position.userScrollDirection !=
+            ScrollDirection.reverse;
+        final fabShown = _isExtended;
+        if (showFab != fabShown) {
+          setState(
+            () {
+              _isExtended = showFab;
+            },
+          );
+        }
+      },
+    );
+    _profileEventSubscription = globalEventBus.on<ProfileEvent>().listen(
+      (event) {
+        setState(
+          () {
+            _userAvatar = "${event.profile.avatarUrl}";
+          },
+        );
+      },
+    );
+    _tabReselectSubscription = startPageBus.on<TabReselectEvent>().listen(
+      (event) {
+        _scrollController.animateTo(0,
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.decelerate);
+      },
+    );
   }
 
   @override
@@ -132,9 +148,11 @@ class EventsPageState extends BaseState<EventsPage> {
   @override
   void didUpdateWidget(covariant EventsPage oldWidget) {
     super.didUpdateWidget(oldWidget);
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      _refreshController.requestRefresh();
-    });
+    WidgetsBinding.instance?.addPostFrameCallback(
+      (timeStamp) {
+        _refreshController.requestRefresh();
+      },
+    );
   }
 
   @override

@@ -74,6 +74,10 @@ NotificationMessageList $NotificationMessageListFromJson(
   if (namespaces != null) {
     notificationMessageList.namespaces = namespaces;
   }
+  final bool? selected = jsonConvert.convert<bool>(json['selected']);
+  if (selected != null) {
+    notificationMessageList.selected = selected;
+  }
   return notificationMessageList;
 }
 
@@ -90,6 +94,7 @@ Map<String, dynamic> $NotificationMessageListToJson(
   data['repository'] = entity.repository?.toJson();
   data['subject'] = entity.subject?.toJson();
   data['namespaces'] = entity.namespaces?.map((v) => v.toJson()).toList();
+  data['selected'] = entity.selected;
   return data;
 }
 

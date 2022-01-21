@@ -45,6 +45,10 @@ UserMessageList $UserMessageListFromJson(Map<String, dynamic> json) {
   if (updatedAt != null) {
     userMessageList.updatedAt = updatedAt;
   }
+  final bool? selected = jsonConvert.convert<bool>(json['selected']);
+  if (selected != null) {
+    userMessageList.selected = selected;
+  }
   return userMessageList;
 }
 
@@ -55,6 +59,7 @@ Map<String, dynamic> $UserMessageListToJson(UserMessageList entity) {
   data['unread'] = entity.unread;
   data['content'] = entity.content;
   data['updated_at'] = entity.updatedAt;
+  data['selected'] = entity.selected;
   return data;
 }
 

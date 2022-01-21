@@ -30,6 +30,7 @@ class UserMessageList {
   String? content;
   @JSONField(name: "updated_at")
   String? updatedAt;
+  bool selected = false;
 
   UserMessageList();
 

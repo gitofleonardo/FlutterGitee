@@ -35,6 +35,7 @@ class NotificationMessageList {
   NotificationMessageListRepository? repository;
   NotificationMessageListSubject? subject;
   List<NotificationMessageListNamespaces>? namespaces;
+  bool selected = false;
 
   NotificationMessageList();
 

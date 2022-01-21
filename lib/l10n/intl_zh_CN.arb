@@ -137,5 +137,9 @@
   "referMessage": "提及我的消息",
   "onlyGetUnreadMessages": "只获取未读消息",
   "reply": "回复",
-  "replyTo": "回复给"
+  "replyTo": "回复给",
+  "markAllRead": "全部标记为已读",
+  "items": "项目",
+  "selected": "已选择",
+  "finished": "已完成"
 }

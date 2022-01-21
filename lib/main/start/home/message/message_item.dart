@@ -9,6 +9,7 @@ class MessageItem extends StatelessWidget {
   final String time;
   final String content;
   final bool unread;
+  final bool selected;
 
   const MessageItem(
       {Key? key,
@@ -18,7 +19,8 @@ class MessageItem extends StatelessWidget {
       required this.avatar,
       required this.time,
       required this.content,
-      required this.unread})
+      required this.unread,
+      required this.selected})
       : super(key: key);
 
   @override
@@ -41,9 +43,21 @@ class MessageItem extends StatelessWidget {
                 width: 32,
                 height: 32,
                 child: ClipOval(
-                  child: Image.network(
-                    avatar,
-                    fit: BoxFit.fill,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    child: selected
+                        ? Container(
+                            constraints: const BoxConstraints.expand(),
+                            color: Theme.of(context).colorScheme.error,
+                            child: Icon(
+                              Icons.check,
+                              color: Theme.of(context).colorScheme.onError,
+                            ),
+                          )
+                        : Image.network(
+                            avatar,
+                            fit: BoxFit.fill,
+                          ),
                   ),
                 ),
               ),
