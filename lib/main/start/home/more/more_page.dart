@@ -226,7 +226,13 @@ class MorePageState extends BaseState<MorePage> {
       child: Container(
         decoration:
             BoxDecoration(color: theme.theme.colorScheme.secondaryContainer),
-        child: avatar,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, "user_profile_page",
+                arguments: _profile.login);
+          },
+          child: avatar,
+        ),
       ),
     );
   }

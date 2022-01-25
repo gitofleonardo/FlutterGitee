@@ -73,13 +73,10 @@ class _IssueDetailPageState extends BaseState<IssueDetailPage> {
   List<Widget> _createTabs() {
     return [
       Tab(
-          text: S.of(context).details,
-          icon: const Icon(
-            Icons.details,
-          )),
+        text: S.of(context).details,
+      ),
       Tab(
         text: S.of(context).comment,
-        icon: const Icon(Icons.message),
       ),
     ];
   }

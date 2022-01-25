@@ -18,7 +18,7 @@ import 'package:flutter_gitee/repo/ui/repository_tree_viewer.dart';
 import 'package:flutter_gitee/user/follower_page.dart';
 import 'package:flutter_gitee/user/following_page.dart';
 import 'package:flutter_gitee/user/login_page.dart';
-import 'package:flutter_gitee/user/user_profile_page.dart';
+import 'package:flutter_gitee/user/profile/user_profile_page.dart';
 
 // local database keys
 const tokenName = "token";

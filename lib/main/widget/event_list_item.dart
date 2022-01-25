@@ -25,7 +25,7 @@ class _UnsupportedEventListItemState extends State<UnsupportedEventListItem> {
       child: InkWell(
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(14),
           child: Column(
             children: [
               Row(
@@ -87,7 +87,7 @@ class FollowEventListItem extends StatelessWidget {
       child: InkWell(
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(14),
           child: Column(
             children: [
               Row(
@@ -175,7 +175,7 @@ class StarEventListItem extends StatelessWidget {
       child: InkWell(
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(14),
           child: Column(
             children: [
               Row(
@@ -404,7 +404,7 @@ class CreateEventListItem extends StatelessWidget {
       child: InkWell(
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+          padding: const EdgeInsets.all(14),
           child: Column(
             children: [
               Row(
@@ -488,7 +488,7 @@ class CreateIssueListItem extends StatelessWidget {
       child: InkWell(
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+          padding: const EdgeInsets.all(14),
           child: Column(
             children: [
               Row(
@@ -591,7 +591,7 @@ class IssueCommentListItem extends StatelessWidget {
       child: InkWell(
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+          padding: const EdgeInsets.all(14),
           child: Column(
             children: [
               Row(

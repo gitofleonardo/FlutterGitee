@@ -1,4 +1,5 @@
 import 'package:flutter_gitee/main/base/request_base_result.dart';
+import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/user/bean/event_result_entity.dart';
 import 'package:flutter_gitee/user/bean/follow_result_entity.dart';
 import 'package:flutter_gitee/user/bean/login_success_result_entity.dart';
@@ -79,8 +80,47 @@ Future<BaseResult<List<EventResultEntity>>> getUserEvent(
     globalProfile = profile.data;
   }
   final result = postRequest<List<EventResultEntity>>(
-      "api/v5/users/${globalProfile?.login.toString()}/events",
+      "api/v5/users/${globalProfile?.login}/events", RequestType.get, map);
+  return result;
+}
+
+Future<BaseResult<List<EventResultEntity>>> getUserReceivedEvent(
+    {required String username, int? prevID, int limit = 10}) async {
+  final map = {"access_token": globalToken, "limit": limit};
+  if (prevID != null) {
+    map["prev_id"] = prevID;
+  }
+  final result = postRequest<List<EventResultEntity>>(
+      "api/v5/users/$username}/received_events", RequestType.get, map);
+  return result;
+}
+
+Future<BaseResult<List<RepositoryEntity>>> getUserRepos(
+    String username, int page, int perPage) {
+  return postRequest<List<RepositoryEntity>>(
+      "api/v5/users/$username/repos",
       RequestType.get,
-      map);
+      {"access_token": globalToken, "page": page, "per_page": perPage});
+}
+
+Future<BaseResult<List<EventResultEntity>>> getUserPublicEvent(
+    {required String username, int? prevID, int limit = 10}) {
+  final map = {"access_token": globalToken, "limit": limit};
+  if (prevID != null) {
+    map["prev_id"] = prevID;
+  }
+  final result = postRequest<List<EventResultEntity>>(
+      "api/v5/users/$username/events/public", RequestType.get, map);
+  return result;
+}
+
+Future<BaseResult<List<EventResultEntity>>> getUserPublicReceivedEvent(
+    {required String username, int? prevID, int limit = 10}) {
+  final map = {"access_token": globalToken, "limit": limit};
+  if (prevID != null) {
+    map["prev_id"] = prevID;
+  }
+  final result = postRequest<List<EventResultEntity>>(
+      "api/v5/users/$username/received_events/public", RequestType.get, map);
   return result;
 }

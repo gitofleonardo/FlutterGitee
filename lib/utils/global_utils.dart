@@ -248,6 +248,11 @@ String formatDate(String dateString) {
   return DateFormat("yy-MM-dd hh:mm").format(date);
 }
 
+int parseDate(String dateString) {
+  final date = DateTime.tryParse(dateString) ?? DateTime.now();
+  return date.millisecond;
+}
+
 String formatGitCount(int? count) {
   final cnt = count ?? 0;
   return cnt < 1000 ? "$cnt" : "${cnt / 1000}K";
