@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_gitee/generated/l10n.dart';
 import 'package:flutter_gitee/main/base/request_base_result.dart';
 import 'package:flutter_gitee/main/base/widget/general_bottom_sheet_header.dart';
@@ -224,42 +223,56 @@ class _RepositoryPageState extends BaseState<RepositoryPage> {
 
   @override
   Widget create(BuildContext context) {
-    return Flex(
-      direction: Axis.vertical,
-      children: [
-        Container(
-          decoration:
-              BoxDecoration(color: Theme.of(context).colorScheme.background),
-          constraints: const BoxConstraints(minWidth: double.infinity),
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: _createFilterChipSets(),
-          ),
-        ),
-        Expanded(
-          child: SmartRefresher(
-            onRefresh: _refreshPage,
-            onLoading: _fetchMore,
-            controller: _refreshController,
-            enablePullDown: true,
-            enablePullUp: _hasMore,
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: _currentRepos.length,
-              itemBuilder: (context, index) {
-                final item = _currentRepos[index];
-                return RepoListItem(
-                    repo: item,
-                    onTap: () {
-                      Navigator.pushNamed(context, "repository_detail_page",
-                          arguments: "${_currentRepos[index].fullName}");
-                    });
-              },
+    final String title;
+    switch (widget.type) {
+      case RepositoryType.star:
+        title = S.of(context).starredRepository;
+        break;
+      case RepositoryType.watch:
+        title = S.of(context).watchedRepository;
+        break;
+    }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: Flex(
+        direction: Axis.vertical,
+        children: [
+          Container(
+            decoration:
+                BoxDecoration(color: Theme.of(context).colorScheme.background),
+            constraints: const BoxConstraints(minWidth: double.infinity),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: _createFilterChipSets(),
             ),
           ),
-        )
-      ],
+          Expanded(
+            child: SmartRefresher(
+              onRefresh: _refreshPage,
+              onLoading: _fetchMore,
+              controller: _refreshController,
+              enablePullDown: true,
+              enablePullUp: _hasMore,
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: _currentRepos.length,
+                itemBuilder: (context, index) {
+                  final item = _currentRepos[index];
+                  return RepoListItem(
+                      repo: item,
+                      onTap: () {
+                        Navigator.pushNamed(context, "repository_detail_page",
+                            arguments: "${_currentRepos[index].fullName}");
+                      });
+                },
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

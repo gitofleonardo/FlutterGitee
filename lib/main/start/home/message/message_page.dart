@@ -13,7 +13,16 @@ import 'package:flutter_gitee/widget/base_state.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-enum MessageType { event, message, refer }
+enum MessageType {
+  /// type of notification threads
+  event,
+
+  /// type of notification threads
+  refer,
+
+  /// type of messages
+  message,
+}
 
 class MessagePage extends StatefulWidget implements HomeWidget {
   const MessagePage({Key? key}) : super(key: key);
@@ -299,7 +308,7 @@ class MessagePageState extends BaseState<MessagePage> {
                     context, "${item.content}", _messageType,
                     senderUsername: item.sender?.login);
                 if (item.unread ?? false) {
-                  _markMessageAsRead("${item.id}");
+                  _markNotificationAsRead("${item.id}");
                   setState(() {
                     item.unread = false;
                   });

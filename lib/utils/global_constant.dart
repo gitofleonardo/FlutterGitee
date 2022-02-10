@@ -6,6 +6,7 @@ import 'package:flutter_gitee/main/language_selection_page.dart';
 import 'package:flutter_gitee/main/start/home/start_page.dart';
 import 'package:flutter_gitee/repo/search/search_page.dart';
 import 'package:flutter_gitee/repo/ui/my_issue_page.dart';
+import 'package:flutter_gitee/repo/ui/my_repository_page.dart';
 import 'package:flutter_gitee/repo/ui/repo_collaborator_page.dart';
 import 'package:flutter_gitee/repo/ui/repo_forks_page.dart';
 import 'package:flutter_gitee/repo/ui/repo_issue_page.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_gitee/repo/ui/repo_releases_page.dart';
 import 'package:flutter_gitee/repo/ui/repo_stargazers_page.dart';
 import 'package:flutter_gitee/repo/ui/repo_watchers_page.dart';
 import 'package:flutter_gitee/repo/ui/repository_detail_page.dart';
+import 'package:flutter_gitee/repo/ui/repository_page.dart';
 import 'package:flutter_gitee/repo/ui/repository_tree_viewer.dart';
 import 'package:flutter_gitee/user/follower_page.dart';
 import 'package:flutter_gitee/user/following_page.dart';
@@ -62,6 +64,11 @@ final routes = {
   "repository_releases_page": (ctx) => RepoReleasesPage(
       fullName: ModalRoute.of(ctx)!.settings.arguments.toString()),
   "language_page": (ctx) => const LanguageSelectionPage(),
+  "my_repository_page": (ctx) => const MyRepositoryPage(),
+  "watched_repository_page": (ctx) =>
+      const RepositoryPage(type: RepositoryType.watch),
+  "starred_repository_page": (ctx) =>
+      const RepositoryPage(type: RepositoryType.watch),
 };
 
 class GlobalTheme {

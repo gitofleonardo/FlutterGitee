@@ -282,41 +282,46 @@ class _RepositoryPageState extends BaseState<MyRepositoryPage> {
 
   @override
   Widget create(BuildContext context) {
-    return Flex(
-      direction: Axis.vertical,
-      children: [
-        Container(
-          constraints: const BoxConstraints(minWidth: double.infinity),
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          color: theme.theme.colorScheme.background,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: _createFilterChipSets(),
-          ),
-        ),
-        Expanded(
-          child: SmartRefresher(
-            onRefresh: _refreshPage,
-            onLoading: _fetchMore,
-            controller: _refreshController,
-            enablePullDown: true,
-            enablePullUp: _hasMore,
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: _currentRepos.length,
-              itemBuilder: (context, index) {
-                final item = _currentRepos[index];
-                return RepoListItem(
-                    repo: item,
-                    onTap: () {
-                      Navigator.pushNamed(context, "repository_detail_page",
-                          arguments: "${_currentRepos[index].fullName}");
-                    });
-              },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(S.of(context).myRepository),
+      ),
+      body: Flex(
+        direction: Axis.vertical,
+        children: [
+          Container(
+            constraints: const BoxConstraints(minWidth: double.infinity),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            color: theme.theme.colorScheme.background,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: _createFilterChipSets(),
             ),
           ),
-        )
-      ],
+          Expanded(
+            child: SmartRefresher(
+              onRefresh: _refreshPage,
+              onLoading: _fetchMore,
+              controller: _refreshController,
+              enablePullDown: true,
+              enablePullUp: _hasMore,
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: _currentRepos.length,
+                itemBuilder: (context, index) {
+                  final item = _currentRepos[index];
+                  return RepoListItem(
+                      repo: item,
+                      onTap: () {
+                        Navigator.pushNamed(context, "repository_detail_page",
+                            arguments: "${_currentRepos[index].fullName}");
+                      });
+                },
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
