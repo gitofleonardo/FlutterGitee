@@ -142,5 +142,8 @@
   "items": "Items",
   "selected": "Selected",
   "finished": "Finished",
-  "currentLanguage": "Current Language"
+  "currentLanguage": "Current Language",
+  "messageDetails": "Message Details",
+  "successfullyReply": "Successfully Reply",
+  "failedReply": "Failed to Reply"
 }

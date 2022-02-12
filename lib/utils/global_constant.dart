@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gitee/main/about_page.dart';
 import 'package:flutter_gitee/main/base/ui/view_picture_page.dart';
 import 'package:flutter_gitee/main/language_selection_page.dart';
+import 'package:flutter_gitee/main/start/home/message/bean/user_message_entity.dart';
 import 'package:flutter_gitee/main/start/home/start_page.dart';
 import 'package:flutter_gitee/repo/search/search_page.dart';
 import 'package:flutter_gitee/repo/ui/my_issue_page.dart';
@@ -21,6 +22,7 @@ import 'package:flutter_gitee/user/follower_page.dart';
 import 'package:flutter_gitee/user/following_page.dart';
 import 'package:flutter_gitee/user/login_page.dart';
 import 'package:flutter_gitee/user/profile/user_profile_page.dart';
+import 'package:flutter_gitee/user/user_message_page.dart';
 
 // local database keys
 const tokenName = "token";
@@ -69,6 +71,8 @@ final routes = {
       const RepositoryPage(type: RepositoryType.watch),
   "starred_repository_page": (ctx) =>
       const RepositoryPage(type: RepositoryType.watch),
+  "user_message_detail_page": (ctx) => UserMessagePage(
+      message: ModalRoute.of(ctx)!.settings.arguments as UserMessageList)
 };
 
 class GlobalTheme {

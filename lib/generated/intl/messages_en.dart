@@ -69,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "events": MessageLookupByLibrary.simpleMessage("Events"),
         "failSendingComment":
             MessageLookupByLibrary.simpleMessage("Fail sending comment"),
+        "failedReply": MessageLookupByLibrary.simpleMessage("Failed to Reply"),
         "filter": MessageLookupByLibrary.simpleMessage("Filter"),
         "finished": MessageLookupByLibrary.simpleMessage("Finished"),
         "follow": MessageLookupByLibrary.simpleMessage("Follow"),
@@ -97,6 +98,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "markdown": MessageLookupByLibrary.simpleMessage("Markdown"),
         "member": MessageLookupByLibrary.simpleMessage("Member"),
         "merged": MessageLookupByLibrary.simpleMessage("Merged"),
+        "messageDetails":
+            MessageLookupByLibrary.simpleMessage("Message Details"),
         "messageType": MessageLookupByLibrary.simpleMessage("Message Type"),
         "messages": MessageLookupByLibrary.simpleMessage("Messages"),
         "more": MessageLookupByLibrary.simpleMessage("More"),
@@ -168,6 +171,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Starred Repository"),
         "starsCount": MessageLookupByLibrary.simpleMessage("Stars Count"),
         "state": MessageLookupByLibrary.simpleMessage("State"),
+        "successfullyReply":
+            MessageLookupByLibrary.simpleMessage("Successfully Reply"),
         "tapToRetry": MessageLookupByLibrary.simpleMessage("Tap To Retry"),
         "termsOfUse": MessageLookupByLibrary.simpleMessage("Terms Of Use"),
         "text": MessageLookupByLibrary.simpleMessage("Text"),

@@ -142,5 +142,8 @@
   "items": "项目",
   "selected": "已选择",
   "finished": "已完成",
-  "currentLanguage": "当前语言"
+  "currentLanguage": "当前语言",
+  "messageDetails": "消息详情",
+  "successfullyReply": "回复成功",
+  "failedReply": "回复失败"
 }

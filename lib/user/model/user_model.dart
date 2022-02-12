@@ -124,3 +124,8 @@ Future<BaseResult<List<EventResultEntity>>> getUserPublicReceivedEvent(
       "api/v5/users/$username/received_events/public", RequestType.get, map);
   return result;
 }
+
+Future<BaseResult<String>> sendUserMessage(String username, String content) {
+  return postRequest<String>("api/v5/notifications/messages", RequestType.post,
+      {"access_token": globalToken, "username": username, "content": content});
+}

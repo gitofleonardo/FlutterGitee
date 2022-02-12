@@ -1489,6 +1489,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Message Details`
+  String get messageDetails {
+    return Intl.message(
+      'Message Details',
+      name: 'messageDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Successfully Reply`
+  String get successfullyReply {
+    return Intl.message(
+      'Successfully Reply',
+      name: 'successfullyReply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to Reply`
+  String get failedReply {
+    return Intl.message(
+      'Failed to Reply',
+      name: 'failedReply',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
