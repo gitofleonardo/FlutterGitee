@@ -51,36 +51,40 @@ class _UserMessagePageState extends BaseState<UserMessagePage> {
 
   void _showReplyDialog(BuildContext context) {
     showModalBottomSheet(
+      isScrollControlled: true,
       shape: bottomSheetShape,
       context: context,
       builder: (context) {
-        return HeaderContentBottomSheet(
-          title: S.of(context).reply,
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Flex(
-              direction: Axis.horizontal,
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _textController,
-                    decoration: InputDecoration(
-                        hintText:
-                            "${S.of(context).replyTo} ${widget.message.sender?.login}"),
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: HeaderContentBottomSheet(
+            title: S.of(context).reply,
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _textController,
+                      decoration: InputDecoration(
+                          hintText:
+                              "${S.of(context).replyTo} ${widget.message.sender?.login}"),
+                    ),
                   ),
-                ),
-                TextButton(
-                    onPressed: () {
-                      final message = _textController.text;
-                      if (message.isEmpty) {
-                        showMessageDialog(context, S.of(context).error,
-                            S.of(context).textCannotBeEmpty);
-                        return;
-                      }
-                      _sendUserMessage(context, message);
-                    },
-                    child: Text(S.of(context).reply))
-              ],
+                  TextButton(
+                      onPressed: () {
+                        final message = _textController.text;
+                        if (message.isEmpty) {
+                          showMessageDialog(context, S.of(context).error,
+                              S.of(context).textCannotBeEmpty);
+                          return;
+                        }
+                        _sendUserMessage(context, message);
+                      },
+                      child: Text(S.of(context).reply))
+                ],
+              ),
             ),
           ),
         );
