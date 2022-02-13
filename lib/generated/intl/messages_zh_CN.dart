@@ -73,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "fork": MessageLookupByLibrary.simpleMessage("Fork"),
         "forksCount": MessageLookupByLibrary.simpleMessage("Fork数"),
         "hash": MessageLookupByLibrary.simpleMessage("哈希值"),
+        "id": MessageLookupByLibrary.simpleMessage("ID"),
         "image": MessageLookupByLibrary.simpleMessage("图片"),
         "issueDetails": MessageLookupByLibrary.simpleMessage("Issue详情"),
         "issueFilter": MessageLookupByLibrary.simpleMessage("过滤Issue"),
@@ -99,7 +100,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "myIssues": MessageLookupByLibrary.simpleMessage("我的Issue"),
         "myRepository": MessageLookupByLibrary.simpleMessage("我的仓库"),
         "networkError": MessageLookupByLibrary.simpleMessage("网络错误"),
+        "nickname": MessageLookupByLibrary.simpleMessage("昵称"),
         "no": MessageLookupByLibrary.simpleMessage("否"),
+        "notSet": MessageLookupByLibrary.simpleMessage("未设置"),
         "notesCount": MessageLookupByLibrary.simpleMessage("笔记计数"),
         "ok": MessageLookupByLibrary.simpleMessage("好的"),
         "onlyGetUnreadMessages":
@@ -122,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pushTo": MessageLookupByLibrary.simpleMessage("推送到"),
         "pwdCannotBeEmpty": MessageLookupByLibrary.simpleMessage("密码不能为空"),
         "referMessage": MessageLookupByLibrary.simpleMessage("提及我的消息"),
+        "registerDate": MessageLookupByLibrary.simpleMessage("注册日期"),
         "rejected": MessageLookupByLibrary.simpleMessage("已拒绝"),
         "releases": MessageLookupByLibrary.simpleMessage("发行版"),
         "reply": MessageLookupByLibrary.simpleMessage("回复"),
@@ -163,6 +167,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user": MessageLookupByLibrary.simpleMessage("用户"),
         "userFilter": MessageLookupByLibrary.simpleMessage("用户过滤"),
         "userProfile": MessageLookupByLibrary.simpleMessage("用户资料"),
+        "username": MessageLookupByLibrary.simpleMessage("用户名"),
         "usernameCannotBeEmpty":
             MessageLookupByLibrary.simpleMessage("用户名不能为空"),
         "usernameEmailPhone":
@@ -171,6 +176,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "watchedRepository": MessageLookupByLibrary.simpleMessage("已订阅仓库"),
         "watchers": MessageLookupByLibrary.simpleMessage("订阅者"),
         "watchesCount": MessageLookupByLibrary.simpleMessage("订阅数"),
+        "weibo": MessageLookupByLibrary.simpleMessage("微博"),
         "wrongAccountOrPwd": MessageLookupByLibrary.simpleMessage("帐号或密码错误"),
         "yes": MessageLookupByLibrary.simpleMessage("是")
       };

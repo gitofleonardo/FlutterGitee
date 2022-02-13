@@ -1519,6 +1519,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Username`
+  String get username {
+    return Intl.message(
+      'Username',
+      name: 'username',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nickname`
+  String get nickname {
+    return Intl.message(
+      'Nickname',
+      name: 'nickname',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not Set`
+  String get notSet {
+    return Intl.message(
+      'Not Set',
+      name: 'notSet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register Date`
+  String get registerDate {
+    return Intl.message(
+      'Register Date',
+      name: 'registerDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ID`
+  String get id {
+    return Intl.message(
+      'ID',
+      name: 'id',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weibo`
+  String get weibo {
+    return Intl.message(
+      'Weibo',
+      name: 'weibo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Successfully Changed`
+  String get successfullyChanged {
+    return Intl.message(
+      'Successfully Changed',
+      name: 'successfullyChanged',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

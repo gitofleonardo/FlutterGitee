@@ -129,3 +129,12 @@ Future<BaseResult<String>> sendUserMessage(String username, String content) {
   return postRequest<String>("api/v5/notifications/messages", RequestType.post,
       {"access_token": globalToken, "username": username, "content": content});
 }
+
+Future<BaseResult<String>> patchUserProfile(
+    String profileProperty, String newValue) {
+  return postRequest(
+    "api/v5/user",
+    RequestType.patch,
+    {"access_token": globalToken, profileProperty: newValue},
+  );
+}

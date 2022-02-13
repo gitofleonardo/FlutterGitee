@@ -150,6 +150,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T>
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: theme.theme.colorScheme.background,
           title: Text(title),
           content: selectable ? SelectableText(message) : Text(message),
           actions: [
@@ -173,6 +174,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T>
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: theme.theme.colorScheme.background,
           title: Text(title),
           content: Flex(
             direction: Axis.horizontal,

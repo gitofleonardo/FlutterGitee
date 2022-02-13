@@ -145,5 +145,12 @@
   "currentLanguage": "当前语言",
   "messageDetails": "消息详情",
   "successfullyReply": "回复成功",
-  "failedReply": "回复失败"
+  "failedReply": "回复失败",
+  "username": "用户名",
+  "nickname": "昵称",
+  "notSet": "未设置",
+  "registerDate": "注册日期",
+  "id": "ID",
+  "weibo": "微博",
+  "successfullyChange": "更改成功"
 }

@@ -145,5 +145,12 @@
   "currentLanguage": "Current Language",
   "messageDetails": "Message Details",
   "successfullyReply": "Successfully Reply",
-  "failedReply": "Failed to Reply"
+  "failedReply": "Failed to Reply",
+  "username": "Username",
+  "nickname": "Nickname",
+  "notSet": "Not Set",
+  "registerDate": "Register Date",
+  "id": "ID",
+  "weibo": "Weibo",
+  "successfullyChanged": "Successfully Changed"
 }
