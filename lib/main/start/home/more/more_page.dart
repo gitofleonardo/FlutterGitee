@@ -245,8 +245,7 @@ class MorePageState extends BaseState<MorePage> {
             BoxDecoration(color: theme.theme.colorScheme.secondaryContainer),
         child: GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, "user_profile_page",
-                arguments: _profile.login);
+            Navigator.pushNamed(context, "profile_edit_page");
           },
           child: avatar,
         ),

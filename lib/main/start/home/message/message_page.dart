@@ -304,9 +304,10 @@ class MessagePageState extends BaseState<MessagePage> {
               if (_selectionMode) {
                 _toggleInSelectionPool(index, _messageType);
               } else {
-                _showMessageDetailDialog(
-                    context, "${item.content}", _messageType,
-                    senderUsername: item.sender?.login);
+                _showUserMessageDetailDialog(
+                  context,
+                  item,
+                );
                 if (item.unread ?? false) {
                   _markNotificationAsRead("${item.id}");
                   setState(() {
@@ -433,6 +434,39 @@ class MessagePageState extends BaseState<MessagePage> {
     });
   }
 
+  void _showUserMessageDetailDialog(
+      BuildContext context, UserMessageList message) {
+    final actions = [
+      TextButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: Text(S.of(context).ok),
+      ),
+      TextButton(
+        onPressed: () {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, "user_message_detail_page",
+              arguments: message);
+        },
+        child: Text(S.of(context).details),
+      ),
+    ];
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: theme.theme.colorScheme.background,
+          title: Text(S.of(context).details),
+          content: SingleChildScrollView(
+            child: SelectableText("${message.content}"),
+          ),
+          actions: actions,
+        );
+      },
+    );
+  }
+
   void _showMessageDetailDialog(
       BuildContext context, String content, MessageType type,
       {String? senderUsername}) {
@@ -444,16 +478,6 @@ class MessagePageState extends BaseState<MessagePage> {
         child: Text(S.of(context).ok),
       )
     ];
-    if (type == MessageType.message) {
-      actions.add(
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text(S.of(context).reply),
-        ),
-      );
-    }
     showDialog(
       context: context,
       builder: (context) {

@@ -143,6 +143,54 @@ abstract class BaseState<T extends StatefulWidget> extends State<T>
     }
   }
 
+  void showMessageDialog(BuildContext context, String title, String message,
+      {bool selectable = false, bool dismissible = true}) {
+    showDialog(
+      barrierDismissible: dismissible,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: theme.theme.colorScheme.background,
+          title: Text(title),
+          content: selectable ? SelectableText(message) : Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(S.of(context).ok),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void showLoadingDialog(BuildContext context, String title,
+      {bool dismissible = false, String? loadingText}) {
+    loadingText ??= S.of(context).loading;
+    showDialog(
+      barrierDismissible: dismissible,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: theme.theme.colorScheme.background,
+          title: Text(title),
+          content: Flex(
+            direction: Axis.horizontal,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(loadingText!)
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
     super.dispose();

@@ -1490,11 +1490,101 @@ class S {
     );
   }
 
-  /// `My Public Keys`
-  String get myPublicKeys {
+  /// `Message Details`
+  String get messageDetails {
     return Intl.message(
-      'My Public Keys',
-      name: 'myPublicKeys',
+      'Message Details',
+      name: 'messageDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Successfully Reply`
+  String get successfullyReply {
+    return Intl.message(
+      'Successfully Reply',
+      name: 'successfullyReply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to Reply`
+  String get failedReply {
+    return Intl.message(
+      'Failed to Reply',
+      name: 'failedReply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username`
+  String get username {
+    return Intl.message(
+      'Username',
+      name: 'username',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nickname`
+  String get nickname {
+    return Intl.message(
+      'Nickname',
+      name: 'nickname',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not Set`
+  String get notSet {
+    return Intl.message(
+      'Not Set',
+      name: 'notSet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register Date`
+  String get registerDate {
+    return Intl.message(
+      'Register Date',
+      name: 'registerDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ID`
+  String get id {
+    return Intl.message(
+      'ID',
+      name: 'id',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weibo`
+  String get weibo {
+    return Intl.message(
+      'Weibo',
+      name: 'weibo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Successfully Changed`
+  String get successfullyChanged {
+    return Intl.message(
+      'Successfully Changed',
+      name: 'successfullyChanged',
       desc: '',
       args: [],
     );

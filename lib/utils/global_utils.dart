@@ -248,6 +248,11 @@ String formatDate(String dateString) {
   return DateFormat("yy-MM-dd hh:mm").format(date);
 }
 
+String formatDateYYYYMMDD(String dateString) {
+  return DateFormat("yyyy-MM-dd")
+      .format(DateTime.tryParse(dateString) ?? DateTime.now());
+}
+
 int parseDate(String dateString) {
   final date = DateTime.tryParse(dateString) ?? DateTime.now();
   return date.millisecond;

@@ -69,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "events": MessageLookupByLibrary.simpleMessage("Events"),
         "failSendingComment":
             MessageLookupByLibrary.simpleMessage("Fail sending comment"),
+        "failedReply": MessageLookupByLibrary.simpleMessage("Failed to Reply"),
         "filter": MessageLookupByLibrary.simpleMessage("Filter"),
         "finished": MessageLookupByLibrary.simpleMessage("Finished"),
         "follow": MessageLookupByLibrary.simpleMessage("Follow"),
@@ -78,6 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "fork": MessageLookupByLibrary.simpleMessage("Fork"),
         "forksCount": MessageLookupByLibrary.simpleMessage("Forks Count"),
         "hash": MessageLookupByLibrary.simpleMessage("Hash"),
+        "id": MessageLookupByLibrary.simpleMessage("ID"),
         "image": MessageLookupByLibrary.simpleMessage("Image"),
         "issueDetails": MessageLookupByLibrary.simpleMessage("Issue Details"),
         "issueFilter": MessageLookupByLibrary.simpleMessage("Issue Filter"),
@@ -97,6 +99,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "markdown": MessageLookupByLibrary.simpleMessage("Markdown"),
         "member": MessageLookupByLibrary.simpleMessage("Member"),
         "merged": MessageLookupByLibrary.simpleMessage("Merged"),
+        "messageDetails":
+            MessageLookupByLibrary.simpleMessage("Message Details"),
         "messageType": MessageLookupByLibrary.simpleMessage("Message Type"),
         "messages": MessageLookupByLibrary.simpleMessage("Messages"),
         "more": MessageLookupByLibrary.simpleMessage("More"),
@@ -105,7 +109,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "myPublicKeys": MessageLookupByLibrary.simpleMessage("My Public Keys"),
         "myRepository": MessageLookupByLibrary.simpleMessage("My Repository"),
         "networkError": MessageLookupByLibrary.simpleMessage("Network Error"),
+        "nickname": MessageLookupByLibrary.simpleMessage("Nickname"),
         "no": MessageLookupByLibrary.simpleMessage("NO"),
+        "notSet": MessageLookupByLibrary.simpleMessage("Not Set"),
         "notesCount": MessageLookupByLibrary.simpleMessage("Notes Count"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
         "onlyGetUnreadMessages":
@@ -131,6 +137,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pwdCannotBeEmpty":
             MessageLookupByLibrary.simpleMessage("Password cannot be empty"),
         "referMessage": MessageLookupByLibrary.simpleMessage("Refer Message"),
+        "registerDate": MessageLookupByLibrary.simpleMessage("Register Date"),
         "rejected": MessageLookupByLibrary.simpleMessage("Rejected"),
         "releases": MessageLookupByLibrary.simpleMessage("Releases"),
         "reply": MessageLookupByLibrary.simpleMessage("Reply"),
@@ -169,6 +176,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Starred Repository"),
         "starsCount": MessageLookupByLibrary.simpleMessage("Stars Count"),
         "state": MessageLookupByLibrary.simpleMessage("State"),
+        "successfullyChanged":
+            MessageLookupByLibrary.simpleMessage("Successfully Changed"),
+        "successfullyReply":
+            MessageLookupByLibrary.simpleMessage("Successfully Reply"),
         "tapToRetry": MessageLookupByLibrary.simpleMessage("Tap To Retry"),
         "termsOfUse": MessageLookupByLibrary.simpleMessage("Terms Of Use"),
         "text": MessageLookupByLibrary.simpleMessage("Text"),
@@ -181,6 +192,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user": MessageLookupByLibrary.simpleMessage("User"),
         "userFilter": MessageLookupByLibrary.simpleMessage("User Filter"),
         "userProfile": MessageLookupByLibrary.simpleMessage("User Profile"),
+        "username": MessageLookupByLibrary.simpleMessage("Username"),
         "usernameCannotBeEmpty":
             MessageLookupByLibrary.simpleMessage("Username cannot be empty"),
         "usernameEmailPhone":
@@ -190,6 +202,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Watched Repository"),
         "watchers": MessageLookupByLibrary.simpleMessage("Watchers"),
         "watchesCount": MessageLookupByLibrary.simpleMessage("WatchesCount"),
+        "weibo": MessageLookupByLibrary.simpleMessage("Weibo"),
         "wrongAccountOrPwd":
             MessageLookupByLibrary.simpleMessage("Wrong account or passowrd"),
         "yes": MessageLookupByLibrary.simpleMessage("YES")
