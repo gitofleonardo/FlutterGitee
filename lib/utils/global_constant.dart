@@ -77,7 +77,6 @@ final routes = {
   "user_message_detail_page": (ctx) => UserMessagePage(
       message: ModalRoute.of(ctx)!.settings.arguments as UserMessageList),
   "profile_edit_page": (ctx) => const ProfileEditPage(),
-      const RepositoryPage(type: RepositoryType.watch),
   "my_public_keys": (ctx) => UserPublicKeysPage(
       username: ModalRoute.of(ctx)!.settings.arguments.toString()),
 };

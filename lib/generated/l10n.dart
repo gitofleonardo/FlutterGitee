@@ -1589,6 +1589,16 @@ class S {
       args: [],
     );
   }
+
+  /// `My Public Keys`
+  String get myPublicKeys {
+    return Intl.message(
+      'My Public Keys',
+      name: 'myPublicKeys',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
