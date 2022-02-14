@@ -22,6 +22,8 @@ import 'package:flutter_gitee/user/following_page.dart';
 import 'package:flutter_gitee/user/login_page.dart';
 import 'package:flutter_gitee/user/profile/user_profile_page.dart';
 
+import '../user/user_public_keys_page.dart';
+
 // local database keys
 const tokenName = "token";
 const refreshTokenName = "refreshToken";
@@ -69,6 +71,8 @@ final routes = {
       const RepositoryPage(type: RepositoryType.watch),
   "starred_repository_page": (ctx) =>
       const RepositoryPage(type: RepositoryType.watch),
+  "my_public_keys": (ctx) => UserPublicKeysPage(
+      username: ModalRoute.of(ctx)!.settings.arguments.toString()),
 };
 
 class GlobalTheme {

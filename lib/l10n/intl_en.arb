@@ -142,5 +142,6 @@
   "items": "Items",
   "selected": "Selected",
   "finished": "Finished",
-  "currentLanguage": "Current Language"
+  "currentLanguage": "Current Language",
+  "myPublicKeys": "My Public Keys"
 }

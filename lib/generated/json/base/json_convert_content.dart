@@ -19,6 +19,7 @@ import 'package:flutter_gitee/repo/bean/repository_tree_entity.dart';
 import 'package:flutter_gitee/user/bean/event_result_entity.dart';
 import 'package:flutter_gitee/user/bean/follow_result_entity.dart';
 import 'package:flutter_gitee/user/bean/login_success_result_entity.dart';
+import 'package:flutter_gitee/user/bean/public_key_entity.dart';
 import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
@@ -373,6 +374,9 @@ class JsonConvert {
     }
     if (type == (LoginSuccessResultEntity).toString()) {
       return LoginSuccessResultEntity.fromJson(json) as M;
+    }
+    if (type == (PublicKeyEntity).toString()) {
+      return PublicKeyEntity.fromJson(json) as M;
     }
     if (type == (UserProfileEntity).toString()) {
       return UserProfileEntity.fromJson(json) as M;
@@ -949,6 +953,12 @@ class JsonConvert {
       return data
           .map<LoginSuccessResultEntity>(
               (Map<String, dynamic> e) => LoginSuccessResultEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<PublicKeyEntity>[] is M) {
+      return data
+          .map<PublicKeyEntity>(
+              (Map<String, dynamic> e) => PublicKeyEntity.fromJson(e))
           .toList() as M;
     }
     if (<UserProfileEntity>[] is M) {

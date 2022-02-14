@@ -3,6 +3,7 @@ import 'package:flutter_gitee/repo/bean/repository_entity.dart';
 import 'package:flutter_gitee/user/bean/event_result_entity.dart';
 import 'package:flutter_gitee/user/bean/follow_result_entity.dart';
 import 'package:flutter_gitee/user/bean/login_success_result_entity.dart';
+import 'package:flutter_gitee/user/bean/public_key_entity.dart';
 import 'package:flutter_gitee/user/bean/user_profile_entity.dart';
 import 'package:flutter_gitee/utils/app_secret.dart';
 import 'package:flutter_gitee/utils/global_context.dart';
@@ -123,4 +124,10 @@ Future<BaseResult<List<EventResultEntity>>> getUserPublicReceivedEvent(
   final result = postRequest<List<EventResultEntity>>(
       "api/v5/users/$username/received_events/public", RequestType.get, map);
   return result;
+}
+
+Future<BaseResult<List<PublicKeyEntity>>> getUserPublicKeys(
+    String username, int page, int perPage) {
+  return postRequest("api/v5/users/$username/keys", RequestType.get,
+      {"access_token": globalToken, "page": page, "per_page": perPage});
 }

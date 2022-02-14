@@ -102,6 +102,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "more": MessageLookupByLibrary.simpleMessage("More"),
         "myCreated": MessageLookupByLibrary.simpleMessage("Created"),
         "myIssues": MessageLookupByLibrary.simpleMessage("My Issues"),
+        "myPublicKeys": MessageLookupByLibrary.simpleMessage("My Public Keys"),
         "myRepository": MessageLookupByLibrary.simpleMessage("My Repository"),
         "networkError": MessageLookupByLibrary.simpleMessage("Network Error"),
         "no": MessageLookupByLibrary.simpleMessage("NO"),

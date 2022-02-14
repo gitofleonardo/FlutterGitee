@@ -60,6 +60,7 @@ class MorePageState extends BaseState<MorePage> {
     }
     gridSpace.add(_createLanguageSelectionSpace());
     gridSpace.add(_createLogoutSpace());
+    gridSpace.add(_createPublicKeysSpace());
     return Scaffold(
       appBar: _createAppBar(context),
       body: SingleChildScrollView(
@@ -132,6 +133,22 @@ class MorePageState extends BaseState<MorePage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _createPublicKeysSpace() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      decoration: BoxDecoration(
+          color: theme.theme.colorScheme.primaryContainer,
+          shape: BoxShape.rectangle,
+          borderRadius: const BorderRadius.all(Radius.circular(24))),
+      child: TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, "my_public_keys",
+                arguments: "${_profile.login}");
+          },
+          child: Text(S.of(context).myPublicKeys)),
     );
   }
 

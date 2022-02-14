@@ -95,6 +95,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "more": MessageLookupByLibrary.simpleMessage("更多"),
         "myCreated": MessageLookupByLibrary.simpleMessage("我创建的"),
         "myIssues": MessageLookupByLibrary.simpleMessage("我的Issue"),
+        "myPublicKeys": MessageLookupByLibrary.simpleMessage("我的公钥"),
         "myRepository": MessageLookupByLibrary.simpleMessage("我的仓库"),
         "networkError": MessageLookupByLibrary.simpleMessage("网络错误"),
         "no": MessageLookupByLibrary.simpleMessage("否"),
