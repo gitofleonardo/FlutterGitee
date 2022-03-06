@@ -46,8 +46,8 @@ My goal is to implement most of the Gitee APIs. You can find the documentation [
 - [x] Change global theme
 - [x] Search for users
 - [ ] Auto login(Currently not supported due to lacking of api documentation)
-- [ ] View messages from server and users
-- [ ] Send messages to another user
+- [x] View messages from server and users
+- [x] Send messages to another user
 - [ ] More user-related processes
 
 ### Repository Features
@@ -65,3 +65,8 @@ My goal is to implement most of the Gitee APIs. You can find the documentation [
 - [x] Available commenting an issue
 - [ ] View opensource license
 - [ ] More repository-related processes
+
+### Samples
+
+| ![sample](raw/gitee_sample0.png) | ![sample](raw/gitee_sample1.png) | ![sample](raw/gitee_sample2.png) | ![sample](raw/gitee_sample3.png) |
+| -- | -- | -- | -- |
